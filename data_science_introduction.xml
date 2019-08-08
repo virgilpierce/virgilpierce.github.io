@@ -363,11 +363,12 @@ p.fig.set_size_inches(9, 9)
 # In any case, depending on the size of the monitor you are viewing this on, you may need to adjust
 # the (10, 10) above to something else.
 </input>
-<output>
-&lt;Figure size 648x648 with 12 Axes>
-</output>
 </console>
+<image source="Images/2.1.png"/>
 </listing>
+
+
+
 <p>In the figures above:</p>
 <p><ul>
 <li><p>on the diagonal: each player is a box in one of the bars.</p>
@@ -518,10 +519,8 @@ sn.distplot(major_2.Weight, ax=ax[1], kde=False, bins=14);
 # These are (mostly) copies of the corresponding histograms from the facet-grid above;
 # Do you notice the difference?
 </input>
-<output>
-&lt;Figure size 720x432 with 2 Axes>
-</output>
 </console>
+<image source='Images/2.2.png' />
 </listing>
 <listing>
 <console>
@@ -547,10 +546,8 @@ sn.distplot(major_2[major_2.Position!='Pitcher'].Weight, ax=ax[1,1], color = 're
 # Also I would like to have the horizontal axis shared in the first two but not the same axis for all four - Not sure
 # that will ever be possible.
 </input>
-<output>
-&lt;Figure size 720x720 with 4 Axes>
-</output>
 </console>
+<image source='Images/2.3.png'/>
 </listing>
 <listing>
 <console>
@@ -569,23 +566,13 @@ plt.legend();
 # I changed the kde flag to True - this gives a curve estimating the distribution,
 # but it also scales the histograms to have area 1 (i.e. they represent proportions of the populations)
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.4.png'/>
 </listing>
 
 </subsection>
 <subsection>
- <title> What is Data Science
-</title>
-
-<p>or </p>
-
-
-</subsection>
-<subsection>
- <title> Why Data Science
+ <title> What is Data Science or Why Data Science
 </title>
 
 <p>Notice <p><ul>
@@ -664,10 +651,8 @@ plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='Weight', y='Height', data=major_2);
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.5.png'/>
 </listing>
 <p>Okay fair enough. There seems to be something of a relationship between height and weight for our players. You may have already learned about <em>Linear Regression</em> in another class (Linear Algebra or Calculus 1). We can use seaborn to plot the least squares regression line for these data points.</p>
 
@@ -679,10 +664,8 @@ plt.figure(figsize = (10, 8))
 sn.set(style = 'darkgrid')
 sn.regplot(x='Weight', y='Height', data=major_2);
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.6.png'/>
 </listing>
 <listing>
 <console>
@@ -695,10 +678,8 @@ plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2);
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.7.png'/>
 </listing>
 <listing>
 <console>
@@ -711,10 +692,8 @@ sn.lmplot(x='Weight', y='Height', hue='Position', data=major_2, height = 8, aspe
 
 # Note that I had to change the size command.
 </input>
-<output>
-&lt;Figure size 785.55x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.8.png'/>
 </listing>
 <listing>
 <console>
@@ -730,10 +709,8 @@ sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2, ax = ax[0
 ax[1].title.set_text('Height v Age')
 sn.scatterplot(x='Age', y='Height', hue='Position', data=major_2, ax = ax[1]);
 </input>
-<output>
-&lt;Figure size 720x432 with 2 Axes>
-</output>
 </console>
+<image source="Images/2.9.png"/>
 </listing>
 
 </subsection>
@@ -782,10 +759,9 @@ p = sn.pairplot(ab)
 
 p.fig.set_size_inches(9, 9) 
 </input>
-<output>
-&lt;Figure size 648x648 with 72 Axes>
-</output>
+
 </console>
+<image source='Images/2.10.png'/>
 </listing>
 <p>What do you notice about these data points?</p>
 
@@ -798,10 +774,8 @@ sn.set(style = 'darkgrid')
 sn.jointplot(x='Length', y='Rings', data=ab, height=8, kind='hex');
 
 </input>
-<output>
-&lt;Figure size 576x576 with 3 Axes>
-</output>
 </console>
+<image source='Images/2.11.png'/>
 </listing>
 <p>We could think of this as regression or classification.</p>
 
@@ -863,10 +837,8 @@ sn.catplot(x='age', y='education', data = ad, hue='income', height= 15, aspect=1
 
 # I think it could be corrected by sorting the data frame by education level first
 </input>
-<output>
-&lt;Figure size 1154.72x1080 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.12.png'/>
 </listing>
 <p>Is this a good representation of the data?</p>
 
@@ -901,10 +873,8 @@ temp = list(md.columns.values)
 for j in range(5):
     sn.countplot(x=temp[j+1], hue='class', data = md, ax=ax[j]) 
 </input>
-<output>
-&lt;Figure size 864x288 with 5 Axes>
-</output>
 </console>
+<image source='Images/2.13.png'/>
 </listing>
 
 </section>
@@ -1044,10 +1014,8 @@ p = sn.pairplot(hd)
 
 p.fig.set_size_inches(9, 9) 
 </input>
-<output>
-&lt;Figure size 648x648 with 56 Axes>
-</output>
 </console>
+<image source='Images/2.14.png'/>
 </listing>
 
 </subsection>
@@ -1082,10 +1050,8 @@ plt.show()
 # There are ways to run this so that you can rotate it - seems to not be working on my mac.
 # Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.15.png'/>
 </listing>
 <listing>
 <console>
@@ -1095,10 +1061,8 @@ plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='1stFlrSF', y='BedroomAbvGr', hue = 'SalePrice', data=hd, palette='winter');
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.16.png'/>
 </listing>
 <listing>
 <console>
@@ -1114,10 +1078,8 @@ p = sn.scatterplot(x='1stFlrSF', y='SalePrice', hue = 'BedroomAbvGr',
 
 ax_fix = p.axes # Saving information about the axis for the next figure
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.17.png'/>
 </listing>
 <listing>
 <console>
@@ -1145,10 +1107,8 @@ ax = p.axes
 ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
 ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
 </input>
-<output>
-&lt;Figure size 802.675x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.18.png'/>
 </listing>
 <p>We will come back to this example again and develop methods of being more precise.</p>
 
@@ -1220,10 +1180,8 @@ sn.scatterplot(x='Date', y='Hours', size='Distance', hue='Avg HR',
 axes.xaxis.set_major_locator(plt.MultipleLocator(100))  
 # This is a little trick to only use every 100th tick label.
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.19.png'/>
 </listing>
 <p>It would be nice to adjust the x-axis ticks here so that it is just the date and not the start time - that could be done by adjusting the values for Date.
 </p>
@@ -1457,10 +1415,8 @@ sn.set(style='darkgrid')
 sn.barplot(x='COUNT', y='COUNTY', data=temp)
 plt.title('Preschool Programs');
 </input>
-<output>
-&lt;Figure size 720x1080 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.20.png'/>
 </listing>
 <p>Fine for someone from Colorado. But can we do better?</p>
 <listing>
@@ -1492,10 +1448,8 @@ sn.relplot(x='Lat', y='Long', hue='PROVIDER SERVICE TYPE',
            data=locate, height=8, aspect=1.2, palette='bright');
 plt.title('Location of Child Care Businesses');
 </input>
-<output>
-&lt;Figure size 939.675x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/2.21.png'/>
 </listing>
 <p>A couple of notes of things we should learn how to do in the future:</p>
 
@@ -1767,10 +1721,8 @@ fig, ax = plt.subplots(5, 10, figsize = (18, 8))
 for i in range(50):
     ax[i%5][i//5].imshow( np.array(digits.iloc[i, 1:]).reshape(28, 28), cmap = 'binary' )
 </input>
-<output>
-&lt;Figure size 1296x576 with 50 Axes>
-</output>
 </console>
+<image source='Images/2.22.png'/>
 </listing>
 <p>The task is to develop an algorithm for deciding which digit a handwritten digit is.</p>
 

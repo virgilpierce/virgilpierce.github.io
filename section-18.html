@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*    on 2019-08-08T14:10:55-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -150,12 +150,12 @@ hd.head()
 hd.shape
 </b>(1460, 81)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.2.</span> </figcaption></figure><section class="subsection" id="subsection-34"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.2.</span> </figcaption></figure><section class="subsection" id="subsection-33"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">2.9.1</span> <span class="title">Regression</span>
 </h3>
-<p id="p-241">The problem here is to use the data set to derive a method of estimating the Sale Price (the last column) based on the features of the home.</p>
-<p id="p-242">This data set comes from <a class="external" href="http://kaggle.com" target="_blank">Kaggle.com</a>  and is actually a set for a submission in their competitions. The test set that is accompanying it is the set of features for some homes without the SalePrice and is used for scoring submissions.</p>
-<p id="p-243"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/house-price-index_orig.jpg" style="width: 100%; height: auto;" alt=""></div></p>
+<p id="p-240">The problem here is to use the data set to derive a method of estimating the Sale Price (the last column) based on the features of the home.</p>
+<p id="p-241">This data set comes from <a class="external" href="http://kaggle.com" target="_blank">Kaggle.com</a>  and is actually a set for a submission in their competitions. The test set that is accompanying it is the set of features for some homes without the SalePrice and is used for scoring submissions.</p>
+<p id="p-242"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/house-price-index_orig.jpg" style="width: 100%; height: auto;" alt=""></div></p>
 <figure class="figure-like" id="listing-37"><pre class="console"><b># Let's be a little bit naive and just take a few of these features - 
 # we will come back to this example later and explore how to deal with some of the 
 # difficulties here.
@@ -178,7 +178,7 @@ hd = hd.loc[:, ['1stFlrSF', '2ndFlrSF', 'FullBath', 'HalfBath', 'BedroomAbvGr',
 3     140000  
 4     250000
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.4.</span> </figcaption></figure><p id="p-244">This is real data, check if there are any missing values:</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.4.</span> </figcaption></figure><p id="p-243">This is real data, check if there are any missing values:</p>
 <figure class="figure-like" id="listing-39"><pre class="console"><b>for c in hd.columns.values:   # .values creates an iterable object from the list of columns.
     if pa.isna(hd.loc[:, c]).any():
         print('{} has missing values'.format(c))
@@ -199,7 +199,7 @@ No missing values found for BedroomAbvGr
 No missing values found for TotRmsAbvGrd
 No missing values found for SalePrice
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.5.</span> </figcaption></figure><p id="p-245">A programing note here: verbose output is much more useful than nonverbose.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.5.</span> </figcaption></figure><p id="p-244">A programing note here: verbose output is much more useful than nonverbose.</p>
 <figure class="figure-like" id="listing-40"><pre class="console"><b># Make a plot of the dataset by pairs for the numerical data
 
 sn.set(style = 'darkgrid')   # seaborn makes nice looking plots - check the galleries for the various options
@@ -209,16 +209,16 @@ p = sn.pairplot(hd)
 # Note that seaborn.pairplot will ignore categorical data (like position) unless we pass it an option.
 
 p.fig.set_size_inches(9, 9)
-</b>&lt;Figure size 648x648 with 56 Axes&gt;
-</pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.6.</span> </figcaption></figure></section><section class="subsection" id="subsection-35"><h3 class="heading hide-type">
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.14.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.6.</span> </figcaption></figure></section><section class="subsection" id="subsection-34"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">2.9.2</span> <span class="title">Why Data Science or What is Data Science</span>
 </h3>
-<p id="p-246">This example drives home the dimensional problem we will have, that we need to develop some tools to deal with. Even visualizing multi dimensional data is very challenging for us.</p>
-<p id="p-247">We need to build some tools to add to our toolbox:</p>
-<ol id="p-248" class="decimal">
-<li id="li-76"><p id="p-249">Methods of identifying variables that provide us with new information about the Sale Price;</p></li>
-<li id="li-77"><p id="p-250">Conversly methods of identifying variables that are not needed or that have less influence on the sale price.</p></li>
+<p id="p-245">This example drives home the dimensional problem we will have, that we need to develop some tools to deal with. Even visualizing multi dimensional data is very challenging for us.</p>
+<p id="p-246">We need to build some tools to add to our toolbox:</p>
+<ol id="p-247" class="decimal">
+<li id="li-76"><p id="p-248">Methods of identifying variables that provide us with new information about the Sale Price;</p></li>
+<li id="li-77"><p id="p-249">Conversly methods of identifying variables that are not needed or that have less influence on the sale price.</p></li>
 </ol>
 <figure class="figure-like" id="listing-41"><pre class="console"><b># We can use the matplotlib module to do 3-dimensional plots
 
@@ -232,14 +232,14 @@ plt.show()
 
 # There are ways to run this so that you can rotate it - seems to not be working on my mac.
 # Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
-</b>&lt;Figure size 720x576 with 1 Axes&gt;
-</pre>
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.15.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.7.</span> </figcaption></figure><figure class="figure-like" id="listing-42"><pre class="console"><b>sn.set(style = 'darkgrid')
 plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='1stFlrSF', y='BedroomAbvGr', hue = 'SalePrice', data=hd, palette='winter');
-</b>&lt;Figure size 720x576 with 1 Axes&gt;
-</pre>
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.16.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.8.</span> </figcaption></figure><figure class="figure-like" id="listing-43"><pre class="console"><b># We are doing regression, so maybe it makes more sense to plot 'SalePrice' as the y-axis and use
 # the nearly categorical 'BedroomAbvGr' as the hue.
 
@@ -250,8 +250,8 @@ p = sn.scatterplot(x='1stFlrSF', y='SalePrice', hue = 'BedroomAbvGr',
                   data = hd, palette = 'magma'); 
 
 ax_fix = p.axes # Saving information about the axis for the next figure
-</b>&lt;Figure size 720x576 with 1 Axes&gt;
-</pre>
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.17.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.9.</span> </figcaption></figure><figure class="figure-like" id="listing-44"><pre class="console"><b># So a naive thing to try is a separate regression line based on the number of bedrooms.
 
 temp = hd.copy()
@@ -274,9 +274,9 @@ ax = p.axes
 
 ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
 ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
-</b>&lt;Figure size 802.675x576 with 1 Axes&gt;
-</pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.10.</span> </figcaption></figure><p id="p-251">We will come back to this example again and develop methods of being more precise.</p></section></section></div></main>
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.18.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.10.</span> </figcaption></figure><p id="p-250">We will come back to this example again and develop methods of being more precise.</p></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
 <script src="https://pretextbook.org/js/0.12/login.js"></script>

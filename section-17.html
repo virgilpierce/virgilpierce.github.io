@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*    on 2019-08-08T14:10:55-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -122,8 +122,8 @@ print(md.shape)
 md.head()
 </b>(8124, 23)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.8.1.</span> </figcaption></figure><p id="p-239">This data set is remarkable because every characteristic is a categorical value (some are boolean).</p>
-<p id="p-240">The task is to determine an algorithm for classifying poisonous mushrooms from the characteristics.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.8.1.</span> </figcaption></figure><p id="p-238">This data set is remarkable because every characteristic is a categorical value (some are boolean).</p>
+<p id="p-239">The task is to determine an algorithm for classifying poisonous mushrooms from the characteristics.</p>
 <figure class="figure-like" id="listing-34"><pre class="console"><b>sn.set(style = 'darkgrid')  
 
 f, ax = plt.subplots(1, 5, figsize=(12,4), sharey=True)
@@ -131,8 +131,8 @@ f, ax = plt.subplots(1, 5, figsize=(12,4), sharey=True)
 temp = list(md.columns.values)
 for j in range(5):
     sn.countplot(x=temp[j+1], hue='class', data = md, ax=ax[j])
-</b>&lt;Figure size 864x288 with 5 Axes&gt;
-</pre>
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.13.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.8.2.</span> </figcaption></figure></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
