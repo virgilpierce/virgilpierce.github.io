@@ -42,6 +42,10 @@
 <!-- Chapter Two - Motivating Examples -->
 
 <xi:include href="data_science_introduction.xml"/>
+
+<!-- Chapter Three - Data -->
+
+<xi:include href='data.xml'/>
         
 </book>
 </pretext>

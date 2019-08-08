@@ -1,0 +1,311 @@
+<chapter xml:id="data">
+ <title> Data
+</title>
+
+<section>
+ <title> What is Data
+</title>
+
+<p>From <url href="https://en.wiktionary.org/wiki/data"> wikitionary </url> </p>
+
+<blockquote><paragraphs><title> Data (noun)</title>
+<p><ol>
+<li><p> Information, especially in a scientific or computational context, or with the implication that it is organized. </p>
+</li>
+<li><p> Recorded observations that are usually presented in a structured format.</p>
+</li>
+<li><p> A representation of facts or ideas in a formalized manner capable of being communicated or manipulated by some process.</p>
+</li>
+<li><p> Digital information such as images or web pages transmitted using the cellular telephone network rather than wifi.</p>
+</li>
+</ol></p>
+
+</paragraphs></blockquote>
+<p>For our class, as time is limited, we are focused on data that can be used for three types of questions:</p>
+
+<p><ol>
+<li><p> Supervised Learning - Classification</p>
+</li>
+<li><p> Supervised Learning - Regression</p>
+</li>
+<li><p> Unsupervised Learning - Clustering</p>
+</li>
+</ol></p>
+
+
+</section>
+<section>
+ <title> Supervised versus Unsupervised Learning
+</title>
+
+<introduction>
+<p>Supervised Learning is statistical learning where we have a training set of data made up of a sample, features of that sample, and then a known answer for the sample to the question.</p>
+</introduction>
+
+<subsection>
+ <title> Example Classification
+</title>
+
+<p>Question: Given the characteristics/features of an adult in the US (i.e. their age and education) can we determine whether their income is more or less than $50,000?</p>
+
+<p>The Data: A sample of adults with values for their features and with their known income levels.</p>
+
+
+
+<listing>
+<console>
+<input>
+import numpy as np                   # Numerical computation library
+import pandas as pa                  # Dataframe and Data manipulation Library
+import matplotlib.pyplot as plt      # Basic plotting functionality Library
+import seaborn as sn                 # Advanced Data visualization Library
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+ad = pa.read_csv('Data Sets/Adult/adult-data.csv', 
+                names = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital_status',
+                        'occupation', 'relationship', 'race', 'sex', 'capital_gain', 'capital_loss', 'hours_per_wk',
+                        'country_of_origin', 'income'])
+
+# The folder with the data set also contains a description of the features and a test set.
+
+ad.head()
+</input>
+<output>
+   age          workclass  fnlwgt   education  education-num  \
+0   39          State-gov   77516   Bachelors             13   
+1   50   Self-emp-not-inc   83311   Bachelors             13   
+2   38            Private  215646     HS-grad              9   
+3   53            Private  234721        11th              7   
+4   28            Private  338409   Bachelors             13   
+
+        marital_status          occupation    relationship    race      sex  \
+0        Never-married        Adm-clerical   Not-in-family   White     Male   
+1   Married-civ-spouse     Exec-managerial         Husband   White     Male   
+2             Divorced   Handlers-cleaners   Not-in-family   White     Male   
+3   Married-civ-spouse   Handlers-cleaners         Husband   Black     Male   
+4   Married-civ-spouse      Prof-specialty            Wife   Black   Female   
+
+   capital_gain  capital_loss  hours_per_wk country_of_origin  income  
+0          2174             0            40     United-States   &lt;=50K  
+1             0             0            13     United-States   &lt;=50K  
+2             0             0            40     United-States   &lt;=50K  
+3             0             0            40     United-States   &lt;=50K  
+4             0             0            40              Cuba   &lt;=50K  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+f, ax = plt.subplots(1,1, figsize=(10, 8))
+
+sn.scatterplot(x='age', y='education-num', hue='income',
+               data=ad, alpha=0.8, ax=ax);
+</input>
+</console>
+<image source='Images/3.1.png'/>
+</listing>
+
+</subsection>
+<subsection>
+ <title> Example Regression
+</title>
+
+<p>Question: Given the characteristics/features of a house in Iowa (i.e. its roof type, and the number of bedrooms) can we determine how much the house will sell for?</p>
+
+<p>The Data: A sample of homes in Iowa with values for their features and with their known sale prices. </p>
+
+</subsection>
+<subsection>
+ <title> Example Clustering
+</title>
+
+<p>Question: Given a set of workouts by your professor, can you determine how they should be grouped together?</p>
+
+<p>The Data: A sample of workouts by your professor with values for their features.</p>
+
+<p>The big difference to me anyway, is that when clustering we are not yet sure what question we are asking.</p>
+
+
+</subsection>
+<subsection>
+ <title> Another Example Clustering
+</title>
+
+<p>Question: Determine the relationships for Airbnbs available in Berlin.</p>
+
+<p>The Data: A collection of features for Airbnbs in Berlin.</p>
+
+<p>Again note that here it is not clear what we might be asking.</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> Where to get Data
+</title>
+
+<introduction>
+<p>To make sure you understand why you might care about this part: Your major activity for this class is going to be a team project analyzing a particular data set. Your team will need to develop a proposal for the problem you will do, and in particular the data set you will work from.</p>
+
+<p>So. Let us take some time to examine where we can find data.</p>
+
+<p>Note the answer to this question ''Where to get Data'' depends on the context of what we are really asking, so I will answer it multiple times.</p>
+</introduction>
+
+<subsection>
+ <title> Where to get Data v1 - To Increase Shareholder/Stakeholder Value
+</title>
+
+<p>Our goal is to train you to one day soon work for a company (or government agency) doing data science and analysis. Your goal in that role is to increase the value of your company. </p>
+
+<paragraphs>
+ <title> Identifying the Question
+</title>
+
+<p>So to increase value using your data science expertise the first thing you need to do is identify a question <p><ul>
+<li><p>you want to find a classification or regreesion problem that if you could answer it would allow your company to do more with less.</p>
+</li>
+</ul></p>
+</p>
+
+
+<p>The University of Northern Colorado provides support to students in some early mathematics classes based upon their score on the ALEKS placement. So the question is, for a course like <em>Mathematics for Liberal Arts</em> that does not have support yet, can we determine from student characteristics whether a student is likely to need support or not.</p>
+
+<p>I.e. will they complete the course with ABC or a DFW. </p>
+
+
+
+<p>If Garmin could determine from the activities someone is doing that they are likely training for the New York City Marathon, they could begin sending them specific advertisements for products or benifits/rewards for being a Garmin customer: for example they could offer to load the course map on their device.</p>
+
+
+
+<p>If Greeley can determine an algorithm to estimate the value of homes based upon characteristics, one of which includes the density of trees on the street or the distance from a park. The city could then use this analysis to determine where an investment in neighborhood improvements could have the greatest impact.</p>
+
+<p>Or to analyze the negative impact of a change to zoning or ordinances.</p>
+
+
+
+<p>There also will be situations where your company has data, but is not sure what it means or what could be done with it. At this moment that means that data has no value. If you can use an unsupervised learning method to find structure in the data, it could lead to being able to make better decisions <p><ul>
+<li><p>this means not only does the company do better, but you also have turned that data without value into something that now has value.</p>
+</li>
+</ul></p>
+</p>
+<p>For example a company might have a set of data about customers. By using clustering they might find that there are distinct groups of customers in the features, and this could lead to targeted advertising for the distinct groups.</p>
+
+
+</paragraphs>
+<paragraphs>
+ <title> Okay so we have not answered the question
+</title>
+
+<p>Where does a company get data. Well they need to collect it. They collect it with: </p>
+
+<p><ul>
+<li><p>Gathering existing information from transactions (almost free),</p>
+</li>
+<li><p>Gathering additional information during a transaction (almost free),</p>
+</li>
+<li><p>Surveys (not free),</p>
+</li>
+<li><p>Observations and Experiments, Prototypes (expensive).</p>
+</li>
+</ul></p>
+
+<p>Preview <p><ul>
+<li><p>ethics. There are ethical restrictions on what kinds of data we can collect and what we do with it. In many cases there are also legal restrictions. For example if we are collecting information that can be used to identify people, we have a duty to protect their privacy. </p>
+</li>
+</ul></p>
+</p>
+<p>Some industries: (Education, Healthcare, and Banking for example) have many restrictions of what kinds of data can be collected and how it can be used. </p>
+
+<p>We will take a class to talk in some detail about the ethics of Data Science. </p>
+
+
+</paragraphs>
+
+</subsection>
+<subsection>
+ <title> Where to get Data v2 - To Contribute to the Public Good
+</title>
+
+<p>The other reason you might want to find some data to analyze is to contribute to the public good. I follow a number of data scientists and educators on twitter, and often you will see them sharing analysis they have done about healthcare, education, and economics in the US or the world. </p>
+
+<p>They might have personal benifit from taking the time to work on these problems, in some cases they may be employed by a non-profit or even for-profit company that pays them to work on them, but in many cases I suspect they are doing it as part of a contribution to the public discourse on these topics - i.e. trying to help us all understand the issue better.
+</p>
+<p>As to where to get this data. Government agencies, and other clearinghouse type places make Terabytes worth of data available. Often merely for the price of acknowleding the source of the data when you use it.</p>
+
+<paragraphs>
+ <title> Some examples
+</title>
+
+<p>Examples of (mostly) easy to download collections:</p>
+<p><ul>
+<li><p><url href="https://data.colorado.gov/"> Colorado Data </url> </p>
+</li>
+<li><p><url href="https://www.data.gov/"> USA Data </url> </p>
+</li>
+<li><p><url href="http://data.un.org/"> United Nations Data </url> </p>
+</li>
+</ul></p>
+
+<p>I like these collections because much of what is here has not been completely explored. The downside is that it is not always clear what the question is.</p>
+
+<p>It requires some digging, but some organizations, like the Pew Charitable Trust publish summaries of data analysis, and link to the data they used. This gives you a way to track down publicly available data, and also gives you some idea of how it could be used.</p>
+<p><ul>
+<li><p><url href="https://www.pewtrusts.org/en"> Pew Charitable Trust </url> </p>
+</li>
+</ul></p>
+
+<p>The issue here is that organizations like Pew, by the time they have published about a data set, have probably looked into it pretty deeply. </p>
+
+<p>However, one of the ethical considerations we will discuss is reproducibility. The conclusions and analysis published from a data set should be reproducible if others start from the same set. It takes people spending time with already analyzed data to check for reproducibility.</p>
+
+
+</paragraphs>
+
+</subsection>
+<subsection>
+ <title> Where to get Data v3 - To do Data Science on
+</title>
+
+<p>One context for <em>Where to get Data?</em> is that your professor is telling you to find a data set to work with; or maybe you are developing Data Science as a hobby; or finally maybe you want to test a technique on a challenging or interesting data question.</p>
+
+<p>Two places that are definitely worth some time are:</p>
+
+<p><ol>
+<li><p> <url href="https://archive.ics.uci.edu/ml/datasets.php"> The University of California at Irvine Data Science Archives </url> </p>
+</li>
+</ol></p>
+
+<p>There is a lot available here, and much of it is very interesting. It is also well classified and documented. </p>
+
+<p>The downside is that it is all thoroughly analyzed. However, working with data that others have already analyzed, one thing you can do is bench mark yourself against others.</p>
+
+<p><ol>
+<li><p> Which brings me to <url href="https://kaggle.com"> Kaggle </url> </p>
+</li>
+</ol></p>
+
+<p>There are two features in Kaggle you should look at. One is the <em>Datasets</em> page. This is a list of datasets for people to work with. Many of these are open ended, i.e. it is not clear what the question would be.</p>
+
+<p>Then there is the <em>competitions</em> page. Kaggle runs data science competitions, in some cases with prize money. What I like about the competitions is that the datasets provided are <alert>very</alert> real. They will have missing data, in some cases they will be hard to obtain or use, and they will often be <alert>BIG</alert>. They are also organized following the principle we will explore in the Data Science process of having already been divided into a training set and a testing set. Kaggle uses the testing set to score the submissions to the competition.</p>
+
+<p>The Kaggle competitions are also nice because they demonstrate the kind of Data Science works that companies find valuable enough to put some money behind.</p>
+
+<p>Having worked on a couple of these, I can say that it is amazing how easy it is to get into the middle of the leaderboard, and how incredibly hard it is to get anywhere near the top.</p>
+
+<p>I actually toyed with the idea of insisting your project come from a Kaggle competition and that part of the assignment would be to submit your solution to the competition.</p>
+
+<p>The big advantage to getting your datasets from UCI or Kaggle is that the questions to ask are much clearer. In the case of UCI this is because the set has already been thoroughly analyzed, and in the case of Kaggle it is because a company is interested in the answer.</p>
+
+
+</subsection>
+
+</section>
+
+</chapter>
