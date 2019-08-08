@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Fifth Motivating Example - House Prices</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-17.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="data_science_introduction.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-19.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-17.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="data_science_introduction.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-19.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Fundamentals of Data Science - STAT 411</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18" class="active">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-18"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">2.9</span> <span class="title">Fifth Motivating Example - House Prices</span>
+</h2>
+<figure class="figure-like" id="listing-35"><pre class="console"><b># Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.1.</span> </figcaption></figure><figure class="figure-like" id="listing-36"><pre class="console"><b># This data set has an extraordinary number of factors. 
+# See the accompanying data_description.txt file that explains them and some of their values.
+
+hd.shape
+</b>(1460, 81)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.2.</span> </figcaption></figure><section class="subsection" id="subsection-34"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">2.9.1</span> <span class="title">Regression</span>
+</h3>
+<p id="p-241">The problem here is to use the data set to derive a method of estimating the Sale Price (the last column) based on the features of the home.</p>
+<p id="p-242">This data set comes from <a class="external" href="http://kaggle.com" target="_blank">Kaggle.com</a>  and is actually a set for a submission in their competitions. The test set that is accompanying it is the set of features for some homes without the SalePrice and is used for scoring submissions.</p>
+<p id="p-243"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/house-price-index_orig.jpg" style="width: 100%; height: auto;" alt=""></div></p>
+<figure class="figure-like" id="listing-37"><pre class="console"><b># Let's be a little bit naive and just take a few of these features - 
+# we will come back to this example later and explore how to deal with some of the 
+# difficulties here.
+
+hd = hd.loc[:, ['1stFlrSF', '2ndFlrSF', 'FullBath', 'HalfBath', 'BedroomAbvGr', 
+                'TotRmsAbvGrd', 'SalePrice']]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.3.</span> </figcaption></figure><figure class="figure-like" id="listing-38"><pre class="console"><b>hd.head()
+</b>   1stFlrSF  2ndFlrSF  FullBath  HalfBath  BedroomAbvGr  TotRmsAbvGrd  \
+0       856       854         2         1             3             8   
+1      1262         0         2         0             3             6   
+2       920       866         2         1             3             6   
+3       961       756         1         0             3             7   
+4      1145      1053         2         1             4             9   
+
+   SalePrice  
+0     208500  
+1     181500  
+2     223500  
+3     140000  
+4     250000
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.4.</span> </figcaption></figure><p id="p-244">This is real data, check if there are any missing values:</p>
+<figure class="figure-like" id="listing-39"><pre class="console"><b>for c in hd.columns.values:   # .values creates an iterable object from the list of columns.
+    if pa.isna(hd.loc[:, c]).any():
+        print('{} has missing values'.format(c))
+    else:
+        print('No missing values found for {}'.format(c))
+
+                                # pandas.isna checks for missing values (They would show up 
+                                # as NaN in the displays of the dataframe).
+         
+                                # Again .loc[:, c] says to take all rows for column c. 
+                                # we use .loc here because we are refering to the actual names and
+                                # not the indices.
+</b>No missing values found for 1stFlrSF
+No missing values found for 2ndFlrSF
+No missing values found for FullBath
+No missing values found for HalfBath
+No missing values found for BedroomAbvGr
+No missing values found for TotRmsAbvGrd
+No missing values found for SalePrice
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.5.</span> </figcaption></figure><p id="p-245">A programing note here: verbose output is much more useful than nonverbose.</p>
+<figure class="figure-like" id="listing-40"><pre class="console"><b># Make a plot of the dataset by pairs for the numerical data
+
+sn.set(style = 'darkgrid')   # seaborn makes nice looking plots - check the galleries for the various options
+
+p = sn.pairplot(hd)   
+
+# Note that seaborn.pairplot will ignore categorical data (like position) unless we pass it an option.
+
+p.fig.set_size_inches(9, 9)
+</b>&lt;Figure size 648x648 with 56 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.6.</span> </figcaption></figure></section><section class="subsection" id="subsection-35"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">2.9.2</span> <span class="title">Why Data Science or What is Data Science</span>
+</h3>
+<p id="p-246">This example drives home the dimensional problem we will have, that we need to develop some tools to deal with. Even visualizing multi dimensional data is very challenging for us.</p>
+<p id="p-247">We need to build some tools to add to our toolbox:</p>
+<ol id="p-248" class="decimal">
+<li id="li-76"><p id="p-249">Methods of identifying variables that provide us with new information about the Sale Price;</p></li>
+<li id="li-77"><p id="p-250">Conversly methods of identifying variables that are not needed or that have less influence on the sale price.</p></li>
+</ol>
+<figure class="figure-like" id="listing-41"><pre class="console"><b># We can use the matplotlib module to do 3-dimensional plots
+
+from mpl_toolkits.mplot3d import Axes3D    # We lneed an additional module
+
+fig = plt.figure(figsize = (10, 8))
+ax = fig.add_subplot(111, projection='3d')     # 111 sets the relative size of the axes
+ax.scatter(hd['1stFlrSF'], hd['BedroomAbvGr'], hd['SalePrice'], c='skyblue', s=60)
+ax.view_init(10, 185)   # this sets the perspective we see the graph from 
+plt.show()
+
+# There are ways to run this so that you can rotate it - seems to not be working on my mac.
+# Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
+</b>&lt;Figure size 720x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.7.</span> </figcaption></figure><figure class="figure-like" id="listing-42"><pre class="console"><b>sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='1stFlrSF', y='BedroomAbvGr', hue = 'SalePrice', data=hd, palette='winter');
+</b>&lt;Figure size 720x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.8.</span> </figcaption></figure><figure class="figure-like" id="listing-43"><pre class="console"><b># We are doing regression, so maybe it makes more sense to plot 'SalePrice' as the y-axis and use
+# the nearly categorical 'BedroomAbvGr' as the hue.
+
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+p = sn.scatterplot(x='1stFlrSF', y='SalePrice', hue = 'BedroomAbvGr', 
+                  data = hd, palette = 'magma'); 
+
+ax_fix = p.axes # Saving information about the axis for the next figure
+</b>&lt;Figure size 720x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.9.</span> </figcaption></figure><figure class="figure-like" id="listing-44"><pre class="console"><b># So a naive thing to try is a separate regression line based on the number of bedrooms.
+
+temp = hd.copy()
+for c in temp.index.values:
+    if temp.loc[c, 'BedroomAbvGr'] &lt;= 2:
+        temp.loc[c, 'BedroomCat'] = '2 or fewer br'
+    if temp.loc[c, 'BedroomAbvGr'] &gt; 2:
+        temp.loc[c,'BedroomCat'] = 'more than 2 br'    # lmplot automatically chooses the categories for hue.
+                                                       # too many hues is confusing, so changed the bedroom
+                                                       # count to a categorical variable.
+                                                        
+                                                        # A better way to do this would have been a boolean
+                                                        # as that could be done without the for and if states.
+                                                        # however it then would require adjusting the labels
+
+sn.set(style = 'darkgrid')
+
+p = sn.lmplot(x='1stFlrSF', y='SalePrice', hue='BedroomCat', data=temp, height = 8, aspect = 1.2);
+ax = p.axes
+
+ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
+ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
+</b>&lt;Figure size 802.675x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.10.</span> </figcaption></figure><p id="p-251">We will come back to this example again and develop methods of being more precise.</p></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

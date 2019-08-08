@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>digits = pa.read_csv('Data Sets/digits/train.csv')
+
+sn.set(style = 'white')
+fig, ax = plt.subplots(5, 10, figsize = (18, 8))
+
+for i in range(50):
+    ax[i%5][i//5].imshow( np.array(digits.iloc[i, 1:]).reshape(28, 28), cmap = 'binary' )
+</b>&lt;Figure size 1296x576 with 50 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.14.1.</span> </figcaption></figure><span class="incontext"><a href="section-23.html#listing-64">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>for c in hd.columns.values:   # .values creates an iterable object from the list of columns.
+    if pa.isna(hd.loc[:, c]).any():
+        print('{} has missing values'.format(c))
+    else:
+        print('No missing values found for {}'.format(c))
+
+                                # pandas.isna checks for missing values (They would show up 
+                                # as NaN in the displays of the dataframe).
+         
+                                # Again .loc[:, c] says to take all rows for column c. 
+                                # we use .loc here because we are refering to the actual names and
+                                # not the indices.
+</b>No missing values found for 1stFlrSF
+No missing values found for 2ndFlrSF
+No missing values found for FullBath
+No missing values found for HalfBath
+No missing values found for BedroomAbvGr
+No missing values found for TotRmsAbvGrd
+No missing values found for SalePrice
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.5.</span> </figcaption></figure><span class="incontext"><a href="section-18.html#listing-39">in-context</a></span>
+</body>
+</html>

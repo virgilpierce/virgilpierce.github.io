@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Rename the Height and Weight columns so it is easier to refer to them.
+
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+
+# This is using a dictionary {'old name':'new name' } to change the names
+# axis = 1 tells it we are changing columns
+# axis = 0 would tell it we were changing rows
+
+major.tail()  # displays the last few rows
+</b>                Name Team        Position  Height  Weight    Age
+1029   Brad_Thompson  STL  Relief_Pitcher      73   190.0  25.08
+1030   Tyler_Johnson  STL  Relief_Pitcher      74   180.0  25.73
+1031  Chris_Narveson  STL  Relief_Pitcher      75   205.0  25.19
+1032   Randy_Keisler  STL  Relief_Pitcher      75   190.0  31.01
+1033     Josh_Kinney  STL  Relief_Pitcher      73   195.0  27.92
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.2.</span> </figcaption></figure><span class="incontext"><a href="section-14.html#listing-10">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+temp = cocc.loc[:, ['PROVIDER SERVICE TYPE', 'LONG-LAT'] ]
+
+# pull up the longitude and lattitude coordinates
+ 
+lon = [eval(temp.loc[c, 'LONG-LAT'])[0] for c in temp.index.values]
+lat = [eval(temp.loc[c, 'LONG-LAT'])[1] for c in temp.index.values]
+    
+# Separate the longitude and lattide coordinates
+# Some notes on the Python here:  the coordinates have been read in as a string, we can convert them to a 
+# tuple with eval and then reference each with a position index.
+
+locate = pa.DataFrame(np.array( [lon, lat]).transpose(), columns = ['Long', 'Lat'])
+locate = pa.concat( [locate, temp], axis=1).drop('LONG-LAT', axis=1)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.4.</span> </figcaption></figure><span class="incontext"><a href="section-21.html#listing-58">in-context</a></span>
+</body>
+</html>

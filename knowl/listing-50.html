@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># First we get a link from dropbox
+# https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=0
+
+# The trick here is that the last digit 'dl=0' needs to be changed to 'dl=1' and then 
+# we just feed it into pandas.read_csv as we have above.
+
+# This takes a while - it is downloading the information and then processing it, and it is more data
+# than our other examples have used.
+
+calendar = pa.read_csv('https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=1')
+listings_sum = pa.read_csv('https://www.dropbox.com/s/5noljx9qipcyyul/listings_summary.csv?dl=1')
+listings = pa.read_csv('https://www.dropbox.com/s/xtkx018qxjfjlah/listings.csv?dl=1')
+neighborhoods = pa.read_csv('https://www.dropbox.com/s/rfqozggf5f2kzlu/neighbourhoods.csv?dl=1')
+reviews_sum = pa.read_csv('https://www.dropbox.com/s/o8gvfm708g1cocf/reviews_summary.csv?dl=1')
+reviews = pa.read_csv('https://www.dropbox.com/s/8dfu8qyc6n6cw3p/reviews.csv?dl=1')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.11.1.</span> </figcaption></figure><span class="incontext"><a href="section-20.html#listing-50">in-context</a></span>
+</body>
+</html>

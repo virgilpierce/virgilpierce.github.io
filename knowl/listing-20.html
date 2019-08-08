@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Make a histogram of the heights and weights
+
+sn.set(style = 'darkgrid')  # Set the style
+
+f, ax = plt.subplots(1, 2, sharey=False, figsize = (10, 6))   # Make a 1 x 2 grid for multiple plots
+sn.distplot(major_2.Height, ax=ax[0], kde=False, bins=14)  
+sn.distplot(major_2.Weight, ax=ax[1], kde=False, bins=14);
+
+# These are (mostly) copies of the corresponding histograms from the facet-grid above;
+# Do you notice the difference?
+</b>&lt;Figure size 720x432 with 2 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.12.</span> </figcaption></figure><span class="incontext"><a href="section-14.html#listing-20">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Make a plot of the dataset by pairs for the numerical data
+
+sn.set(style = 'darkgrid')   # seaborn makes nice looking plots - check the galleries for the various options
+
+p = sn.pairplot(major)   
+
+# Note that seaborn.pairplot will ignore categorical data (like position) unless we pass it an option.
+
+
+p.fig.set_size_inches(9, 9)  
+
+# My one major frustration with seaborn is that changing the size of a plot or figure depends
+# on what plotting command you happen to be using. There is no one way to do it. However the
+# plots it makes are generally so nice, that I just deal with it.
+
+# In any case, depending on the size of the monitor you are viewing this on, you may need to adjust
+# the (10, 10) above to something else.
+</b>&lt;Figure size 648x648 with 12 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.9.</span> </figcaption></figure><span class="incontext"><a href="section-14.html#listing-17">in-context</a></span>
+</body>
+</html>

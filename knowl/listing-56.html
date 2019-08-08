@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+cocc = cocc.loc[:, ['COUNTY', 'CITY', 'PROVIDER SERVICE TYPE']]  # Keep only the columns we want here
+cocc.loc[:, 'COUNT'] = 1   # Add a variable for counting unique values
+cocc = cocc.groupby(['COUNTY', 'CITY', 'PROVIDER SERVICE TYPE']).sum()   
+ # Sum the values after grouping by County, 
+       # City, and Provider Type
+    
+cocc.head()
+</b>                                                  COUNT
+COUNTY CITY   PROVIDER SERVICE TYPE                    
+Adams  Arvada Child Care Center                       2
+       Aurora Child Care Center                      10
+              Experienced Family Child Care Home      1
+              Family Child Care Home                  2
+              Preschool Program                       7
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.2.</span> </figcaption></figure><span class="incontext"><a href="section-21.html#listing-56">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># the dir() function lists attributes a function has:
+# However many of the attributes are so-called system attributes and not very helpful. 
+# I typically ask Python to drop them using a simple list comprehension.
+
+[x for x in dir(list) if not '__' in x]
+
+# You can read this command in English: [] - make a list; of elements x for each x in 
+# dir(list) if x does not contain the string '__'
+</b>['append',
+ 'clear',
+ 'copy',
+ 'count',
+ 'extend',
+ 'index',
+ 'insert',
+ 'pop',
+ 'remove',
+ 'reverse',
+ 'sort']
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.4.4.</span> </figcaption></figure><span class="incontext"><a href="section-13.html#listing-8">in-context</a></span>
+</body>
+</html>

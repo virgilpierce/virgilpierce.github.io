@@ -1,0 +1,1786 @@
+<chapter xml:id="data_science_introduction">
+ <title> Fundamentals of Data Science - STAT 411
+</title>
+
+<introduction>
+<p>We start with some examples of the kinds of problems we will consider in this class. I am calling these motivating problems because we will return to them again and again as class goes on.</p>
+
+<p>Please read the syllabus. We will not take time to go over it entirely here. You should have an email from me with:</p>
+<p><ol>
+<li><p> The syllabus as an HTML file,</p>
+</li>
+<li><p> A link to Github for our class, </p>
+</li>
+<li><p> A link inviting you to join the Slack channel for our class, and </p>
+</li>
+<li><p> A link to a survey asking for some information from you.</p>
+</li>
+</ol></p>
+
+<p>Before we get started with the statistics, some preliminaries:</p>
+</introduction>
+
+
+<section>
+ <title> Anaconda, Jupyter, and Python
+</title>
+
+<p>We will be using Jupyter and Python for class. Python is a programing language, Jupyter is a shell for intereacting with it and creating nice files, and Anaconda is a distribution that will install both systems for you and manage most of the packages we need.</p>
+
+<p>Some details:</p>
+<p><ul>
+<li><p><url href="https://www.anaconda.com/"> You will need to download and install Anaconda from this website </url> </p>
+</li>
+<li><p>You will then need to go into the package manager under <em>Environments</em> and install pandas, seaborn, and scikitlearn. If your Jupyter is updated during class you will need to install these pakcages again.</p>
+</li>
+</ul></p>
+
+<p>My colleagues doing numerical analysis and data science use Jupyter/Python to take a project all the way from exploration and development, though analysis, and to publication and presentation.</p>
+
+
+</section>
+<section>
+ <title> Github
+</title>
+
+<p><url href="https://github.com/virgilpierce/STAT_411"> All of the course materials, including the syllabus, will be in the Github repository for our class, available here </url> . This is a public repository. There are three ways to use it to get the course files. You can download the course as a .zip file, you can create a Github account and clone it yourself, and finally you could create a Github account and make a pull request for it. It will be updated as class goes on, so you may want to get in a habit of regularly making a new Fetch.</p>
+
+<p>Later in class we will cover how to use Github with your team for versioning control.</p>
+
+<p>I will accept, and be grateful for, commit requests from you to fix typos in the course files, or you can add them to the "issues" tab in Github. You will also notice that I am tracking some issues there.</p>
+
+
+</section>
+<section>
+ <title> Python
+</title>
+
+<introduction>
+<p>The course will use a lot of Python, however I am not assuming you already know it. We will have example files to start from, and it is generally speaking an easy yet powerful language to learn. You have my permission to stop us at any point and ask any question about Python you want.</p>
+</introduction>
+
+<subsection>
+ <title> Why Python
+</title>
+
+<p>There is a fair amount of debate about whether Data Science should be taught with Python, R, or some other language. Here is why I am using Python and asking you to use it, however as I say this is not a settled question.</p>
+
+<p><ul>
+<li><p>Python is realitvely easy to learn. It is a language for which readability counts,</p>
+</li>
+<li><p>Python is highly used in Mathematics, Statistics and Science. It is generally more broadly applicable than R,</p>
+</li>
+<li><p>It is widely used in industry for Data Science and other computations,</p>
+</li>
+<li><p>Python is the recomended language for making use of cloud computing platforms (Google Cloud and Amazon Web Services), and it includes modules for Parallel Programing,</p>
+</li>
+<li><p>It is my assertion that if you learn Data Science with Python, you will easily be able to pick up R if you find yourself in a shop that uses it,</p>
+</li>
+<li><p>The bulk of my experience with Data Science has been through Python,</p>
+</li>
+<li><p>I want the class to understand what you are doing, so we need to fix the language the whole class uses.</p>
+</li>
+</ul>
+</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> Some Prelimaries</title>
+ 
+<introduction>
+<listing>
+<console>
+<input>
+# We will typically need four modules
+
+import numpy as np                   # Numerical computation library
+import pandas as pa                  # Dataframe and Data manipulation Library
+import matplotlib.pyplot as plt      # Basic plotting functionality Library
+import seaborn as sn                 # Advanced Data visualization Library
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# If you are new to Python these commands are loading external module files that 
+# contain list of commands we need. The commands are accessed by &lt;name of module>.&lt;name of command>
+# For example
+
+np.sqrt(9)
+
+# Pulls the sqrt() function from the numpy package. I am using the alias np for numpy (from the 'as np')
+# to save myself three letters each time I use a numpy command. 
+</input>
+<output>
+3.0
+</output>
+</console>
+</listing>
+<p>Note what happened here:</p>
+
+<p><ul>
+<li><p>The "#" characters represent comment lines - they are not read by the interpreter,</p>
+</li>
+<li><p>In Jupyter the last executed expression of a cell is cycled through the print() function and displayed as nice output.</p>
+</li>
+</ul></p>
+</introduction>
+
+<subsection>
+ <title> Getting Help
+</title>
+
+<p>First there is inline help from two functions:</p>
+<listing>
+<console>
+<input>
+# Adding a question mark after a command gives us an overview of that command
+
+list?
+</input>
+<output>
+Init signature: list(iterable=(), /)
+Docstring:     
+Built-in mutable sequence.
+
+If no argument is given, the constructor creates a new empty list.
+The argument must be an iterable if specified.
+Type:           type
+Subclasses:     _HashedSeq, StackSummary, SList, _ImmutableLineList, FormattedText, NodeList, _ExplodedList, Stack, _Accumulator, _ymd, ...
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# the dir() function lists attributes a function has:
+# However many of the attributes are so-called system attributes and not very helpful. 
+# I typically ask Python to drop them using a simple list comprehension.
+
+[x for x in dir(list) if not '__' in x]
+
+# You can read this command in English: [] - make a list; of elements x for each x in 
+# dir(list) if x does not contain the string '__'
+</input>
+<output>
+['append',
+ 'clear',
+ 'copy',
+ 'count',
+ 'extend',
+ 'index',
+ 'insert',
+ 'pop',
+ 'remove',
+ 'reverse',
+ 'sort']
+</output>
+</console>
+</listing>
+<p>What we get is a list of commands that can apply to a list in Python.</p>
+
+<p>Then there is google help. Particularly if you are using one of the packages like seaborn, there is extensive online documentation about how it works. Just look. Most problems can be resolved in a few minutes.</p>
+
+<p>I have reference books, but my warning to you is not to spend to much money on them. The online help has more detail, and in my experience the books will never have the right details, you end up using the inline and online help more.</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> First Motivating Example - Baseball Players
+</title>
+
+<introduction>
+<p>Before we get too far, let us look at an example to see what we are aiming at in this class. Consider the dataset of Major League Baseball Players height and weight.</p>
+
+<p><image source="Images/tj_bohn_autograph.jpg" width="60%" /></p>
+<listing>
+<console>
+<input>
+# Read in the major league players data set
+
+major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
+
+# Each row of a data frame is a data point - in this case a player.
+# Each column is a feature about the data point (its coordinates if you will)
+
+major.head()   # displays the first few rows
+</input>
+<output>
+              Name Team       Position  Height(inches)  Weight(pounds)    Age
+0    Adam_Donachie  BAL        Catcher              74           180.0  22.99
+1        Paul_Bako  BAL        Catcher              74           215.0  34.69
+2  Ramon_Hernandez  BAL        Catcher              72           210.0  30.78
+3     Kevin_Millar  BAL  First_Baseman              72           210.0  35.43
+4      Chris_Gomez  BAL  First_Baseman              73           188.0  35.71
+</output>
+</console>
+</listing>
+<p>Note that in order to be following along here and executing the code, you will have to have downloaded the notebook file as well as the Data Set file, and kept them in the same relative directories. I really suggest just cloning the whole repository.</p>
+<listing>
+<console>
+<input>
+# Rename the Height and Weight columns so it is easier to refer to them.
+
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+
+# This is using a dictionary {'old name':'new name' } to change the names
+# axis = 1 tells it we are changing columns
+# axis = 0 would tell it we were changing rows
+
+major.tail()  # displays the last few rows
+</input>
+<output>
+                Name Team        Position  Height  Weight    Age
+1029   Brad_Thompson  STL  Relief_Pitcher      73   190.0  25.08
+1030   Tyler_Johnson  STL  Relief_Pitcher      74   180.0  25.73
+1031  Chris_Narveson  STL  Relief_Pitcher      75   205.0  25.19
+1032   Randy_Keisler  STL  Relief_Pitcher      75   190.0  31.01
+1033     Josh_Kinney  STL  Relief_Pitcher      73   195.0  27.92
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We can grab an individual row:
+
+major.loc[500]
+</input>
+<output>
+Name         T.J._Bohn
+Team               ATL
+Position    Outfielder
+Height              77
+Weight             200
+Age              27.12
+Name: 500, dtype: object
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Grabbing more than one row, displays them as actual rows:
+
+major.loc[500:501]
+</input>
+<output>
+           Name Team          Position  Height  Weight    Age
+500   T.J._Bohn  ATL        Outfielder      77   200.0  27.12
+501  Tim_Hudson  ATL  Starting_Pitcher      73   164.0  31.63
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We can grab a subset of the columns
+
+major.loc[:, ['Height', 'Weight']].head()   # using head to only display part of them
+</input>
+<output>
+   Height  Weight
+0      74   180.0
+1      74   215.0
+2      72   210.0
+3      72   210.0
+4      73   188.0
+</output>
+</console>
+</listing>
+<p>We will use ONLY real data in this class. Real data is messy. </p>
+
+<p>Our first data set is missing a value for one of the players:</p>
+<listing>
+<console>
+<input>
+major[pa.isna(major.Weight)]    # pa.isna(major.Weight) gives a list of True or False values, True is 
+                                    # for a player (row) that is missing a value for the Weight feature (column)
+</input>
+<output>
+              Name Team          Position  Height  Weight    Age
+640  Kirk_Saarloos  CIN  Starting_Pitcher      72     NaN  27.77
+</output>
+</console>
+</listing>
+<p>For now it is probably simplest to just not use this player in our analysis. But generally we should ask: What should we do with missing data?</p>
+<listing>
+<console>
+<input>
+major = major.drop(640, axis=0)    # Remove row 640 (note axis = 0 for 'row')
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Check the size of our dataframe
+
+major.shape  # Our dataframe has 1033 players (rows) and 6 features (columns)
+
+# We will **OFTEN** be thinking about the dataframe as a matrix, hence the rows x columns language.
+</input>
+<output>
+(1033, 6)
+</output>
+</console>
+</listing>
+</introduction>
+
+
+<subsection>
+ <title> First Question
+</title>
+
+<p>What are the relationships between the numeric features of the players?</p>
+
+<p>We start by just consider the histograms and scatter plots for the numerical features.</p>
+
+<p>We will use the seaborn package usually for plots. <url href="https://seaborn.pydata.org/"> I have found the online help available here to be very helpful </url> .</p>
+<listing>
+<console>
+<input>
+# Make a plot of the dataset by pairs for the numerical data
+
+sn.set(style = 'darkgrid')   # seaborn makes nice looking plots - check the galleries for the various options
+
+p = sn.pairplot(major)   
+
+# Note that seaborn.pairplot will ignore categorical data (like position) unless we pass it an option.
+
+
+p.fig.set_size_inches(9, 9)  
+
+# My one major frustration with seaborn is that changing the size of a plot or figure depends
+# on what plotting command you happen to be using. There is no one way to do it. However the
+# plots it makes are generally so nice, that I just deal with it.
+
+# In any case, depending on the size of the monitor you are viewing this on, you may need to adjust
+# the (10, 10) above to something else.
+</input>
+<output>
+&lt;Figure size 648x648 with 12 Axes>
+</output>
+</console>
+</listing>
+<p>In the figures above:</p>
+<p><ul>
+<li><p>on the diagonal: each player is a box in one of the bars.</p>
+</li>
+<li><p>on the off diagonals: each player is one of the dots.</p>
+</li>
+</ul></p>
+
+<p>There is a lot to notice here, and we will be coming back to this dataset again and again.</p>
+
+<p>I want to point out two things right away. It is not clear, from the historgrams for the three features (Height, Weight, and Age) that the distributions are normal <p><ul>
+<li><p>Age in particular appears to be definitely not normal.</p>
+</li>
+</ul></p>
+</p>
+
+</subsection>
+<subsection>
+ <title> Second Question
+</title>
+
+<p>We might ask, how does a player's height or weight depend on the position they play?</p>
+<listing>
+<console>
+<input>
+set(major.Position)   # Make a set of all of the positions (eliminates duplicates)
+
+# Note there are two ways to get the values for a feature. 
+# major.Position 
+# or major.loc[:, 'Position']
+
+# Actually there is a third way. Note that 'Position' is third feature, so we can find it with:
+# major.iloc[:, 2]
+# iloc means locating entries by 'Integer Index' rather than actual tag.
+</input>
+<output>
+{'Catcher',
+ 'Designated_Hitter',
+ 'First_Baseman',
+ 'Outfielder',
+ 'Relief_Pitcher',
+ 'Second_Baseman',
+ 'Shortstop',
+ 'Starting_Pitcher',
+ 'Third_Baseman'}
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:'Pitcher' for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:'Not Pitcher' for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2 # print the dataframe to check if there is a problem
+</input>
+<output>
+                    Name Team     Position  Height  Weight    Age
+0          Adam_Donachie  BAL  Not Pitcher      74   180.0  22.99
+1              Paul_Bako  BAL  Not Pitcher      74   215.0  34.69
+2        Ramon_Hernandez  BAL  Not Pitcher      72   210.0  30.78
+3           Kevin_Millar  BAL  Not Pitcher      72   210.0  35.43
+4            Chris_Gomez  BAL  Not Pitcher      73   188.0  35.71
+5          Brian_Roberts  BAL  Not Pitcher      69   176.0  29.39
+6          Miguel_Tejada  BAL  Not Pitcher      69   209.0  30.77
+7            Melvin_Mora  BAL  Not Pitcher      71   200.0  35.07
+8            Aubrey_Huff  BAL  Not Pitcher      76   231.0  30.19
+9             Adam_Stern  BAL  Not Pitcher      71   180.0  27.05
+10       Jeff_Fiorentino  BAL  Not Pitcher      73   188.0  23.88
+11         Freddie_Bynum  BAL  Not Pitcher      73   180.0  26.96
+12         Nick_Markakis  BAL  Not Pitcher      74   185.0  23.29
+13         Brandon_Fahey  BAL  Not Pitcher      74   160.0  26.11
+14       Corey_Patterson  BAL  Not Pitcher      69   180.0  27.55
+15            Jay_Payton  BAL  Not Pitcher      70   185.0  34.27
+16           Jay_Gibbons  BAL  Not Pitcher      72   197.0  30.00
+17           Erik_Bedard  BAL      Pitcher      73   189.0  27.99
+18           Hayden_Penn  BAL      Pitcher      75   185.0  22.38
+19           Adam_Loewen  BAL      Pitcher      78   219.0  22.89
+20        Daniel_Cabrera  BAL      Pitcher      79   230.0  25.76
+21        Steve_Trachsel  BAL      Pitcher      76   205.0  36.33
+22          Jaret_Wright  BAL      Pitcher      74   230.0  31.17
+23           Kris_Benson  BAL      Pitcher      76   195.0  32.31
+24      Scott_Williamson  BAL      Pitcher      72   180.0  31.03
+25          John_Parrish  BAL      Pitcher      71   192.0  29.26
+26            Danys_Baez  BAL      Pitcher      75   225.0  29.47
+27         Chad_Bradford  BAL      Pitcher      77   203.0  32.46
+28          Jamie_Walker  BAL      Pitcher      74   195.0  35.67
+29          Brian_Burres  BAL      Pitcher      73   182.0  25.89
+...                  ...  ...          ...     ...     ...    ...
+1004         John_Nelson  STL  Not Pitcher      73   190.0  27.99
+1005       Albert_Pujols  STL  Not Pitcher      75   225.0  27.12
+1006        Adam_Kennedy  STL  Not Pitcher      73   185.0  31.14
+1007         Aaron_Miles  STL  Not Pitcher      67   180.0  30.21
+1008      David_Eckstein  STL  Not Pitcher      67   165.0  32.11
+1009         Scott_Rolen  STL  Not Pitcher      76   240.0  31.91
+1010       Scott_Spiezio  STL  Not Pitcher      74   220.0  34.44
+1011         Jim_Edmonds  STL  Not Pitcher      73   212.0  36.68
+1012          So_Taguchi  STL  Not Pitcher      70   163.0  37.66
+1013    Juan_Encarnacion  STL  Not Pitcher      75   215.0  30.98
+1014      Skip_Schumaker  STL  Not Pitcher      70   175.0  27.07
+1015      John_Rodriguez  STL  Not Pitcher      72   205.0  29.11
+1016        Chris_Duncan  STL  Not Pitcher      77   210.0  25.82
+1017     Adam_Wainwright  STL      Pitcher      79   205.0  25.50
+1018         Mark_Mulder  STL      Pitcher      78   208.0  29.57
+1019       Anthony_Reyes  STL      Pitcher      74   215.0  25.37
+1020       Ryan_Franklin  STL      Pitcher      75   180.0  33.99
+1021           Kip_Wells  STL      Pitcher      75   200.0  29.86
+1022     Chris_Carpenter  STL      Pitcher      78   230.0  31.84
+1023       Russ_Springer  STL      Pitcher      76   211.0  38.31
+1024  Jason_Isringhausen  STL      Pitcher      75   230.0  34.48
+1025      Ricardo_Rincon  STL      Pitcher      69   190.0  36.88
+1026       Braden_Looper  STL      Pitcher      75   220.0  32.34
+1027        Randy_Flores  STL      Pitcher      72   180.0  31.58
+1028        Josh_Hancock  STL      Pitcher      75   205.0  28.89
+1029       Brad_Thompson  STL      Pitcher      73   190.0  25.08
+1030       Tyler_Johnson  STL      Pitcher      74   180.0  25.73
+1031      Chris_Narveson  STL      Pitcher      75   205.0  25.19
+1032       Randy_Keisler  STL      Pitcher      75   190.0  31.01
+1033         Josh_Kinney  STL      Pitcher      73   195.0  27.92
+
+[1033 rows x 6 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Make a histogram of the heights and weights
+
+sn.set(style = 'darkgrid')  # Set the style
+
+f, ax = plt.subplots(1, 2, sharey=False, figsize = (10, 6))   # Make a 1 x 2 grid for multiple plots
+sn.distplot(major_2.Height, ax=ax[0], kde=False, bins=14)  
+sn.distplot(major_2.Weight, ax=ax[1], kde=False, bins=14);
+
+# These are (mostly) copies of the corresponding histograms from the facet-grid above;
+# Do you notice the difference?
+</input>
+<output>
+&lt;Figure size 720x432 with 2 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Make them again but by player position also
+
+sn.set(style = 'darkgrid') 
+
+f, ax = plt.subplots(2, 2, sharey=False, figsize = (10, 10))   # Make a 2 x 2 grid for multiple plots
+sn.distplot(major_2[major_2.Position=='Pitcher'].Height, ax=ax[0, 0], color = 'blue',
+            label = 'Pitchers', kde=False, bins=14)  
+sn.distplot(major_2[major_2.Position=='Pitcher'].Weight, ax=ax[0, 1], color = 'blue', 
+            label = 'Pitchers', kde=False, bins=14)
+sn.distplot(major_2[major_2.Position!='Pitcher'].Height, ax=ax[1, 0], color = 'red', 
+            label = 'Non Pitchers', kde=False, bins=14)
+sn.distplot(major_2[major_2.Position!='Pitcher'].Weight, ax=ax[1,1], color = 'red', 
+            label = 'Non Pitchers', kde=False, bins=14);
+
+# First row are Pitchers
+# Second row are Non-Pitchers
+# I am a little annoyed the label did not come through - Adding this as an issue in Github
+
+# Also I would like to have the horizontal axis shared in the first two but not the same axis for all four - Not sure
+# that will ever be possible.
+</input>
+<output>
+&lt;Figure size 720x720 with 4 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We could also plot two histograms on top of each other
+
+sn.set(style = 'darkgrid') 
+plt.figure(figsize = (10, 8))
+
+sn.distplot(major_2[major_2.Position=='Pitcher'].Height, color='blue', 
+            label='Pitchers', kde=True, bins=14) 
+sn.distplot(major_2[major_2.Position!='Pitcher'].Height, color='red', 
+            label='Non Pitchers', kde=True, bins=14)
+plt.legend();
+
+# I changed the kde flag to True - this gives a curve estimating the distribution,
+# but it also scales the histograms to have area 1 (i.e. they represent proportions of the populations)
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+
+</subsection>
+<subsection>
+ <title> What is Data Science
+</title>
+
+<p>or </p>
+
+
+</subsection>
+<subsection>
+ <title> Why Data Science
+</title>
+
+<p>Notice <p><ul>
+<li><p>we showed (up to some assumptions) above that the distribution of the heights of pitchers is different from that of non-pitchers. In particular we can now say that the mean height of Pitchers is higher than that of non-Pitchers. </p>
+</li>
+</ul></p>
+</p>
+<p>However there are three problems with the traditional approach:</p>
+
+<p><ol>
+<li><p> Hypothesis testing requires us to know (or assume) the distribution of players' heights. </p>
+</li>
+<li><p> Hypothesis testing requires us to use the data to estimate the parameters of the distribution of players' heights.</p>
+
+<p>These are not theoretical concerns:  Note there are some classic examples of samples taken from different distributions that have the same means and standard deviations. </p>
+
+<p>These problems become worse the larger the dimension we work with - the more features we include. This is called the curse of dimensionality:  Suppose we had n data points estimating a distribution in one dimension. The amount of data we need in order to be as certain of our estimates of a distribution for dimension d, is proportional to $ n^d $.</p>
+</li>
+
+<li><p> The question we answered with the T-test or Confidence Interval computation is not really very instructive. </p>
+
+<p>Pitchers are, on the mean, taller. But that does not tell us necessarily given a players height (and weight and age) whether they are likely to be a pitcher or not. In other words, what we have is a rather blunt instrument: Given that a player is a pitcher, we have an estimate of their height. We could give an interval estimate for an individuals height and vary it to balance the Type 1 and Type 2 errors.</p></li>
+
+<li><p> Maybe a 4th problem: We have only used 1/3 of the numerical data we had about players.</p>
+
+<p>While generally speaking we do not just want to use all of the data just because we have it, we will discuss the downsides later, we do though want to consider whether the data we have helps clarify the question.</p>
+</li>
+</ol></p>
+
+
+</subsection>
+<subsection>
+ <title> A World of Data and a World of Computation
+</title>
+
+<p>Two things have been happening over the last decades that promise to rescue us from the curse of dimensionality and simmultaneously free us from having to assume the distrubtion in statistical questions. </p>
+
+<p><ul>
+<li><p>Data has become <alert>VERY</alert> cheap</p>
+</li>
+</ul></p>
+
+<p>High dimensional data (data with lots of features) is now (sometimes) really easy and cheap to collect, and to collect in ways that computers can use (even on the fly). We will look at some methods of collecting data.</p>
+
+<p><ul>
+<li><p>Computational power has become <alert>VERY</alert> cheap</p>
+</li>
+</ul></p>
+
+<p>You can rent time on Google Cloud or the Amazon Web Servers for small fractions of a penny per minute. Your company can do it on-demand. At the end of class we will take a look at how to use Google Cloud or Amazon Web Servers. Depending on your teams project, you may want to use it!</p>
+
+
+</subsection>
+<subsection>
+ <title> Results are What Matters
+</title>
+
+<p>In this class we will build models for <em>Regression</em> (estimating values of a numerical parameter) and for <em>Categorization</em> (estimating values for a categorical parameter) from high dimensional data (data with many features). We will use a process for doing this that will produce a model and an estimate on the error of our model.</p>
+
+<p>In <em>some</em> cases we will do it without even worrying or understanding why the model works.</p>
+
+<p>In any case it is possible because data has become cheap enough that we can in many examples afford to set aside a large random sample of our data for testing our algorithm and estimating its error. We will discuss this more when we come to the Data Science Process.</p>
+
+</subsection>
+<subsection>
+ <title> High Dimensional Problems
+</title>
+
+<p>Okay so there is a lot going on here. Let us start with an example of what we mean by high dimensional questions. 
+Consider one of the off diagonal scatter plots from the facet-grid above: Height versus Weight.</p>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='Weight', y='Height', data=major_2);
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>Okay fair enough. There seems to be something of a relationship between height and weight for our players. You may have already learned about <em>Linear Regression</em> in another class (Linear Algebra or Calculus 1). We can use seaborn to plot the least squares regression line for these data points.</p>
+
+<p>We will learn some ways later in class of actually computing this line and its slope. It is not important today.</p>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (10, 8))
+sn.set(style = 'darkgrid')
+sn.regplot(x='Weight', y='Height', data=major_2);
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Let us consider the position of a player in the relationship between Height and Weight.
+# What do we notice?
+
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2);
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+
+sn.lmplot(x='Weight', y='Height', hue='Position', data=major_2, height = 8, aspect = 1.2);
+
+# Changing the command to lmplot we can plot a separate fit for Pitchers and Non-Pitchers
+
+# Note that I had to change the size command.
+</input>
+<output>
+&lt;Figure size 785.55x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Let us consider the position of a player in the relationship between Height and Weight.
+# What do we notice?
+
+sn.set(style = 'darkgrid')
+fig, ax = plt.subplots(1, 2, figsize = (10, 6), sharey=True)
+
+ax[0].title.set_text('Height v Weight')
+sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2, ax = ax[0]);
+ax[1].title.set_text('Height v Age')
+sn.scatterplot(x='Age', y='Height', hue='Position', data=major_2, ax = ax[1]);
+</input>
+<output>
+&lt;Figure size 720x432 with 2 Axes>
+</output>
+</console>
+</listing>
+
+</subsection>
+
+</section>
+<section>
+ <title> Second Motivating Example - Abalone Characteristics</title>
+<p>The task for this example is to take a database of abalone characteristics and determine an alogorithm by which the age of an abalone can be determined. </p>
+
+<p>This dataset is available from the University of California at Irvine archive.</p>
+
+<p><image source='Images/Abalone.jpeg' widht='60%'/></p>
+<listing>
+<console>
+<input>
+ab = pa.read_csv('Data Sets/Abalone/abalone.csv', 
+                 names = ['Sex', 'Length', 'Diameter', 'Height', 'Whole_weight', 
+                      'Sucked_weight', 'Viscera_weight', 'Shell_weight',
+                                          'Rings'])
+
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_weight  Sucked_weight  Viscera_weight  \
+0   M   0.455     0.365   0.095        0.5140         0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255         0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770         0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160         0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050         0.0895          0.0395   
+
+   Shell_weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')  
+
+p = sn.pairplot(ab)   
+
+p.fig.set_size_inches(9, 9) 
+</input>
+<output>
+&lt;Figure size 648x648 with 72 Axes>
+</output>
+</console>
+</listing>
+<p>What do you notice about these data points?</p>
+
+<p>Again you see what I mean by high dimensional data.</p>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+
+sn.jointplot(x='Length', y='Rings', data=ab, height=8, kind='hex');
+
+</input>
+<output>
+&lt;Figure size 576x576 with 3 Axes>
+</output>
+</console>
+</listing>
+<p>We could think of this as regression or classification.</p>
+
+<p>The challenge I see is that even though we have many features, there appear to be relations between them.</p>
+
+</section>
+<section>
+ <title> Third Motivating Example - US Income Levels
+</title>
+
+<p>We will look at this example now, but there is an ethical consideration with questions like this that you should be thinking about.</p>
+<listing>
+<console>
+<input>
+ad = pa.read_csv('Data Sets/Adult/adult-data.csv', 
+                names = ['age', 'workclass', 'fnlwgt', 'education', 'education-num', 'marital_status',
+                        'occupation', 'relationship', 'race', 'sex', 'capital_gain', 'capital_loss', 'hours_per_wk',
+                        'country_of_origin', 'income'])
+
+# The folder with the data set also contains a description of the features and a test set.
+
+ad.head()
+</input>
+<output>
+   age          workclass  fnlwgt   education  education-num  \
+0   39          State-gov   77516   Bachelors             13   
+1   50   Self-emp-not-inc   83311   Bachelors             13   
+2   38            Private  215646     HS-grad              9   
+3   53            Private  234721        11th              7   
+4   28            Private  338409   Bachelors             13   
+
+        marital_status          occupation    relationship    race      sex  \
+0        Never-married        Adm-clerical   Not-in-family   White     Male   
+1   Married-civ-spouse     Exec-managerial         Husband   White     Male   
+2             Divorced   Handlers-cleaners   Not-in-family   White     Male   
+3   Married-civ-spouse   Handlers-cleaners         Husband   Black     Male   
+4   Married-civ-spouse      Prof-specialty            Wife   Black   Female   
+
+   capital_gain  capital_loss  hours_per_wk country_of_origin  income  
+0          2174             0            40     United-States   &lt;=50K  
+1             0             0            13     United-States   &lt;=50K  
+2             0             0            40     United-States   &lt;=50K  
+3             0             0            40     United-States   &lt;=50K  
+4             0             0            40              Cuba   &lt;=50K  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+
+sn.catplot(x='age', y='education', data = ad, hue='income', height= 15, aspect=1, kind='box');
+
+# There is an issue here: The order of the categories is not sequential by education level, 
+# I have tried passing the order argument, but then it generates an empty plot. 
+
+# filing as a bug in Github.
+
+# I think it could be corrected by sorting the data frame by education level first
+</input>
+<output>
+&lt;Figure size 1154.72x1080 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>Is this a good representation of the data?</p>
+
+</section>
+<section>
+ <title> Fourth Motivating Example - Mushroom Characteristics</title>
+<listing>
+<console>
+<input>
+md = pa.read_csv('Data Sets/mushrooms.csv')
+
+print(md.shape)
+md.head()
+</input>
+<output>
+(8124, 23)
+
+</output>
+</console>
+</listing>
+<p>This data set is remarkable because every characteristic is a categorical value (some are boolean).</p>
+
+<p>The task is to determine an algorithm for classifying poisonous mushrooms from the characteristics.</p>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')  
+
+f, ax = plt.subplots(1, 5, figsize=(12,4), sharey=True)
+
+temp = list(md.columns.values)
+for j in range(5):
+    sn.countplot(x=temp[j+1], hue='class', data = md, ax=ax[j]) 
+</input>
+<output>
+&lt;Figure size 864x288 with 5 Axes>
+</output>
+</console>
+</listing>
+
+</section>
+<section>
+ <title> Fifth Motivating Example - House Prices</title>
+<listing>
+<console>
+<input>
+# Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# This data set has an extraordinary number of factors. 
+# See the accompanying data_description.txt file that explains them and some of their values.
+
+hd.shape
+</input>
+<output>
+(1460, 81)
+</output>
+</console>
+</listing>
+<subsection>
+ <title> Regression
+</title>
+
+<p>The problem here is to use the data set to derive a method of estimating the Sale Price (the last column) based on the features of the home.</p>
+
+<p>This data set comes from <url href="http://kaggle.com"> Kaggle.com </url>  and is actually a set for a submission in their competitions. The test set that is accompanying it is the set of features for some homes without the SalePrice and is used for scoring submissions.</p>
+
+<p><image source='Images/house-price-index_orig.jpg' width='60%'/></p>
+<listing>
+<console>
+<input>
+# Let's be a little bit naive and just take a few of these features - 
+# we will come back to this example later and explore how to deal with some of the 
+# difficulties here.
+
+hd = hd.loc[:, ['1stFlrSF', '2ndFlrSF', 'FullBath', 'HalfBath', 'BedroomAbvGr', 
+                'TotRmsAbvGrd', 'SalePrice']]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd.head()
+</input>
+<output>
+   1stFlrSF  2ndFlrSF  FullBath  HalfBath  BedroomAbvGr  TotRmsAbvGrd  \
+0       856       854         2         1             3             8   
+1      1262         0         2         0             3             6   
+2       920       866         2         1             3             6   
+3       961       756         1         0             3             7   
+4      1145      1053         2         1             4             9   
+
+   SalePrice  
+0     208500  
+1     181500  
+2     223500  
+3     140000  
+4     250000  
+</output>
+</console>
+</listing>
+<p>This is real data, check if there are any missing values:</p>
+<listing>
+<console>
+<input>
+for c in hd.columns.values:   # .values creates an iterable object from the list of columns.
+    if pa.isna(hd.loc[:, c]).any():
+        print('{} has missing values'.format(c))
+    else:
+        print('No missing values found for {}'.format(c))
+
+                                # pandas.isna checks for missing values (They would show up 
+                                # as NaN in the displays of the dataframe).
+         
+                                # Again .loc[:, c] says to take all rows for column c. 
+                                # we use .loc here because we are refering to the actual names and
+                                # not the indices.
+</input>
+<output>
+No missing values found for 1stFlrSF
+No missing values found for 2ndFlrSF
+No missing values found for FullBath
+No missing values found for HalfBath
+No missing values found for BedroomAbvGr
+No missing values found for TotRmsAbvGrd
+No missing values found for SalePrice
+
+</output>
+</console>
+</listing>
+<p>A programing note here: verbose output is much more useful than nonverbose. </p>
+<listing>
+<console>
+<input>
+# Make a plot of the dataset by pairs for the numerical data
+
+sn.set(style = 'darkgrid')   # seaborn makes nice looking plots - check the galleries for the various options
+
+p = sn.pairplot(hd)   
+
+# Note that seaborn.pairplot will ignore categorical data (like position) unless we pass it an option.
+
+p.fig.set_size_inches(9, 9) 
+</input>
+<output>
+&lt;Figure size 648x648 with 56 Axes>
+</output>
+</console>
+</listing>
+
+</subsection>
+<subsection>
+ <title> Why Data Science or What is Data Science
+</title>
+
+<p>This example drives home the dimensional problem we will have, that we need to develop some tools to deal with. Even visualizing multi dimensional data is very challenging for us.</p>
+
+<p>We need to build some tools to add to our toolbox:</p>
+
+<p><ol>
+<li><p> Methods of identifying variables that provide us with new information about the Sale Price;</p>
+</li>
+<li><p> Conversly methods of identifying variables that are not needed or that have less influence on the sale price.</p>
+</li>
+</ol>
+</p>
+<listing>
+<console>
+<input>
+# We can use the matplotlib module to do 3-dimensional plots
+
+from mpl_toolkits.mplot3d import Axes3D    # We lneed an additional module
+
+fig = plt.figure(figsize = (10, 8))
+ax = fig.add_subplot(111, projection='3d')     # 111 sets the relative size of the axes
+ax.scatter(hd['1stFlrSF'], hd['BedroomAbvGr'], hd['SalePrice'], c='skyblue', s=60)
+ax.view_init(10, 185)   # this sets the perspective we see the graph from 
+plt.show()
+
+# There are ways to run this so that you can rotate it - seems to not be working on my mac.
+# Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='1stFlrSF', y='BedroomAbvGr', hue = 'SalePrice', data=hd, palette='winter');
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We are doing regression, so maybe it makes more sense to plot 'SalePrice' as the y-axis and use
+# the nearly categorical 'BedroomAbvGr' as the hue.
+
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+p = sn.scatterplot(x='1stFlrSF', y='SalePrice', hue = 'BedroomAbvGr', 
+                  data = hd, palette = 'magma'); 
+
+ax_fix = p.axes # Saving information about the axis for the next figure
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# So a naive thing to try is a separate regression line based on the number of bedrooms.
+
+temp = hd.copy()
+for c in temp.index.values:
+    if temp.loc[c, 'BedroomAbvGr'] &lt;= 2:
+        temp.loc[c, 'BedroomCat'] = '2 or fewer br'
+    if temp.loc[c, 'BedroomAbvGr'] > 2:
+        temp.loc[c,'BedroomCat'] = 'more than 2 br'    # lmplot automatically chooses the categories for hue.
+                                                       # too many hues is confusing, so changed the bedroom
+                                                       # count to a categorical variable.
+                                                        
+                                                        # A better way to do this would have been a boolean
+                                                        # as that could be done without the for and if states.
+                                                        # however it then would require adjusting the labels
+
+sn.set(style = 'darkgrid')
+
+p = sn.lmplot(x='1stFlrSF', y='SalePrice', hue='BedroomCat', data=temp, height = 8, aspect = 1.2);
+ax = p.axes
+
+ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
+ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
+</input>
+<output>
+&lt;Figure size 802.675x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>We will come back to this example again and develop methods of being more precise.</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> Sixth Motivating Example - Running Data from Garmin
+</title>
+
+<p>I have been dealing with an injury for the last month; however I generally try to run close to an hour a day. Here is a report of my running activities from Garmin.</p>
+<listing>
+<console>
+<input>
+run = pa.read_csv('Data Sets/Pierce_Garmin.csv')
+
+print(run.shape)
+run.head()
+</input>
+<output>
+(320, 29)
+
+</output>
+</console>
+</listing>
+<p>Note the big change for this example here is that we have Dates and Times!</p>
+<listing>
+<console>
+<input>
+def hours(timestr):   # function to convert HH:MM:SS to Hours decimal
+
+    ftr = [1, 1/60, 1/60/60]
+
+    return sum([a*b for a,b in zip(ftr, map(int,timestr.split(':')))])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+run.loc[:, 'Hours'] = list(map(hours, run.Time))  # Adding a feature that is the hours of the run as a decimal
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+run.loc[run.loc[:, 'Avg HR']=='--', 'Avg HR'] = 'np.nan'   
+
+# Replacing Garmins symbol for no-data with Pandas, as a string so we can pass it to eval in map.
+ 
+run.loc[:, 'Avg HR'] = list(map(eval, run.loc[:, 'Avg HR'] ))
+
+# Even though much of the data is numeric, it was loaded as strings (probably because
+# of the .csv file Garmin gave us). Easy enough in Python to convert strings to numbers by passing them
+# through eval with map as long as none of them are gibberish like '--'
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set()
+fig, axes = plt.subplots(1, 1, figsize=(10, 8));
+
+sn.scatterplot(x='Date', y='Hours', size='Distance', hue='Avg HR',
+               sizes = (50, 500), data=run, ax=axes);
+
+axes.xaxis.set_major_locator(plt.MultipleLocator(100))  
+# This is a little trick to only use every 100th tick label.
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>It would be nice to adjust the x-axis ticks here so that it is just the date and not the start time - that could be done by adjusting the values for Date.
+</p>
+<p>Also the longest run plotted is the NYC Marathon, it would be nice to add a label to it.</p>
+
+</section>
+<section>
+ <title> Seventh Motivating Example - Berlin Airbnb Data
+</title>
+
+<introduction>
+<p>This is a regression problem, however it is also an example of what to me is the most promosing aspect of Data Science as a field <p><ul>
+<li><p>the development of algorithms that interpret and react to human language.</p>
+</li>
+</ul></p>
+</p>
+<p>note: the other really promising aspect of the field is computer vision <p><ul>
+<li><p>the development of algorithms that interpret and react to images.</p>
+</li>
+</ul></p>
+</p>
+<p>This example is also unique in that there are a number of data files attached to it, and to analyze it well they need to be connected. </p>
+</introduction>
+
+<subsection>
+ <title> Big Data
+</title>
+
+<p>This is also an example of what we might call big data (though this is small big). The files are too big for Excell. <em> We could not analyze them without using technology like Python or R.</em>
+</p>
+<p>The files are also too big for Github, so we will need to load them from a dropbox link. Strangely this is easy, there is just one thing to change in the link Dropbox gives us for the file.</p>
+<listing>
+<console>
+<input>
+# First we get a link from dropbox
+# https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=0
+
+# The trick here is that the last digit 'dl=0' needs to be changed to 'dl=1' and then 
+# we just feed it into pandas.read_csv as we have above.
+
+# This takes a while - it is downloading the information and then processing it, and it is more data
+# than our other examples have used.
+
+calendar = pa.read_csv('https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=1')
+listings_sum = pa.read_csv('https://www.dropbox.com/s/5noljx9qipcyyul/listings_summary.csv?dl=1')
+listings = pa.read_csv('https://www.dropbox.com/s/xtkx018qxjfjlah/listings.csv?dl=1')
+neighborhoods = pa.read_csv('https://www.dropbox.com/s/rfqozggf5f2kzlu/neighbourhoods.csv?dl=1')
+reviews_sum = pa.read_csv('https://www.dropbox.com/s/o8gvfm708g1cocf/reviews_summary.csv?dl=1')
+reviews = pa.read_csv('https://www.dropbox.com/s/8dfu8qyc6n6cw3p/reviews.csv?dl=1')
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print(listings_sum.shape)
+listings_sum.head()
+</input>
+<output>
+(22552, 96)
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print(listings.shape)
+listings.head()
+</input>
+<output>
+(22552, 16)
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print(reviews_sum.shape)
+reviews_sum.head()
+</input>
+<output>
+(401963, 6)
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+import random
+calendar = calendar.loc[calendar.available!='f']
+print(calendar.shape)
+calendar.iloc[[random.randint(0, calendar.shape[0]) for x in range(10)], :]
+</input>
+<output>
+(1800841, 4)
+
+</output>
+</console>
+</listing>
+<p>So notice the issues:</p>
+
+<p><ol>
+<li><p> We will need to use the listing id to follow from one of the facets to the other</p>
+</li>
+<li><p> While the airbnb supplied data - listings and neighborhood descriptions are in English, the reviews are in multiple languages.</p>
+</li>
+<li><p> In addition to the text for the listings we also have dates, geocoordinates, and some numerical data.</p>
+</li>
+</ol>
+</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> Eighth Motivating Example - Colorado Child Care
+</title>
+
+<p><image source='Images/child-care.jpeg' width='60%'/></p>
+<listing>
+<console>
+<input>
+# Consider the following data set of licenses for child care business in Colorado 
+#   (from https://data.colorado.gov/)
+
+cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+
+cocc.head()
+</input>
+<output>
+   PROVIDER ID                          PROVIDER NAME  \
+0           48                          VIKKI MCKEOGH   
+1           65                            JACKIE GRAY   
+2          100  CHEROKEE TRAIL ELEMENTARY KIDS CENTER   
+3          115              EARLY CHILDHOOD EDUCATION   
+4          157                     CHERLLYNN SAUNDERS   
+
+                PROVIDER SERVICE TYPE         STREET ADDRESS  \
+0  Experienced Family Child Care Home       6635 E Monaco DR   
+1              Family Child Care Home          4388 118 Ave.   
+2        School-Age Child Care Center  17302 Clarke Farms DR   
+3                   Preschool Program         1023 N 31st ST   
+4                 Infant/Toddler Home         5989 W Fair DR   
+
+               CITY STATE    ZIP     COUNTY            COMMUNITY  \
+0          Brighton    CO  80602      Adams           West Adams   
+1          Thornton    CO  80233      Adams           West Adams   
+2            Parker    CO  80134    Douglas               Parker   
+3  Colorado Springs    CO  80904    El Paso     Colorado Springs   
+4         Littleton    CO  80123  Jefferson  Northeast Jefferson   
+
+                                           ECC  ... CCCAP CASE COUNT_D1  \
+0  Early Childhood Partnership of Adams County  ...                 NaN   
+1  Early Childhood Partnership of Adams County  ...                 3.0   
+2       Douglas County Early Childhood Council  ...                 3.0   
+3                            Alliance for Kids  ...                 NaN   
+4                Triad Early Childhood Council  ...                 NaN   
+
+  CCCAP FA EXP DATE_D1 CCCAP TOTAL AUTH_D1 CCCAP FA STATUS_D1  \
+0                  NaN                 NaN                NaN   
+1           06/30/2019                 3.0                1.0   
+2           06/30/2019                 5.0                1.0   
+3                  NaN                 NaN                NaN   
+4                  NaN                 NaN                NaN   
+
+  CCCAP AMOUNT PAID_D1  CCCAP FA EXP DATE_D2  CCCAP TOTAL AUTH_D2  \
+0                  NaN                   NaN                  NaN   
+1               239.20            06/14/2019                  3.0   
+2               974.61            05/31/2020                  5.0   
+3                  NaN                   NaN                  NaN   
+4                  NaN                   NaN                  NaN   
+
+   CCCAP FA STATUS_D2 LICENSE FEE DISCOUNT                  LONG-LAT  
+0                 NaN                  0.0  (39.919258, -104.911005)  
+1                 1.0                  0.0      (39.9101, -104.9344)  
+2                 1.0                  0.0  (39.525183, -104.786646)  
+3                 NaN                  0.0   (38.86547, -104.867475)  
+4                 NaN                  0.0  (39.604151, -105.063248)  
+
+[5 rows x 27 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+cocc = cocc.loc[:, ['COUNTY', 'CITY', 'PROVIDER SERVICE TYPE']]  # Keep only the columns we want here
+cocc.loc[:, 'COUNT'] = 1   # Add a variable for counting unique values
+cocc = cocc.groupby(['COUNTY', 'CITY', 'PROVIDER SERVICE TYPE']).sum()   
+ # Sum the values after grouping by County, 
+       # City, and Provider Type
+    
+cocc.head()
+</input>
+<output>
+                                                  COUNT
+COUNTY CITY   PROVIDER SERVICE TYPE                    
+Adams  Arvada Child Care Center                       2
+       Aurora Child Care Center                      10
+              Experienced Family Child Care Home      1
+              Family Child Care Home                  2
+              Preschool Program                       7
+</output>
+</console>
+</listing>
+<p>Worth pausing here and making sure we understand what we have done: We have created a new data frame whose rows are now the County, City, and Provider Type factors; and the single Column is the Count of the number of </p>
+<p>that Provider Type in the City.</p>
+<listing>
+<console>
+<input>
+temp = cocc.reset_index().loc[:, ['COUNTY', 'PROVIDER SERVICE TYPE', 'COUNT']]  
+
+# Drop the city and go back to a full data frame.
+
+temp = temp.groupby(['COUNTY', 'PROVIDER SERVICE TYPE']).sum()
+
+# Redo the gather but now ignoring City
+
+temp = temp.reset_index()
+
+# Set it back to a full data frame.
+
+temp = temp[temp['PROVIDER SERVICE TYPE']=='Preschool Program']
+
+plt.figure(figsize = (10, 15))
+sn.set(style='darkgrid')
+sn.barplot(x='COUNT', y='COUNTY', data=temp)
+plt.title('Preschool Programs');
+</input>
+<output>
+&lt;Figure size 720x1080 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>Fine for someone from Colorado. But can we do better?</p>
+<listing>
+<console>
+<input>
+cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+temp = cocc.loc[:, ['PROVIDER SERVICE TYPE', 'LONG-LAT'] ]
+
+# pull up the longitude and lattitude coordinates
+ 
+lon = [eval(temp.loc[c, 'LONG-LAT'])[0] for c in temp.index.values]
+lat = [eval(temp.loc[c, 'LONG-LAT'])[1] for c in temp.index.values]
+    
+# Separate the longitude and lattide coordinates
+# Some notes on the Python here:  the coordinates have been read in as a string, we can convert them to a 
+# tuple with eval and then reference each with a position index.
+
+locate = pa.DataFrame(np.array( [lon, lat]).transpose(), columns = ['Long', 'Lat'])
+locate = pa.concat( [locate, temp], axis=1).drop('LONG-LAT', axis=1)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style='whitegrid')
+sn.hls_palette(10)
+sn.relplot(x='Lat', y='Long', hue='PROVIDER SERVICE TYPE', 
+           data=locate, height=8, aspect=1.2, palette='bright');
+plt.title('Location of Child Care Businesses');
+</input>
+<output>
+&lt;Figure size 939.675x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>A couple of notes of things we should learn how to do in the future:</p>
+
+<p><ol>
+<li><p> It would be nice to put these points on a map of Colorado; or to put points for the larger cities in the state.</p>
+</li>
+<li><p> It would also be nice to change it to combine near by points and make a bigger point.</p>
+</li>
+</ol></p>
+
+<paragraphs>
+ <title> What is a good question for this data set?</title>
+</paragraphs>
+
+</section>
+<section>
+ <title> Ninth Motivating Example - Flight Delays at DEN
+</title>
+
+<p><image source='Images/flights-denver.jpg' width="60%"/></p>
+<listing>
+<console>
+<input>
+# Consider the following dataset of the flights originating at DEN in 2008
+
+fd = pa.read_csv('Data Sets/DenverDelayedFlights.csv')
+
+fd = fd.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis = 1)
+
+fd.head()
+</input>
+<output>
+   Year  Month  DayofMonth  DayOfWeek  DepTime  CRSDepTime  ArrTime  \
+0  2008      1           4          5   1437.0        1415   1548.0   
+1  2008      1           4          5   1358.0        1345   1652.0   
+2  2008      1           4          5   1614.0        1555   1926.0   
+3  2008      1           4          5   1736.0        1700   2234.0   
+4  2008      1           4          5   2041.0        1925   2343.0   
+
+   CRSArrTime UniqueCarrier  FlightNum  ... TaxiIn  TaxiOut  Cancelled  \
+0        1530            WN        806  ...    9.0     11.0          0   
+1        1645            WN       1856  ...    5.0      8.0          0   
+2        1920            WN       1262  ...    4.0      8.0          0   
+3        2215            WN        494  ...    2.0      7.0          0   
+4        2245            WN       2907  ...    2.0     10.0          0   
+
+   CancellationCode  Diverted  CarrierDelay WeatherDelay NASDelay  \
+0                 N         0           8.0          0.0      0.0   
+1                 N         0           NaN          NaN      NaN   
+2                 N         0           NaN          NaN      NaN   
+3                 N         0           4.0          0.0      0.0   
+4                 N         0           2.0          0.0      0.0   
+
+   SecurityDelay  LateAircraftDelay  
+0            0.0               10.0  
+1            NaN                NaN  
+2            NaN                NaN  
+3            0.0               15.0  
+4            0.0               56.0  
+
+[5 rows x 29 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+fd.shape
+</input>
+<output>
+(74323, 29)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print('Cancelled flights: {}, Non Cancelled Flights: {} \n'.format(sum(fd.Cancelled == 1), 
+                                                                sum(fd.Cancelled == 0)) )
+print('{0:.6f}'.format( 100*sum(fd.Cancelled == 1) / fd.shape[0] ))
+</input>
+<output>
+Cancelled flights: 35, Non Cancelled Flights: 74288 
+
+0.047092
+
+</output>
+</console>
+</listing>
+<p>This is going to be a difficult classification question. Less than 5% of flights were cancelled.</p>
+<listing>
+<console>
+<input>
+fd[ fd.Cancelled == 1]
+</input>
+<output>
+       Year  Month  DayofMonth  DayOfWeek  DepTime  CRSDepTime  ArrTime  \
+58441  2008     10          10          5   1502.0        1450      NaN   
+58760  2008     10           5          7   1852.0        1738      NaN   
+62298  2008     11           5          3   1032.0        1026      NaN   
+62375  2008     11          29          6   1319.0        1257      NaN   
+62376  2008     11          29          6   1030.0        1021      NaN   
+62386  2008     11          30          7   1255.0        1123      NaN   
+66243  2008     12          20          6   2125.0        1955      NaN   
+66994  2008     12           4          4   1147.0        1125      NaN   
+67031  2008     12           8          1   1530.0        1513      NaN   
+67096  2008     12          15          1   1806.0        1755      NaN   
+67210  2008     12          22          1   2003.0        1929      NaN   
+67269  2008     12          25          4    915.0         854      NaN   
+67329  2008     12          29          1   1220.0        1124      NaN   
+67574  2008     12          22          1   2155.0        2115      NaN   
+67651  2008     12          22          1   1806.0        1800      NaN   
+67715  2008     12          27          6   1741.0        1654      NaN   
+67834  2008     12          14          7    915.0         830      NaN   
+68141  2008     12           1          1   2135.0        2121      NaN   
+68163  2008     12          18          4    942.0         920      NaN   
+68302  2008     12          22          1   1350.0        1208      NaN   
+68311  2008     12          25          4   1827.0        1803      NaN   
+68343  2008     12          18          4   1909.0        1855      NaN   
+68437  2008     12           8          1   1549.0        1536      NaN   
+68505  2008     12          22          1   1611.0        1458      NaN   
+68772  2008     12           3          3   2211.0        2115      NaN   
+68773  2008     12           2          2   2123.0        2115      NaN   
+68778  2008     12          17          3   2148.0        2115      NaN   
+68780  2008     12          18          4   2243.0        2140      NaN   
+68782  2008     12          20          6   2255.0        2140      NaN   
+68981  2008     12          18          4   2317.0        2005      NaN   
+69066  2008     12          19          5   1217.0        1119      NaN   
+69084  2008     12          18          4   1102.0        1010      NaN   
+70953  2008     12           3          3   2318.0        2149      NaN   
+72823  2008     12          20          6   1805.0        1755      NaN   
+73022  2008     12          22          1    843.0         830      NaN   
+
+       CRSArrTime UniqueCarrier  FlightNum  ... TaxiIn  TaxiOut  Cancelled  \
+58441        1546            YV       7097  ...    NaN     14.0          1   
+58760        1904            OO       6224  ...    NaN     39.0          1   
+62298        1125            YV       7151  ...    NaN     19.0          1   
+62375        1356            YV       7098  ...    NaN     14.0          1   
+62376        1120            YV       7151  ...    NaN     24.0          1   
+62386        1224            YV       7193  ...    NaN     33.0          1   
+66243        2205            WN         76  ...    NaN     15.0          1   
+66994        1226            YV       7193  ...    NaN      NaN          1   
+67031        1621            YV       7062  ...    NaN     21.0          1   
+67096        1853            YV       7151  ...    NaN     34.0          1   
+67210        2057            YV       7119  ...    NaN     12.0          1   
+67269         952            YV       7084  ...    NaN     16.0          1   
+67329        1257            YV       7059  ...    NaN     16.0          1   
+67574        2210            OO       5889  ...    NaN      NaN          1   
+67651        1908            OO       5927  ...    NaN     13.0          1   
+67715        1829            OO       5959  ...    NaN      NaN          1   
+67834         923            OO       6063  ...    NaN      NaN          1   
+68141        2302            OO       6538  ...    NaN     13.0          1   
+68163        1010            OO       6542  ...    NaN     12.0          1   
+68302        1301            OO       6573  ...    NaN     13.0          1   
+68311        1853            OO       6575  ...    NaN     17.0          1   
+68343        2154            OO       6582  ...    NaN     21.0          1   
+68437        1629            OO       6610  ...    NaN     18.0          1   
+68505        1548            OO       6620  ...    NaN      NaN          1   
+68772        2205            OO       6680  ...    NaN      NaN          1   
+68773        2205            OO       6680  ...    NaN     15.0          1   
+68778        2205            OO       6680  ...    NaN     32.0          1   
+68780        2230            OO       6680  ...    NaN     22.0          1   
+68782        2230            OO       6680  ...    NaN     22.0          1   
+68981        2323            OO       6728  ...    NaN     38.0          1   
+69066        1309            OO       6765  ...    NaN     22.0          1   
+69084        1226            OO       6080  ...    NaN     14.0          1   
+70953        2342            UA       1459  ...    NaN      NaN          1   
+72823        1951            F9        811  ...    NaN     38.0          1   
+73022        1018            F9        791  ...    NaN      9.0          1   
+
+       CancellationCode  Diverted  CarrierDelay WeatherDelay NASDelay  \
+58441                 B         0           NaN          NaN      NaN   
+58760                 A         0           NaN          NaN      NaN   
+62298                 B         0           NaN          NaN      NaN   
+62375                 B         0           NaN          NaN      NaN   
+62376                 B         0           NaN          NaN      NaN   
+62386                 B         0           NaN          NaN      NaN   
+66243                 B         0           NaN          NaN      NaN   
+66994                 B         0           NaN          NaN      NaN   
+67031                 B         0           NaN          NaN      NaN   
+67096                 B         0           NaN          NaN      NaN   
+67210                 C         0           NaN          NaN      NaN   
+67269                 B         0           NaN          NaN      NaN   
+67329                 B         0           NaN          NaN      NaN   
+67574                 B         0           NaN          NaN      NaN   
+67651                 B         0           NaN          NaN      NaN   
+67715                 A         0           NaN          NaN      NaN   
+67834                 B         0           NaN          NaN      NaN   
+68141                 B         0           NaN          NaN      NaN   
+68163                 B         0           NaN          NaN      NaN   
+68302                 B         0           NaN          NaN      NaN   
+68311                 B         0           NaN          NaN      NaN   
+68343                 B         0           NaN          NaN      NaN   
+68437                 B         0           NaN          NaN      NaN   
+68505                 B         0           NaN          NaN      NaN   
+68772                 A         0           NaN          NaN      NaN   
+68773                 B         0           NaN          NaN      NaN   
+68778                 B         0           NaN          NaN      NaN   
+68780                 B         0           NaN          NaN      NaN   
+68782                 B         0           NaN          NaN      NaN   
+68981                 B         0           NaN          NaN      NaN   
+69066                 A         0           NaN          NaN      NaN   
+69084                 A         0           NaN          NaN      NaN   
+70953                 A         0           NaN          NaN      NaN   
+72823                 B         0           NaN          NaN      NaN   
+73022                 B         0           NaN          NaN      NaN   
+
+       SecurityDelay  LateAircraftDelay  
+58441            NaN                NaN  
+58760            NaN                NaN  
+62298            NaN                NaN  
+62375            NaN                NaN  
+62376            NaN                NaN  
+62386            NaN                NaN  
+66243            NaN                NaN  
+66994            NaN                NaN  
+67031            NaN                NaN  
+67096            NaN                NaN  
+67210            NaN                NaN  
+67269            NaN                NaN  
+67329            NaN                NaN  
+67574            NaN                NaN  
+67651            NaN                NaN  
+67715            NaN                NaN  
+67834            NaN                NaN  
+68141            NaN                NaN  
+68163            NaN                NaN  
+68302            NaN                NaN  
+68311            NaN                NaN  
+68343            NaN                NaN  
+68437            NaN                NaN  
+68505            NaN                NaN  
+68772            NaN                NaN  
+68773            NaN                NaN  
+68778            NaN                NaN  
+68780            NaN                NaN  
+68782            NaN                NaN  
+68981            NaN                NaN  
+69066            NaN                NaN  
+69084            NaN                NaN  
+70953            NaN                NaN  
+72823            NaN                NaN  
+73022            NaN                NaN  
+
+[35 rows x 29 columns]
+</output>
+</console>
+</listing>
+
+<paragraphs>
+ <title> What are some good questions for this data set?</title>
+</paragraphs>
+
+
+</section>
+<section>
+ <title> Tenth Motivating Example - Image Classification
+</title>
+
+<p>We are actually planning on skipping this topic in this class, but it is important enough that it deserves a mention. Many of the techniques for classification we are using will work on it.</p>
+<listing>
+<console>
+<input>
+digits = pa.read_csv('Data Sets/digits/train.csv')
+
+sn.set(style = 'white')
+fig, ax = plt.subplots(5, 10, figsize = (18, 8))
+
+for i in range(50):
+    ax[i%5][i//5].imshow( np.array(digits.iloc[i, 1:]).reshape(28, 28), cmap = 'binary' )
+</input>
+<output>
+&lt;Figure size 1296x576 with 50 Axes>
+</output>
+</console>
+</listing>
+<p>The task is to develop an algorithm for deciding which digit a handwritten digit is.</p>
+
+</section>
+<section>
+ <title> Left for a future class - Unsupervised Learning
+</title>
+
+<p>All of these examples, except possibly the child care one, are what we would call <em>supervised learning</em>. We will be discussing <em>unsupervised learning</em>, but I am leaving it for a future class to go over. Your team projects in particular should be either a categorization or regression problem in supervised learning.</p>
+
+</section>
+
+</chapter>

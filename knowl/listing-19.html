@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:'Pitcher' for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:'Not Pitcher' for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2 # print the dataframe to check if there is a problem
+</b>                    Name Team     Position  Height  Weight    Age
+0          Adam_Donachie  BAL  Not Pitcher      74   180.0  22.99
+1              Paul_Bako  BAL  Not Pitcher      74   215.0  34.69
+2        Ramon_Hernandez  BAL  Not Pitcher      72   210.0  30.78
+3           Kevin_Millar  BAL  Not Pitcher      72   210.0  35.43
+4            Chris_Gomez  BAL  Not Pitcher      73   188.0  35.71
+5          Brian_Roberts  BAL  Not Pitcher      69   176.0  29.39
+6          Miguel_Tejada  BAL  Not Pitcher      69   209.0  30.77
+7            Melvin_Mora  BAL  Not Pitcher      71   200.0  35.07
+8            Aubrey_Huff  BAL  Not Pitcher      76   231.0  30.19
+9             Adam_Stern  BAL  Not Pitcher      71   180.0  27.05
+10       Jeff_Fiorentino  BAL  Not Pitcher      73   188.0  23.88
+11         Freddie_Bynum  BAL  Not Pitcher      73   180.0  26.96
+12         Nick_Markakis  BAL  Not Pitcher      74   185.0  23.29
+13         Brandon_Fahey  BAL  Not Pitcher      74   160.0  26.11
+14       Corey_Patterson  BAL  Not Pitcher      69   180.0  27.55
+15            Jay_Payton  BAL  Not Pitcher      70   185.0  34.27
+16           Jay_Gibbons  BAL  Not Pitcher      72   197.0  30.00
+17           Erik_Bedard  BAL      Pitcher      73   189.0  27.99
+18           Hayden_Penn  BAL      Pitcher      75   185.0  22.38
+19           Adam_Loewen  BAL      Pitcher      78   219.0  22.89
+20        Daniel_Cabrera  BAL      Pitcher      79   230.0  25.76
+21        Steve_Trachsel  BAL      Pitcher      76   205.0  36.33
+22          Jaret_Wright  BAL      Pitcher      74   230.0  31.17
+23           Kris_Benson  BAL      Pitcher      76   195.0  32.31
+24      Scott_Williamson  BAL      Pitcher      72   180.0  31.03
+25          John_Parrish  BAL      Pitcher      71   192.0  29.26
+26            Danys_Baez  BAL      Pitcher      75   225.0  29.47
+27         Chad_Bradford  BAL      Pitcher      77   203.0  32.46
+28          Jamie_Walker  BAL      Pitcher      74   195.0  35.67
+29          Brian_Burres  BAL      Pitcher      73   182.0  25.89
+...                  ...  ...          ...     ...     ...    ...
+1004         John_Nelson  STL  Not Pitcher      73   190.0  27.99
+1005       Albert_Pujols  STL  Not Pitcher      75   225.0  27.12
+1006        Adam_Kennedy  STL  Not Pitcher      73   185.0  31.14
+1007         Aaron_Miles  STL  Not Pitcher      67   180.0  30.21
+1008      David_Eckstein  STL  Not Pitcher      67   165.0  32.11
+1009         Scott_Rolen  STL  Not Pitcher      76   240.0  31.91
+1010       Scott_Spiezio  STL  Not Pitcher      74   220.0  34.44
+1011         Jim_Edmonds  STL  Not Pitcher      73   212.0  36.68
+1012          So_Taguchi  STL  Not Pitcher      70   163.0  37.66
+1013    Juan_Encarnacion  STL  Not Pitcher      75   215.0  30.98
+1014      Skip_Schumaker  STL  Not Pitcher      70   175.0  27.07
+1015      John_Rodriguez  STL  Not Pitcher      72   205.0  29.11
+1016        Chris_Duncan  STL  Not Pitcher      77   210.0  25.82
+1017     Adam_Wainwright  STL      Pitcher      79   205.0  25.50
+1018         Mark_Mulder  STL      Pitcher      78   208.0  29.57
+1019       Anthony_Reyes  STL      Pitcher      74   215.0  25.37
+1020       Ryan_Franklin  STL      Pitcher      75   180.0  33.99
+1021           Kip_Wells  STL      Pitcher      75   200.0  29.86
+1022     Chris_Carpenter  STL      Pitcher      78   230.0  31.84
+1023       Russ_Springer  STL      Pitcher      76   211.0  38.31
+1024  Jason_Isringhausen  STL      Pitcher      75   230.0  34.48
+1025      Ricardo_Rincon  STL      Pitcher      69   190.0  36.88
+1026       Braden_Looper  STL      Pitcher      75   220.0  32.34
+1027        Randy_Flores  STL      Pitcher      72   180.0  31.58
+1028        Josh_Hancock  STL      Pitcher      75   205.0  28.89
+1029       Brad_Thompson  STL      Pitcher      73   190.0  25.08
+1030       Tyler_Johnson  STL      Pitcher      74   180.0  25.73
+1031      Chris_Narveson  STL      Pitcher      75   205.0  25.19
+1032       Randy_Keisler  STL      Pitcher      75   190.0  31.01
+1033         Josh_Kinney  STL      Pitcher      73   195.0  27.92
+
+[1033 rows x 6 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.11.</span> </figcaption></figure><span class="incontext"><a href="section-14.html#listing-19">in-context</a></span>
+</body>
+</html>

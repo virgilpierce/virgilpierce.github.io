@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We can use the matplotlib module to do 3-dimensional plots
+
+from mpl_toolkits.mplot3d import Axes3D    # We lneed an additional module
+
+fig = plt.figure(figsize = (10, 8))
+ax = fig.add_subplot(111, projection='3d')     # 111 sets the relative size of the axes
+ax.scatter(hd['1stFlrSF'], hd['BedroomAbvGr'], hd['SalePrice'], c='skyblue', s=60)
+ax.view_init(10, 185)   # this sets the perspective we see the graph from 
+plt.show()
+
+# There are ways to run this so that you can rotate it - seems to not be working on my mac.
+# Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
+</b>&lt;Figure size 720x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.7.</span> </figcaption></figure><span class="incontext"><a href="section-18.html#listing-41">in-context</a></span>
+</body>
+</html>

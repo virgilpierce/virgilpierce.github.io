@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>run.loc[run.loc[:, 'Avg HR']=='--', 'Avg HR'] = 'np.nan'   
+
+# Replacing Garmins symbol for no-data with Pandas, as a string so we can pass it to eval in map.
+ 
+run.loc[:, 'Avg HR'] = list(map(eval, run.loc[:, 'Avg HR'] ))
+
+# Even though much of the data is numeric, it was loaded as strings (probably because
+# of the .csv file Garmin gave us). Easy enough in Python to convert strings to numbers by passing them
+# through eval with map as long as none of them are gibberish like '--'
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.10.4.</span> </figcaption></figure><span class="incontext"><a href="section-19.html#listing-48">in-context</a></span>
+</body>
+</html>

@@ -39,7 +39,9 @@
         
 <xi:include href="course_syllabus.xml" />
         
-        
+<!-- Chapter Two - Motivating Examples -->
+
+<xi:include href="data_science_introduction.xml"/>
         
 </book>
 </pretext>

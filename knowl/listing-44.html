@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># So a naive thing to try is a separate regression line based on the number of bedrooms.
+
+temp = hd.copy()
+for c in temp.index.values:
+    if temp.loc[c, 'BedroomAbvGr'] &lt;= 2:
+        temp.loc[c, 'BedroomCat'] = '2 or fewer br'
+    if temp.loc[c, 'BedroomAbvGr'] &gt; 2:
+        temp.loc[c,'BedroomCat'] = 'more than 2 br'    # lmplot automatically chooses the categories for hue.
+                                                       # too many hues is confusing, so changed the bedroom
+                                                       # count to a categorical variable.
+                                                        
+                                                        # A better way to do this would have been a boolean
+                                                        # as that could be done without the for and if states.
+                                                        # however it then would require adjusting the labels
+
+sn.set(style = 'darkgrid')
+
+p = sn.lmplot(x='1stFlrSF', y='SalePrice', hue='BedroomCat', data=temp, height = 8, aspect = 1.2);
+ax = p.axes
+
+ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
+ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
+</b>&lt;Figure size 802.675x576 with 1 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.9.10.</span> </figcaption></figure><span class="incontext"><a href="section-18.html#listing-44">in-context</a></span>
+</body>
+</html>

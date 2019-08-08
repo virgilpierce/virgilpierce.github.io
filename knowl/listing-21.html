@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Make them again but by player position also
+
+sn.set(style = 'darkgrid') 
+
+f, ax = plt.subplots(2, 2, sharey=False, figsize = (10, 10))   # Make a 2 x 2 grid for multiple plots
+sn.distplot(major_2[major_2.Position=='Pitcher'].Height, ax=ax[0, 0], color = 'blue',
+            label = 'Pitchers', kde=False, bins=14)  
+sn.distplot(major_2[major_2.Position=='Pitcher'].Weight, ax=ax[0, 1], color = 'blue', 
+            label = 'Pitchers', kde=False, bins=14)
+sn.distplot(major_2[major_2.Position!='Pitcher'].Height, ax=ax[1, 0], color = 'red', 
+            label = 'Non Pitchers', kde=False, bins=14)
+sn.distplot(major_2[major_2.Position!='Pitcher'].Weight, ax=ax[1,1], color = 'red', 
+            label = 'Non Pitchers', kde=False, bins=14);
+
+# First row are Pitchers
+# Second row are Non-Pitchers
+# I am a little annoyed the label did not come through - Adding this as an issue in Github
+
+# Also I would like to have the horizontal axis shared in the first two but not the same axis for all four - Not sure
+# that will ever be possible.
+</b>&lt;Figure size 720x720 with 4 Axes&gt;
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.13.</span> </figcaption></figure><span class="incontext"><a href="section-14.html#listing-21">in-context</a></span>
+</body>
+</html>

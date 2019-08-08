@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T12:37:30-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Consider the following dataset of the flights originating at DEN in 2008
+
+fd = pa.read_csv('Data Sets/DenverDelayedFlights.csv')
+
+fd = fd.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis = 1)
+
+fd.head()
+</b>   Year  Month  DayofMonth  DayOfWeek  DepTime  CRSDepTime  ArrTime  \
+0  2008      1           4          5   1437.0        1415   1548.0   
+1  2008      1           4          5   1358.0        1345   1652.0   
+2  2008      1           4          5   1614.0        1555   1926.0   
+3  2008      1           4          5   1736.0        1700   2234.0   
+4  2008      1           4          5   2041.0        1925   2343.0   
+
+   CRSArrTime UniqueCarrier  FlightNum  ... TaxiIn  TaxiOut  Cancelled  \
+0        1530            WN        806  ...    9.0     11.0          0   
+1        1645            WN       1856  ...    5.0      8.0          0   
+2        1920            WN       1262  ...    4.0      8.0          0   
+3        2215            WN        494  ...    2.0      7.0          0   
+4        2245            WN       2907  ...    2.0     10.0          0   
+
+   CancellationCode  Diverted  CarrierDelay WeatherDelay NASDelay  \
+0                 N         0           8.0          0.0      0.0   
+1                 N         0           NaN          NaN      NaN   
+2                 N         0           NaN          NaN      NaN   
+3                 N         0           4.0          0.0      0.0   
+4                 N         0           2.0          0.0      0.0   
+
+   SecurityDelay  LateAircraftDelay  
+0            0.0               10.0  
+1            NaN                NaN  
+2            NaN                NaN  
+3            0.0               15.0  
+4            0.0               56.0  
+
+[5 rows x 29 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.13.1.</span> </figcaption></figure><span class="incontext"><a href="section-22.html#listing-60">in-context</a></span>
+</body>
+</html>
