@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-08T10:18:46-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># A list of the non system attributes of a function or object
+#    I use this to get some idea of what functions or actions are typically applied
+#    to a Python object. 
+
+#    It is useful to drop the special actions with the leading or trailing '__' as
+#    they are not usually ones we care about, which is why I use this expression, but 
+#    usually just a dir() would work fine.
+
+[x for x in dir(list) if not '__' in x]
+</b>['append',
+ 'clear',
+ 'copy',
+ 'count',
+ 'extend',
+ 'index',
+ 'insert',
+ 'pop',
+ 'remove',
+ 'reverse',
+ 'sort']
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">1.1.3.</span> </figcaption></figure><span class="incontext"><a href="section-1.html#listing-3">in-context</a></span>
+</body>
+</html>
