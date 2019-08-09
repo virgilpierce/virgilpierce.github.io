@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-09T07:11:23-06:00    *-->
+<!--*    on 2019-08-09T09:53:13-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -41,7 +41,7 @@ MathJax.Hub.Config({
         mtextFontInherit: true,
     },
 });
-</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.11/pretext.js"></script><script src="https://pretextbook.org/js/0.11/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
@@ -53,7 +53,7 @@ MathJax.Hub.Config({
 var role = 'student';
 var guest_access = true;
 var login_required = false;
-var js_version = 0.12;
+var js_version = 0.11;
 </script>
 </head>
 <body class="mathbook-book has-toc has-sidebar-left">
@@ -124,7 +124,7 @@ var js_version = 0.12;
 <span class="type">Section</span> <span class="codenumber">2.5</span> <span class="title">First Motivating Example - Baseball Players</span>
 </h2>
 <section class="introduction" id="introduction-9"><p id="p-185">Before we get too far, let us look at an example to see what we are aiming at in this class. Consider the dataset of Major League Baseball Players height and weight.</p>
-<p id="p-186"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/tj_bohn_autograph.jpg" style="width: 100%; height: auto;" alt=""></div></p>
+<p id="p-186"><div style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/tj_bohn_autograph.jpg" style="width: 100%; height: auto;" alt=""></div></p>
 <figure class="figure-like" id="listing-9"><pre class="console"><b># Read in the major league players data set
 
 major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
@@ -226,7 +226,7 @@ p.fig.set_size_inches(9, 9)
 # In any case, depending on the size of the monitor you are viewing this on, you may need to adjust
 # the (10, 10) above to something else.
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.1.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.1.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.9.</span> </figcaption></figure><p id="p-194">In the figures above:</p>
 <ul id="p-195" class="disc">
 <li id="li-66"><p id="p-196">on the diagonal: each player is a box in one of the bars.</p></li>
@@ -348,7 +348,7 @@ sn.distplot(major_2.Weight, ax=ax[1], kde=False, bins=14);
 # These are (mostly) copies of the corresponding histograms from the facet-grid above;
 # Do you notice the difference?
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.2.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.2.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.12.</span> </figcaption></figure><figure class="figure-like" id="listing-21"><pre class="console"><b># Make them again but by player position also
 
 sn.set(style = 'darkgrid') 
@@ -370,7 +370,7 @@ sn.distplot(major_2[major_2.Position!='Pitcher'].Weight, ax=ax[1,1], color = 're
 # Also I would like to have the horizontal axis shared in the first two but not the same axis for all four - Not sure
 # that will ever be possible.
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.3.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.3.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.13.</span> </figcaption></figure><figure class="figure-like" id="listing-22"><pre class="console"><b># We could also plot two histograms on top of each other
 
 sn.set(style = 'darkgrid') 
@@ -385,7 +385,7 @@ plt.legend();
 # I changed the kde flag to True - this gives a curve estimating the distribution,
 # but it also scales the histograms to have area 1 (i.e. they represent proportions of the populations)
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.4.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.4.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.14.</span> </figcaption></figure></section><section class="subsection" id="subsection-29"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">2.5.3</span> <span class="title">What is Data Science or Why Data Science</span>
 </h3>
@@ -426,14 +426,14 @@ plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='Weight', y='Height', data=major_2);
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.5.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.5.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.15.</span> </figcaption></figure><p id="p-224">Okay fair enough. There seems to be something of a relationship between height and weight for our players. You may have already learned about <em class="emphasis">Linear Regression</em> in another class (Linear Algebra or Calculus 1). We can use seaborn to plot the least squares regression line for these data points.</p>
 <p id="p-225">We will learn some ways later in class of actually computing this line and its slope. It is not important today.</p>
 <figure class="figure-like" id="listing-24"><pre class="console"><b>plt.figure(figsize = (10, 8))
 sn.set(style = 'darkgrid')
 sn.regplot(x='Weight', y='Height', data=major_2);
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.6.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.6.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.16.</span> </figcaption></figure><figure class="figure-like" id="listing-25"><pre class="console"><b># Let us consider the position of a player in the relationship between Height and Weight.
 # What do we notice?
 
@@ -442,7 +442,7 @@ plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2);
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.7.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.7.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.17.</span> </figcaption></figure><figure class="figure-like" id="listing-26"><pre class="console"><b>sn.set(style = 'darkgrid')
 
 sn.lmplot(x='Weight', y='Height', hue='Position', data=major_2, height = 8, aspect = 1.2);
@@ -451,7 +451,7 @@ sn.lmplot(x='Weight', y='Height', hue='Position', data=major_2, height = 8, aspe
 
 # Note that I had to change the size command.
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.8.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.8.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.18.</span> </figcaption></figure><figure class="figure-like" id="listing-27"><pre class="console"><b># Let us consider the position of a player in the relationship between Height and Weight.
 # What do we notice?
 
@@ -463,10 +463,10 @@ sn.scatterplot(x='Weight', y='Height', hue = 'Position', data=major_2, ax = ax[0
 ax[1].title.set_text('Height v Age')
 sn.scatterplot(x='Age', y='Height', hue='Position', data=major_2, ax = ax[1]);
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.9.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.9.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.19.</span> </figcaption></figure></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
-<script src="https://pretextbook.org/js/0.12/login.js"></script>
+<script src="https://pretextbook.org/js/0.11/login.js"></script>
 </body>
 </html>

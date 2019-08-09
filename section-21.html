@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-09T07:11:24-06:00    *-->
+<!--*    on 2019-08-09T09:53:13-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -41,7 +41,7 @@ MathJax.Hub.Config({
         mtextFontInherit: true,
     },
 });
-</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.11/pretext.js"></script><script src="https://pretextbook.org/js/0.11/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
@@ -53,7 +53,7 @@ MathJax.Hub.Config({
 var role = 'student';
 var guest_access = true;
 var login_required = false;
-var js_version = 0.12;
+var js_version = 0.11;
 </script>
 </head>
 <body class="mathbook-book has-toc has-sidebar-left">
@@ -123,7 +123,7 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-21"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">2.12</span> <span class="title">Eighth Motivating Example - Colorado Child Care</span>
 </h2>
-<p id="p-266"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/child-care.jpeg" style="width: 100%; height: auto;" alt=""></div></p>
+<p id="p-266"><div style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/child-care.jpeg" style="width: 100%; height: auto;" alt=""></div></p>
 <figure class="figure-like" id="listing-55"><pre class="console"><b># Consider the following data set of licenses for child care business in Colorado 
 #   (from https://data.colorado.gov/)
 
@@ -218,7 +218,7 @@ sn.set(style='darkgrid')
 sn.barplot(x='COUNT', y='COUNTY', data=temp)
 plt.title('Preschool Programs');
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.20.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.20.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.12.3.</span> </figcaption></figure><p id="p-269">Fine for someone from Colorado. But can we do better?</p>
 <figure class="figure-like" id="listing-58"><pre class="console"><b>cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
 temp = cocc.loc[:, ['PROVIDER SERVICE TYPE', 'LONG-LAT'] ]
@@ -241,7 +241,7 @@ sn.relplot(x='Lat', y='Long', hue='PROVIDER SERVICE TYPE',
            data=locate, height=8, aspect=1.2, palette='bright');
 plt.title('Location of Child Care Businesses');
 </b></pre>
-<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.21.png" style="width: 100%; height: auto;" alt=""></div>
+<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.21.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.12.5.</span> </figcaption></figure><p id="p-270">A couple of notes of things we should learn how to do in the future:</p>
 <ol id="p-271" class="decimal">
 <li id="li-82"><p id="p-272">It would be nice to put these points on a map of Colorado; or to put points for the larger cities in the state.</p></li>
@@ -250,6 +250,6 @@ plt.title('Location of Child Care Businesses');
 <article class="paragraphs" id="paragraphs-1"><h5 class="heading"><span class="title">What is a good question for this data set?</span></h5></article></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
-<script src="https://pretextbook.org/js/0.12/login.js"></script>
+<script src="https://pretextbook.org/js/0.11/login.js"></script>
 </body>
 </html>
