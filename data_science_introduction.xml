@@ -575,13 +575,8 @@ plt.legend();
  <title> What is Data Science or Why Data Science
 </title>
 
-<p>Notice <p><ul>
-<li><p>we showed (up to some assumptions) above that the distribution of the heights of pitchers is different from that of non-pitchers. In particular we can now say that the mean height of Pitchers is higher than that of non-Pitchers. </p>
-</li>
-</ul></p>
-</p>
-<p>However there are three problems with the traditional approach:</p>
-
+<p> You might be familiar with hypothesis testing already, for instance an appropriate test for the example above is that the 
+	distribution of heights of pitchers differs from that of non-pitchers. A couple of things to remind you of: </p>
 <p><ol>
 <li><p> Hypothesis testing requires us to know (or assume) the distribution of players' heights. </p>
 </li>

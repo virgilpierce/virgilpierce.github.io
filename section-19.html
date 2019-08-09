@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-08T15:53:50-06:00    *-->
+<!--*    on 2019-08-09T07:11:24-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -123,14 +123,14 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-19"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">2.10</span> <span class="title">Sixth Motivating Example - Running Data from Garmin</span>
 </h2>
-<p id="p-251">I have been dealing with an injury for the last month; however I generally try to run close to an hour a day. Here is a report of my running activities from Garmin.</p>
+<p id="p-248">I have been dealing with an injury for the last month; however I generally try to run close to an hour a day. Here is a report of my running activities from Garmin.</p>
 <figure class="figure-like" id="listing-45"><pre class="console"><b>run = pa.read_csv('Data Sets/Pierce_Garmin.csv')
 
 print(run.shape)
 run.head()
 </b>(320, 29)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.10.1.</span> </figcaption></figure><p id="p-252">Note the big change for this example here is that we have Dates and Times!</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.10.1.</span> </figcaption></figure><p id="p-249">Note the big change for this example here is that we have Dates and Times!</p>
 <figure class="figure-like" id="listing-46"><pre class="console"><b>def hours(timestr):   # function to convert HH:MM:SS to Hours decimal
 
     ftr = [1, 1/60, 1/60/60]
@@ -159,8 +159,8 @@ axes.xaxis.set_major_locator(plt.MultipleLocator(100))
 # This is a little trick to only use every 100th tick label.
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.19.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.10.5.</span> </figcaption></figure><p id="p-253">It would be nice to adjust the x-axis ticks here so that it is just the date and not the start time - that could be done by adjusting the values for Date.</p>
-<p id="p-254">Also the longest run plotted is the NYC Marathon, it would be nice to add a label to it.</p></section></div></main>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.10.5.</span> </figcaption></figure><p id="p-250">It would be nice to adjust the x-axis ticks here so that it is just the date and not the start time - that could be done by adjusting the values for Date.</p>
+<p id="p-251">Also the longest run plotted is the NYC Marathon, it would be nice to add a label to it.</p></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
 <script src="https://pretextbook.org/js/0.12/login.js"></script>
