@@ -395,12 +395,8 @@ reg.score(X, y)
 </output>
 </console>
 </listing>
-<p>Score here is what is called the <m>R^2</m> of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An <m>R^2</m> of <p><ol>
-<li><p>514 is not good (which we can see in the graph below).</p>
-</li>
-</ol></p>
-</p>
-<p>Later on we will go into further detail about Linear Regression and what <m>R^2</m> means.</p>
+<p>Score here is what is called the <m>R^2</m> of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An <m>R^2</m> of 0.514 is not good (which we can see in the graph below).
+Later on we will go into further detail about Linear Regression and what <m>R^2</m> means.</p>
 <listing>
 <console>
 <input>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-12T12:16:19-06:00    *-->
+<!--*    on 2019-08-12T12:17:56-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -381,8 +381,7 @@ y
 reg.score(X, y)
 </b>0.5139213494859829
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p id="p-392">Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of <ol id="p-393" class="decimal"><li id="li-115"><p id="p-394">514 is not good (which we can see in the graph below).</p></li></ol></p>
-<p id="p-395">Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p id="p-392">Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of 0.514 is not good (which we can see in the graph below). Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
 <figure class="figure-like" id="listing-81"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_    # The intercept and slope(s) of the regression line can be pulled out
 
 # Also note that I used a little bit of python trickery here to unpack the array reg.coef_
@@ -390,7 +389,7 @@ reg.score(X, y)
 b, m
 </b>(15955.120847421553, 109.27661587643645)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p id="p-396">The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p id="p-393">The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
 <figure class="figure-like" id="listing-82"><pre class="console"><b>x = 4500
 
 print(reg.predict(np.array(x).reshape(-1, 1))[0])   
@@ -400,7 +399,7 @@ print(b+m*x)
 </b>507699.89229138556
 507699.89229138556
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p id="p-397">We can plot this together with the data.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p id="p-394">We can plot this together with the data.</p>
 <figure class="figure-like" id="listing-83"><pre class="console"><b>xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
 yvalues = reg.predict(xvalues)  # apply the models predictor
 
