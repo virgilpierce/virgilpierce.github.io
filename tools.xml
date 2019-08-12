@@ -482,10 +482,7 @@ plt.ylabel('SalePrice');
 </li>
 </ol></p>
 
-<p>Note that if we were to break step 6 into pieces, it would looke a little similar to the whole cycle. In fact you would probably take additional test sets out of the data as you explore different models. Your goal is to already have a sense of what the error will be as you head into the final testing phase in step <p><ol>
-<li>
-</li>
-</ol></p>
+<p>Note that if we were to break step 6 into pieces, it would looke a little similar to the whole cycle. In fact you would probably take additional test sets out of the data as you explore different models. Your goal is to already have a sense of what the error will be as you head into the final testing phase in step 6.
 </p>
 <p><alert>Warning</alert> Failing to take appropriate precautions to estimate the error of the model, or adjusting your model after you have used the test data can lead to overfiting. Your model will look better on the data you have, but when you put it into production it may behave poorly.</p>
 
