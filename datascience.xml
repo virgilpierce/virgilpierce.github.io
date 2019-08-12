@@ -46,6 +46,10 @@
 <!-- Chapter Three - Data -->
 
 <xi:include href='data.xml'/>
+
+<!-- Chapter Four - Tools of the Trade -->
+
+<xi:include href='tools.xml'/>
         
 </book>
 </pretext>

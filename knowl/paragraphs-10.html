@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">Plotting.</span></h5>
+<p>We will use seaborn to plot data. A future class will go through more examples and additional detail about plotting. For now here is an example of a scatter plot we might use with the transformed data for housing prices:</p>
+<figure class="figure-like"><pre class="console"><b># Import seaborn and matplotlib.pyplot
+
+import seaborn as sn
+import matplotlib.pyplot as plt
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.8.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='Total_SF', y='SalePrice', data=hd2, palette='winter');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.9.</span> </figcaption></figure></article><span class="incontext"><a href="section-28.html#paragraphs-10">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">Manipulating Data.</span></h5>
+<p>First, we consider the effect of total square footage on the price of the house. Note that there is no feature that is <em class="emphasis">Total Square Footage</em>.  There is <em class="emphasis">1stFlrSF</em> and <em class="emphasis">2ndFlrSF</em>. So what we want to do is make a new feature that is the sum of these two. However the dataframe itself is big right now, so what I would also like to do is pair it down to only the features I want to consider.</p>
+<figure class="figure-like"><pre class="console"><b># Make a new data frame using only the '1stFlrSF', '2ndFlrSF', and 'SalePrice' features
+
+hd2 = hd[['1stFlrSF', '2ndFlrSF', 'SalePrice']]
+hd2.head()
+</b>   1stFlrSF  2ndFlrSF  SalePrice
+0       856       854     208500
+1      1262         0     181500
+2       920       866     223500
+3       961       756     140000
+4      1145      1053     250000
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.4.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b># Add a new feature by summing the '1stFlrSF' and '2ndFlrSF' features for each house
+# new features are added by referencing a subset of the rows with the feature named
+
+# While we are on the subject, I recomend using feature names that do not have spaces and do not start 
+# with digits these will behave better in Python overall.
+
+hd2 = hd2.assign(Total_SF=pa.Series(hd2['1stFlrSF'] + hd2['2ndFlrSF'], index=hd2.index))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.5.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>hd2.head()
+</b>   1stFlrSF  2ndFlrSF  SalePrice  Total_SF
+0       856       854     208500      1710
+1      1262         0     181500      1262
+2       920       866     223500      1786
+3       961       756     140000      1717
+4      1145      1053     250000      2198
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.6.</span> </figcaption></figure><p><em class="alert">Warning</em> if you do this the naive Python way (particular if you have used numpy arrays) you probably are getting a <em class="emphasis">SettingWithCopyWarning</em>. Using assign is now considered the best method. For more complicated transformations you would probably want to use a lambda or even a regular function.</p>
+<p>We will deal with manipulating categorical data later, thouigh you can also look back at the baseball player example in Chapter 1.</p></article><span class="incontext"><a href="section-28.html#paragraphs-8">in-context</a></span>
+</body>
+</html>

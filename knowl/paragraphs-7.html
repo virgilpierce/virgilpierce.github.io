@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:19-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">Import Data.</span></h5>
+<p>The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html" target="_blank">pandas.read_csv</a>. Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
+<p><em class="alert">Warning</em> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
+<figure class="figure-like"><pre class="console"><b># Start with importing the pandas package
+
+import pandas as pa
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.1.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b># Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.2.</span> </figcaption></figure><p>The <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank">pandas.dataframe</a>  object type is a structured array. It is a collection of rows and columns with names for the rows and colummns. Note there is a special <em class="emphasis">NaN</em> character that represents entries that were missing in the dataset.</p>
+<p>Not surprinsingly with the house pricing dataset <em class="emphasis">PoolQC</em> (Pool Quality) is a missing value for many houses.</p>
+<p>Typically the columns should be the features, and each row should represent one of the samples or instances. We can get a list of the features:</p>
+<figure class="figure-like"><pre class="console"><b># I wrap it in a list command because it returns an np.array element with some additional information otherwise
+
+list(hd.columns.values)
+</b>['Id',
+ 'MSSubClass',
+ 'MSZoning',
+ 'LotFrontage',
+ 'LotArea',
+ 'Street',
+ 'Alley',
+ 'LotShape',
+ 'LandContour',
+ 'Utilities',
+ 'LotConfig',
+ 'LandSlope',
+ 'Neighborhood',
+ 'Condition1',
+ 'Condition2',
+ 'BldgType',
+ 'HouseStyle',
+ 'OverallQual',
+ 'OverallCond',
+ 'YearBuilt',
+ 'YearRemodAdd',
+ 'RoofStyle',
+ 'RoofMatl',
+ 'Exterior1st',
+ 'Exterior2nd',
+ 'MasVnrType',
+ 'MasVnrArea',
+ 'ExterQual',
+ 'ExterCond',
+ 'Foundation',
+ 'BsmtQual',
+ 'BsmtCond',
+ 'BsmtExposure',
+ 'BsmtFinType1',
+ 'BsmtFinSF1',
+ 'BsmtFinType2',
+ 'BsmtFinSF2',
+ 'BsmtUnfSF',
+ 'TotalBsmtSF',
+ 'Heating',
+ 'HeatingQC',
+ 'CentralAir',
+ 'Electrical',
+ '1stFlrSF',
+ '2ndFlrSF',
+ 'LowQualFinSF',
+ 'GrLivArea',
+ 'BsmtFullBath',
+ 'BsmtHalfBath',
+ 'FullBath',
+ 'HalfBath',
+ 'BedroomAbvGr',
+ 'KitchenAbvGr',
+ 'KitchenQual',
+ 'TotRmsAbvGrd',
+ 'Functional',
+ 'Fireplaces',
+ 'FireplaceQu',
+ 'GarageType',
+ 'GarageYrBlt',
+ 'GarageFinish',
+ 'GarageCars',
+ 'GarageArea',
+ 'GarageQual',
+ 'GarageCond',
+ 'PavedDrive',
+ 'WoodDeckSF',
+ 'OpenPorchSF',
+ 'EnclosedPorch',
+ '3SsnPorch',
+ 'ScreenPorch',
+ 'PoolArea',
+ 'PoolQC',
+ 'Fence',
+ 'MiscFeature',
+ 'MiscVal',
+ 'MoSold',
+ 'YrSold',
+ 'SaleType',
+ 'SaleCondition',
+ 'SalePrice']
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.3.</span> </figcaption></figure></article><span class="incontext"><a href="section-28.html#paragraphs-7">in-context</a></span>
+</body>
+</html>

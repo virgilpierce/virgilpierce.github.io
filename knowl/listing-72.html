@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Add a new feature by summing the '1stFlrSF' and '2ndFlrSF' features for each house
+# new features are added by referencing a subset of the rows with the feature named
+
+# While we are on the subject, I recomend using feature names that do not have spaces and do not start 
+# with digits these will behave better in Python overall.
+
+hd2 = hd2.assign(Total_SF=pa.Series(hd2['1stFlrSF'] + hd2['2ndFlrSF'], index=hd2.index))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.5.</span> </figcaption></figure><span class="incontext"><a href="section-28.html#listing-72">in-context</a></span>
+</body>
+</html>

@@ -1,48 +1,17 @@
-<pretext>
-
-    <docinfo>
-        <macros>
-        \newcommand{\doubler}[1]{2#1}
-        </macros>
-    </docinfo>
-
-    <article xml:id="minimal">
-        <title>Conversion Script Test</title>
-
-        <frontmatter>
-
-            <titlepage>
-                <author>
-                    <personname>Virgil U Pierce</personname>
-                    <institution>University of Northern Colorado</institution>
-                </author>
-                <date><today /></date>
-            </titlepage>
-
-            <abstract>
-                <p>Testing of conversion of a Jupyter notebook to Pretext, and compiling</p>
-            </abstract>
-            
-            <introduction>
-
-                <p>Check if process.call worked</p>
-
-                <p>This is a short paragraph to introduce the article (but it is not the abstract).  
-                It is optional, in case it would be preferable to have the first section be titled an 
-                <q>Introduction.</q></p>
-            </introduction>
-            
-        </frontmatter><section>
+<chapter xml:id='tools'>
  <title> Tools of the Trade
 </title>
 
-<subsection>
+<section>
  <title> Python and Jupyter
 </title>
 
+<introduction>
 <p>We discussed in Chapter 2 why we will be using Python and Jupyter in this class and how to get them. A few more notes are worthwhile about Python, and what we will do today is work through an example carefully illustrating some of the tools we will use. Let's use the dataset on house prices.</p>
+</introduction>
 
-<subsubsection>
+
+<subsection>
  <title> Markdown
 </title>
 
@@ -68,8 +37,8 @@
 <p>You render the markdown code by typing shift+enter in the cell just as you would for executing code in a code cell.</p>
 
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Python for Data Science
 </title>
 
@@ -88,8 +57,8 @@
 <p>If you look at the last example from Chapter 2 you will see an example of working with image files as data, and later in the class we will explore how to handle text and interact with the Twitter API to gather data. </p>
 
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Example
 </title>
 
@@ -97,9 +66,8 @@
  <title> Import Data
 </title>
 
-<p>The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method </p>
-<p><url href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"> pandas.read_csv </url> . </p>
-<p>Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
+<p>The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method 
+  <url href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"> pandas.read_csv </url>. Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
 
 <p><alert>Warning</alert> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
 <listing>
@@ -352,7 +320,7 @@ plt.figure(figsize = (10, 8))
 sn.scatterplot(x='Total_SF', y='SalePrice', data=hd2, palette='winter');
 </input>
 </console>
-<figure source='Images/3_1.1.png' width='60%'/>
+<image source='Images/4_1.1.png'/>
 </listing>
 
 </paragraphs>
@@ -483,15 +451,15 @@ plt.xlabel('Total_SF') # Apply the axis labels
 plt.ylabel('SalePrice');
 </input>
 </console>
-<figure source='Images/3_1.2.png' width='60%'/>
+<image source='Images/4_1.2.png'/>
 </listing>
 
 </paragraphs>
 
-</subsubsection>
-
 </subsection>
-<subsection>
+
+</section>
+<section>
  <title> Development
 </title>
 
@@ -525,11 +493,12 @@ plt.ylabel('SalePrice');
 </p>
 <p><alert>Warning</alert> Failing to take appropriate precautions to estimate the error of the model, or adjusting your model after you have used the test data can lead to overfiting. Your model will look better on the data you have, but when you put it into production it may behave poorly.</p>
 
-</subsection>
-<subsection>
+</section>
+<section>
  <title> Versioning Control
 </title>
 
+<introduction>
 <p>A major part of any work using significant computing software like Data Science, is versioning control. Projects are usually done by a team and usually run through multiple stages of development before their final production or presentation steps. This means a challenge of the work is keeping track of what changes have been made, providing a system for changes to be vetted by the team, having a way to keep track of and resolve conflicts between versions, and possibly creating different versions that evolve independently.</p>
 
 <p>Add to this that for many employers their datascience (or mathematics, engineering, or programing) teams may be spread out around the country or the world. So we need to keep track of versions, but we also need to be able to distribute them.</p>
@@ -550,8 +519,9 @@ plt.ylabel('SalePrice');
 <li><p> The Industry Standard for Versioning Control is Git (though there are other similar programs out there). A highly used service that is integrated with Git is <url href="http://github.com"> Github </url> . </p>
 </li>
 </ol></p>
+</introduction>
 
-<subsubsection>
+<subsection>
  <title> Git
 </title>
 
@@ -567,8 +537,8 @@ plt.ylabel('SalePrice');
 <p>Ultimately I am asking you to use Git and Github for this class because the employers I have talked to in Data Science, Mathematics, and Statistics have said that a candidate with experience using Git will have an advantage when interviewing with them. At the end of the day, understanding how to use Git will make you a better member of any team, however they do Versioning Control. </p>
 
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Using Github/Git with your Team
 </title>
 
@@ -603,8 +573,8 @@ plt.ylabel('SalePrice');
 
 <p>Your teammates will then need to go to the Github website, login, and then <em>Clone</em> the repository to their local machine.</p>
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Git Glossary
 </title>
 
@@ -633,8 +603,8 @@ plt.ylabel('SalePrice');
 <p><em>Push:</em> a push sends the commits on your current branch to Github (that have not been sent already). Effectively it publishes what you have done so that a teammate following your branch can then fetch them and see what you have changed.</p>
 
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Suggestions
 </title>
 
@@ -659,10 +629,8 @@ plt.ylabel('SalePrice');
 </console>
 </listing>
 
-</subsubsection>
-
 </subsection>
 
 </section>
-</article>
-</pretext>
+
+</chapter>

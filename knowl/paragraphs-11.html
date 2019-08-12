@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">Making Predictions.</span></h5>
+<p>So fine we have drawn a nice picture, but what we actually want is to use this model to make predictions. We will use the scikitlearn package. The linear regression command is <a class="external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank">sklearn.linear_model.LinearRegression</a></p>
+<p>In order to use this we also need to first convert our pandas DataFrame to a</p>
+<p><a class="external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html" target="_blank">numpy.array</a></p>
+<figure class="figure-like"><pre class="console"><b># import the numpy and the Linear Regression tool from scikitlearn
+
+import numpy as np
+from sklearn.linear_model import LinearRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.10.</span> </figcaption></figure><p>First we make a numpy.array of the predictor features we want to include in the model. For today that is just the <em class="emphasis">Total_SF</em> feature.</p>
+<p>Then we make another numpy.array with the known value of the result feature. For today that is the <em class="emphasis">SalePrice</em> feature.</p>
+<figure class="figure-like"><pre class="console"><b>X = np.atleast_2d(np.array(hd2['Total_SF'])).transpose() 
+
+# There is an annoying scikitlearn thing here that it needs the X to be a 2-d array;
+# In our case the X is a 1-d object.
+
+# I need the transpose because numpy.atleast_2d() gives a (1, n) array and we want a (n, 1) array.
+
+X
+</b>array([[1710],
+       [1262],
+       [1786],
+       ...,
+       [2340],
+       [1078],
+       [1256]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.11.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>y = np.array(hd2['SalePrice'])
+
+# scikitlearn wants the predictor to be a 1-d array, so no problems.
+
+y
+</b>array([208500, 181500, 223500, ..., 266500, 142125, 147500])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.12.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>reg = LinearRegression().fit(X, y)   # .fit(X, y) applies the model to the X features to predict the y values
+                                     # this syntax is identical throughout the scikitlearn functions
+reg.score(X, y)
+</b>0.5139213494859829
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p>Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of <ol class="decimal"><li><p>514 is not good (which we can see in the graph below).</p></li></ol></p>
+<p>Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
+<figure class="figure-like"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_    # The intercept and slope(s) of the regression line can be pulled out
+
+# Also note that I used a little bit of python trickery here to unpack the array reg.coef_
+
+b, m
+</b>(15955.120847421553, 109.27661587643645)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p>The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
+<figure class="figure-like"><pre class="console"><b>x = 4500
+
+print(reg.predict(np.array(x).reshape(-1, 1))[0])   
+# Note a couple of annoying things. The built in expects a 2d array and returns an array.
+
+print(b+m*x)
+</b>507699.89229138556
+507699.89229138556
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p>We can plot this together with the data.</p>
+<figure class="figure-like"><pre class="console"><b>xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
+yvalues = reg.predict(xvalues)  # apply the models predictor
+
+plt.figure(figsize = (10, 8))
+
+plt.plot(X, y, 'b.')  # Plot the points from the dataset
+plt.plot(xvalues, yvalues, 'r-');  # plot the regression line
+
+# Note the syntax for the plot function here. It is identical to that of Matlab.
+
+plt.xlabel('Total_SF') # Apply the axis labels
+plt.ylabel('SalePrice');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.16.</span> </figcaption></figure></article><span class="incontext"><a href="section-28.html#paragraphs-11">in-context</a></span>
+</body>
+</html>

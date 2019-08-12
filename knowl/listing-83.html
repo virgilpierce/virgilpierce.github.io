@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
+yvalues = reg.predict(xvalues)  # apply the models predictor
+
+plt.figure(figsize = (10, 8))
+
+plt.plot(X, y, 'b.')  # Plot the points from the dataset
+plt.plot(xvalues, yvalues, 'r-');  # plot the regression line
+
+# Note the syntax for the plot function here. It is identical to that of Matlab.
+
+plt.xlabel('Total_SF') # Apply the axis labels
+plt.ylabel('SalePrice');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.16.</span> </figcaption></figure><span class="incontext"><a href="section-28.html#listing-83">in-context</a></span>
+</body>
+</html>

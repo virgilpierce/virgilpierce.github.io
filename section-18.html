@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-09T09:53:13-06:00    *-->
+<!--*    on 2019-08-12T12:16:18-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -41,7 +41,7 @@ MathJax.Hub.Config({
         mtextFontInherit: true,
     },
 });
-</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.11/pretext.js"></script><script src="https://pretextbook.org/js/0.11/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
 <link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
@@ -53,7 +53,7 @@ MathJax.Hub.Config({
 var role = 'student';
 var guest_access = true;
 var login_required = false;
-var js_version = 0.11;
+var js_version = 0.12;
 </script>
 </head>
 <body class="mathbook-book has-toc has-sidebar-left">
@@ -118,6 +118,13 @@ var js_version = 0.11;
 <li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
 </ul>
 </li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
 </ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
 </div></div>
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-18"><h2 class="heading hide-type">
@@ -162,7 +169,7 @@ hd.shape
 </h3>
 <p id="p-237">The problem here is to use the data set to derive a method of estimating the Sale Price (the last column) based on the features of the home.</p>
 <p id="p-238">This data set comes from <a class="external" href="http://kaggle.com" target="_blank">Kaggle.com</a>  and is actually a set for a submission in their competitions. The test set that is accompanying it is the set of features for some homes without the SalePrice and is used for scoring submissions.</p>
-<p id="p-239"><div style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/house-price-index_orig.jpg" style="width: 100%; height: auto;" alt=""></div></p>
+<p id="p-239"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/house-price-index_orig.jpg" style="width: 100%; height: auto;" alt=""></div></p>
 <figure class="figure-like" id="listing-37"><pre class="console"><b># Let's be a little bit naive and just take a few of these features - 
 # we will come back to this example later and explore how to deal with some of the 
 # difficulties here.
@@ -217,7 +224,7 @@ p = sn.pairplot(hd)
 
 p.fig.set_size_inches(9, 9)
 </b></pre>
-<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.14.png" style="width: 100%; height: auto;" alt=""></div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.14.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.6.</span> </figcaption></figure></section><section class="subsection" id="subsection-34"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">2.9.2</span> <span class="title">Why Data Science or What is Data Science</span>
 </h3>
@@ -240,13 +247,13 @@ plt.show()
 # There are ways to run this so that you can rotate it - seems to not be working on my mac.
 # Generally I've found that 2-d plots with a hue color for a 3rd factor work best.
 </b></pre>
-<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.15.png" style="width: 100%; height: auto;" alt=""></div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.15.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.7.</span> </figcaption></figure><figure class="figure-like" id="listing-42"><pre class="console"><b>sn.set(style = 'darkgrid')
 plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='1stFlrSF', y='BedroomAbvGr', hue = 'SalePrice', data=hd, palette='winter');
 </b></pre>
-<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.16.png" style="width: 100%; height: auto;" alt=""></div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.16.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.8.</span> </figcaption></figure><figure class="figure-like" id="listing-43"><pre class="console"><b># We are doing regression, so maybe it makes more sense to plot 'SalePrice' as the y-axis and use
 # the nearly categorical 'BedroomAbvGr' as the hue.
 
@@ -258,7 +265,7 @@ p = sn.scatterplot(x='1stFlrSF', y='SalePrice', hue = 'BedroomAbvGr',
 
 ax_fix = p.axes # Saving information about the axis for the next figure
 </b></pre>
-<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.17.png" style="width: 100%; height: auto;" alt=""></div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.17.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.9.</span> </figcaption></figure><figure class="figure-like" id="listing-44"><pre class="console"><b># So a naive thing to try is a separate regression line based on the number of bedrooms.
 
 temp = hd.copy()
@@ -282,10 +289,10 @@ ax = p.axes
 ax[0,0].set_ylim(ax_fix.get_ylim())  # This took some work using the dir() command and google
 ax[0,0].set_xlim(ax_fix.get_xlim());  # These two commands set the axes scale below to match the previous graph.
 </b></pre>
-<div style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.18.png" style="width: 100%; height: auto;" alt=""></div>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.18.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.9.10.</span> </figcaption></figure><p id="p-247">We will come back to this example again and develop methods of being more precise.</p></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
-<script src="https://pretextbook.org/js/0.11/login.js"></script>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
 </body>
 </html>

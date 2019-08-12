@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">Exporting Data.</span></h5>
+<p>Occasionally you will need to export data from Python so that it can be used in other programs. The primary reasons I have to do this in my work are:</p>
+<ul class="disc">
+<li><p>I need to share the results of some analysis or transformation of the data, like we did here (particularly after using the pandas.groupby() and similar functions). Many people I work with do not use Python and so I need to export the data to a spreadsheet readable format so they can see it.</p></li>
+<li><p>I am applying a complicated transformation that has taken some time to compute, and I want to save the result as a starting point for further analysis.</p></li>
+</ul>
+<p>As you can imagine, pandas has a tool for that:</p>
+<p><a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html" target="_blank">pandas.DataFrame.to_csv</a></p>
+<figure class="figure-like"><pre class="console"><b># Note that you need to give a relative path (relative to the directory your notebook is in), 
+# or give an absolute path. I work on multiple machines and so relative paths are usually more reliable
+
+hd2.to_csv('total_sf.csv')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.7.</span> </figcaption></figure></article><span class="incontext"><a href="section-28.html#paragraphs-9">in-context</a></span>
+</body>
+</html>

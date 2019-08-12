@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:20-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>X = np.atleast_2d(np.array(hd2['Total_SF'])).transpose() 
+
+# There is an annoying scikitlearn thing here that it needs the X to be a 2-d array;
+# In our case the X is a 1-d object.
+
+# I need the transpose because numpy.atleast_2d() gives a (1, n) array and we want a (n, 1) array.
+
+X
+</b>array([[1710],
+       [1262],
+       [1786],
+       ...,
+       [2340],
+       [1078],
+       [1256]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.11.</span> </figcaption></figure><span class="incontext"><a href="section-28.html#listing-78">in-context</a></span>
+</body>
+</html>

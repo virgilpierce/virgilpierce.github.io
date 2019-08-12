@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-12T12:16:19-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Python and Jupyter</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="tools.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="tools.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-29.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="tools.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="tools.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-29.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28" class="active">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-28"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">4.1</span> <span class="title">Python and Jupyter</span>
+</h2>
+<section class="introduction" id="introduction-13"><p id="p-354">We discussed in Chapter 2 why we will be using Python and Jupyter in this class and how to get them. A few more notes are worthwhile about Python, and what we will do today is work through an example carefully illustrating some of the tools we will use. Let's use the dataset on house prices.</p></section><section class="subsection" id="subsection-43"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">4.1.1</span> <span class="title">Markdown</span>
+</h3>
+<p id="p-355">Before we get started in that, note that one of the big features we get with Jupyter (Notebooks or Labs) is the <em class="emphasis">Markdown</em> cells in addition to the <em class="emphasis">Code</em> cells. Markdown is a simple language for adding some features to regular text. It is a WYSIWYG (What You See Is What You Get text processing language, unlike say \(\LaTeX\) which is a compiled text processing language). The markdown used by Jupyter is identical to that used by Github; and is not far from the markdown language used by wikipedia. Some quick points about using markdown:</p>
+<ul id="p-356" class="disc">
+<li id="li-103"><p id="p-357">Section headers are identified with '#' symbols.</p></li>
+<li id="li-104"><p id="p-358">You can add mathematics using dollar symbols enclosing LaTeX commands.</p></li>
+<li id="li-105"><p id="p-359">Single dollar symbols are for inline mathematics, for example \(f(x) = \sin(x^2)\)</p></li>
+<li id="li-106">
+<p id="p-360">Double dollar symbols are for a mathematics environment, for example</p>
+<div class="displaymath">
+\begin{equation*}
+\int x dx = \frac{1}{2} x^2 + C
+\end{equation*}
+</div>
+</li>
+<li id="li-107"><p id="p-361">For more help with LaTeX, just google things. There are now tools that can take a picture of handwritten mathematics and give you the LaTeX code to creat it.</p></li>
+<li id="li-108"><p id="p-362">Images can be include using a sort of html like tag (see the example notebooks)</p></li>
+<li id="li-109"><p id="p-363">Star symbols are used for italics and two star symbols for bold</p></li>
+</ul>
+<p id="p-364">You render the markdown code by typing shift+enter in the cell just as you would for executing code in a code cell.</p></section><section class="subsection" id="subsection-44"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">4.1.2</span> <span class="title">Python for Data Science</span>
+</h3>
+<p id="p-365">So the best way to learn is to do, so lets start with an example. Many data sets arrive as a comma separated variable (CSV) file. This is a text file representing a spreadsheet where each entry in different columns are separated by a variable. It is worth opening a CSV file in a text editor on your computer and making sure you recognize the structure. If you have received the data as another type of spreadsheet you should open it in its native application and then save it as or export it as a CSV file.</p>
+<p id="p-366">Other common types of data are:</p>
+<ul id="p-367" class="disc">
+<li id="li-110"><p id="p-368">Images</p></li>
+<li id="li-111"><p id="p-369">Text Files</p></li>
+<li id="li-112"><p id="p-370">Data scrapped from APIs (like the Twitter API)</p></li>
+</ul>
+<p id="p-371">If you look at the last example from Chapter 2 you will see an example of working with image files as data, and later in the class we will explore how to handle text and interact with the Twitter API to gather data.</p></section><section class="subsection" id="subsection-45"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">4.1.3</span> <span class="title">Example</span>
+</h3>
+<article class="paragraphs" id="paragraphs-7"><h5 class="heading"><span class="title">Import Data.</span></h5>
+<p id="p-372">The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html" target="_blank">pandas.read_csv</a>. Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
+<p id="p-373"><em class="alert">Warning</em> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
+<figure class="figure-like" id="listing-68"><pre class="console"><b># Start with importing the pandas package
+
+import pandas as pa
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-69"><pre class="console"><b># Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.2.</span> </figcaption></figure><p id="p-374">The <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank">pandas.dataframe</a>  object type is a structured array. It is a collection of rows and columns with names for the rows and colummns. Note there is a special <em class="emphasis">NaN</em> character that represents entries that were missing in the dataset.</p>
+<p id="p-375">Not surprinsingly with the house pricing dataset <em class="emphasis">PoolQC</em> (Pool Quality) is a missing value for many houses.</p>
+<p id="p-376">Typically the columns should be the features, and each row should represent one of the samples or instances. We can get a list of the features:</p>
+<figure class="figure-like" id="listing-70"><pre class="console"><b># I wrap it in a list command because it returns an np.array element with some additional information otherwise
+
+list(hd.columns.values)
+</b>['Id',
+ 'MSSubClass',
+ 'MSZoning',
+ 'LotFrontage',
+ 'LotArea',
+ 'Street',
+ 'Alley',
+ 'LotShape',
+ 'LandContour',
+ 'Utilities',
+ 'LotConfig',
+ 'LandSlope',
+ 'Neighborhood',
+ 'Condition1',
+ 'Condition2',
+ 'BldgType',
+ 'HouseStyle',
+ 'OverallQual',
+ 'OverallCond',
+ 'YearBuilt',
+ 'YearRemodAdd',
+ 'RoofStyle',
+ 'RoofMatl',
+ 'Exterior1st',
+ 'Exterior2nd',
+ 'MasVnrType',
+ 'MasVnrArea',
+ 'ExterQual',
+ 'ExterCond',
+ 'Foundation',
+ 'BsmtQual',
+ 'BsmtCond',
+ 'BsmtExposure',
+ 'BsmtFinType1',
+ 'BsmtFinSF1',
+ 'BsmtFinType2',
+ 'BsmtFinSF2',
+ 'BsmtUnfSF',
+ 'TotalBsmtSF',
+ 'Heating',
+ 'HeatingQC',
+ 'CentralAir',
+ 'Electrical',
+ '1stFlrSF',
+ '2ndFlrSF',
+ 'LowQualFinSF',
+ 'GrLivArea',
+ 'BsmtFullBath',
+ 'BsmtHalfBath',
+ 'FullBath',
+ 'HalfBath',
+ 'BedroomAbvGr',
+ 'KitchenAbvGr',
+ 'KitchenQual',
+ 'TotRmsAbvGrd',
+ 'Functional',
+ 'Fireplaces',
+ 'FireplaceQu',
+ 'GarageType',
+ 'GarageYrBlt',
+ 'GarageFinish',
+ 'GarageCars',
+ 'GarageArea',
+ 'GarageQual',
+ 'GarageCond',
+ 'PavedDrive',
+ 'WoodDeckSF',
+ 'OpenPorchSF',
+ 'EnclosedPorch',
+ '3SsnPorch',
+ 'ScreenPorch',
+ 'PoolArea',
+ 'PoolQC',
+ 'Fence',
+ 'MiscFeature',
+ 'MiscVal',
+ 'MoSold',
+ 'YrSold',
+ 'SaleType',
+ 'SaleCondition',
+ 'SalePrice']
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.3.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-8"><h5 class="heading"><span class="title">Manipulating Data.</span></h5>
+<p id="p-377">First, we consider the effect of total square footage on the price of the house. Note that there is no feature that is <em class="emphasis">Total Square Footage</em>.  There is <em class="emphasis">1stFlrSF</em> and <em class="emphasis">2ndFlrSF</em>. So what we want to do is make a new feature that is the sum of these two. However the dataframe itself is big right now, so what I would also like to do is pair it down to only the features I want to consider.</p>
+<figure class="figure-like" id="listing-71"><pre class="console"><b># Make a new data frame using only the '1stFlrSF', '2ndFlrSF', and 'SalePrice' features
+
+hd2 = hd[['1stFlrSF', '2ndFlrSF', 'SalePrice']]
+hd2.head()
+</b>   1stFlrSF  2ndFlrSF  SalePrice
+0       856       854     208500
+1      1262         0     181500
+2       920       866     223500
+3       961       756     140000
+4      1145      1053     250000
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-72"><pre class="console"><b># Add a new feature by summing the '1stFlrSF' and '2ndFlrSF' features for each house
+# new features are added by referencing a subset of the rows with the feature named
+
+# While we are on the subject, I recomend using feature names that do not have spaces and do not start 
+# with digits these will behave better in Python overall.
+
+hd2 = hd2.assign(Total_SF=pa.Series(hd2['1stFlrSF'] + hd2['2ndFlrSF'], index=hd2.index))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-73"><pre class="console"><b>hd2.head()
+</b>   1stFlrSF  2ndFlrSF  SalePrice  Total_SF
+0       856       854     208500      1710
+1      1262         0     181500      1262
+2       920       866     223500      1786
+3       961       756     140000      1717
+4      1145      1053     250000      2198
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.6.</span> </figcaption></figure><p id="p-378"><em class="alert">Warning</em> if you do this the naive Python way (particular if you have used numpy arrays) you probably are getting a <em class="emphasis">SettingWithCopyWarning</em>. Using assign is now considered the best method. For more complicated transformations you would probably want to use a lambda or even a regular function.</p>
+<p id="p-379">We will deal with manipulating categorical data later, thouigh you can also look back at the baseball player example in Chapter 1.</p></article><article class="paragraphs" id="paragraphs-9"><h5 class="heading"><span class="title">Exporting Data.</span></h5>
+<p id="p-380">Occasionally you will need to export data from Python so that it can be used in other programs. The primary reasons I have to do this in my work are:</p>
+<ul id="p-381" class="disc">
+<li id="li-113"><p id="p-382">I need to share the results of some analysis or transformation of the data, like we did here (particularly after using the pandas.groupby() and similar functions). Many people I work with do not use Python and so I need to export the data to a spreadsheet readable format so they can see it.</p></li>
+<li id="li-114"><p id="p-383">I am applying a complicated transformation that has taken some time to compute, and I want to save the result as a starting point for further analysis.</p></li>
+</ul>
+<p id="p-384">As you can imagine, pandas has a tool for that:</p>
+<p id="p-385"><a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html" target="_blank">pandas.DataFrame.to_csv</a></p>
+<figure class="figure-like" id="listing-74"><pre class="console"><b># Note that you need to give a relative path (relative to the directory your notebook is in), 
+# or give an absolute path. I work on multiple machines and so relative paths are usually more reliable
+
+hd2.to_csv('total_sf.csv')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.7.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-10"><h5 class="heading"><span class="title">Plotting.</span></h5>
+<p id="p-386">We will use seaborn to plot data. A future class will go through more examples and additional detail about plotting. For now here is an example of a scatter plot we might use with the transformed data for housing prices:</p>
+<figure class="figure-like" id="listing-75"><pre class="console"><b># Import seaborn and matplotlib.pyplot
+
+import seaborn as sn
+import matplotlib.pyplot as plt
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.8.</span> </figcaption></figure><figure class="figure-like" id="listing-76"><pre class="console"><b>sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='Total_SF', y='SalePrice', data=hd2, palette='winter');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.9.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-11"><h5 class="heading"><span class="title">Making Predictions.</span></h5>
+<p id="p-387">So fine we have drawn a nice picture, but what we actually want is to use this model to make predictions. We will use the scikitlearn package. The linear regression command is <a class="external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank">sklearn.linear_model.LinearRegression</a></p>
+<p id="p-388">In order to use this we also need to first convert our pandas DataFrame to a</p>
+<p id="p-389"><a class="external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html" target="_blank">numpy.array</a></p>
+<figure class="figure-like" id="listing-77"><pre class="console"><b># import the numpy and the Linear Regression tool from scikitlearn
+
+import numpy as np
+from sklearn.linear_model import LinearRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.10.</span> </figcaption></figure><p id="p-390">First we make a numpy.array of the predictor features we want to include in the model. For today that is just the <em class="emphasis">Total_SF</em> feature.</p>
+<p id="p-391">Then we make another numpy.array with the known value of the result feature. For today that is the <em class="emphasis">SalePrice</em> feature.</p>
+<figure class="figure-like" id="listing-78"><pre class="console"><b>X = np.atleast_2d(np.array(hd2['Total_SF'])).transpose() 
+
+# There is an annoying scikitlearn thing here that it needs the X to be a 2-d array;
+# In our case the X is a 1-d object.
+
+# I need the transpose because numpy.atleast_2d() gives a (1, n) array and we want a (n, 1) array.
+
+X
+</b>array([[1710],
+       [1262],
+       [1786],
+       ...,
+       [2340],
+       [1078],
+       [1256]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.11.</span> </figcaption></figure><figure class="figure-like" id="listing-79"><pre class="console"><b>y = np.array(hd2['SalePrice'])
+
+# scikitlearn wants the predictor to be a 1-d array, so no problems.
+
+y
+</b>array([208500, 181500, 223500, ..., 266500, 142125, 147500])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.12.</span> </figcaption></figure><figure class="figure-like" id="listing-80"><pre class="console"><b>reg = LinearRegression().fit(X, y)   # .fit(X, y) applies the model to the X features to predict the y values
+                                     # this syntax is identical throughout the scikitlearn functions
+reg.score(X, y)
+</b>0.5139213494859829
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p id="p-392">Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of <ol id="p-393" class="decimal"><li id="li-115"><p id="p-394">514 is not good (which we can see in the graph below).</p></li></ol></p>
+<p id="p-395">Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
+<figure class="figure-like" id="listing-81"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_    # The intercept and slope(s) of the regression line can be pulled out
+
+# Also note that I used a little bit of python trickery here to unpack the array reg.coef_
+
+b, m
+</b>(15955.120847421553, 109.27661587643645)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p id="p-396">The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
+<figure class="figure-like" id="listing-82"><pre class="console"><b>x = 4500
+
+print(reg.predict(np.array(x).reshape(-1, 1))[0])   
+# Note a couple of annoying things. The built in expects a 2d array and returns an array.
+
+print(b+m*x)
+</b>507699.89229138556
+507699.89229138556
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p id="p-397">We can plot this together with the data.</p>
+<figure class="figure-like" id="listing-83"><pre class="console"><b>xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
+yvalues = reg.predict(xvalues)  # apply the models predictor
+
+plt.figure(figsize = (10, 8))
+
+plt.plot(X, y, 'b.')  # Plot the points from the dataset
+plt.plot(xvalues, yvalues, 'r-');  # plot the regression line
+
+# Note the syntax for the plot function here. It is identical to that of Matlab.
+
+plt.xlabel('Total_SF') # Apply the axis labels
+plt.ylabel('SalePrice');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.16.</span> </figcaption></figure></article></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>
