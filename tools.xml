@@ -1,0 +1,668 @@
+<pretext>
+
+    <docinfo>
+        <macros>
+        \newcommand{\doubler}[1]{2#1}
+        </macros>
+    </docinfo>
+
+    <article xml:id="minimal">
+        <title>Conversion Script Test</title>
+
+        <frontmatter>
+
+            <titlepage>
+                <author>
+                    <personname>Virgil U Pierce</personname>
+                    <institution>University of Northern Colorado</institution>
+                </author>
+                <date><today /></date>
+            </titlepage>
+
+            <abstract>
+                <p>Testing of conversion of a Jupyter notebook to Pretext, and compiling</p>
+            </abstract>
+            
+            <introduction>
+
+                <p>Check if process.call worked</p>
+
+                <p>This is a short paragraph to introduce the article (but it is not the abstract).  
+                It is optional, in case it would be preferable to have the first section be titled an 
+                <q>Introduction.</q></p>
+            </introduction>
+            
+        </frontmatter><section>
+ <title> Tools of the Trade
+</title>
+
+<subsection>
+ <title> Python and Jupyter
+</title>
+
+<p>We discussed in Chapter 2 why we will be using Python and Jupyter in this class and how to get them. A few more notes are worthwhile about Python, and what we will do today is work through an example carefully illustrating some of the tools we will use. Let's use the dataset on house prices.</p>
+
+<subsubsection>
+ <title> Markdown
+</title>
+
+<p>Before we get started in that, note that one of the big features we get with Jupyter (Notebooks or Labs) is the <em>Markdown</em> cells in addition to the <em>Code</em> cells. Markdown is a simple language for adding some features to regular text. It is a WYSIWYG (What You See Is What You Get text processing language, unlike say <m>\LaTeX</m> which is a compiled text processing language). The markdown used by Jupyter is identical to that used by Github; and is not far from the markdown language used by wikipedia. Some quick points about using markdown:</p>
+
+<p><ul>
+<li><p>Section headers are identified with '#' symbols. </p>
+</li>
+<li><p>You can add mathematics using dollar symbols enclosing LaTeX commands.  </p>
+</li>
+<li><p>Single dollar symbols are for inline mathematics, for example <m>f(x) = \sin(x^2)</m></p>
+</li>
+<li><p>Double dollar symbols are for a mathematics environment, for example <me> \int x dx = \frac{1}{2} x^2 + C</me></p>
+</li>
+<li><p>For more help with LaTeX, just google things. There are now tools that can take a picture of handwritten mathematics and give you the LaTeX code to creat it.</p>
+</li>
+<li><p>Images can be include using a sort of html like tag (see the example notebooks)</p>
+</li>
+<li><p>Star symbols are used for italics and two star symbols for bold</p>
+</li>
+</ul></p>
+
+<p>You render the markdown code by typing shift+enter in the cell just as you would for executing code in a code cell.</p>
+
+
+</subsubsection>
+<subsubsection>
+ <title> Python for Data Science
+</title>
+
+<p>So the best way to learn is to do, so lets start with an example. Many data sets arrive as a comma separated variable (CSV) file. This is a text file representing a spreadsheet where each entry in different columns are separated by a variable. It is worth opening a CSV file in a text editor on your computer and making sure you recognize the structure. If you have received the data as another type of spreadsheet you should open it in its native application and then save it as or export it as a CSV file.</p>
+
+<p>Other common types of data are:</p>
+<p><ul>
+<li><p>Images</p>
+</li>
+<li><p>Text Files </p>
+</li>
+<li><p>Data scrapped from APIs (like the Twitter API)</p>
+</li>
+</ul></p>
+
+<p>If you look at the last example from Chapter 2 you will see an example of working with image files as data, and later in the class we will explore how to handle text and interact with the Twitter API to gather data. </p>
+
+
+</subsubsection>
+<subsubsection>
+ <title> Example
+</title>
+
+<paragraphs>
+ <title> Import Data
+</title>
+
+<p>The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method </p>
+<p><url href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"> pandas.read_csv </url> . </p>
+<p>Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
+
+<p><alert>Warning</alert> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
+<listing>
+<console>
+<input>
+# Start with importing the pandas package
+
+import pandas as pa
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</output>
+</console>
+</listing>
+<p>The <url href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html"> pandas.dataframe </url>  object type is a structured array. It is a collection of rows and columns with names for the rows and colummns. Note there is a special <em>NaN</em> character that represents entries that were missing in the dataset. </p>
+
+<p>Not surprinsingly with the house pricing dataset <em>PoolQC</em> (Pool Quality) is a missing value for many houses.</p>
+
+<p>Typically the columns should be the features, and each row should represent one of the samples or instances. We can get a list of the features:</p>
+<listing>
+<console>
+<input>
+# I wrap it in a list command because it returns an np.array element with some additional information otherwise
+
+list(hd.columns.values)
+</input>
+<output>
+['Id',
+ 'MSSubClass',
+ 'MSZoning',
+ 'LotFrontage',
+ 'LotArea',
+ 'Street',
+ 'Alley',
+ 'LotShape',
+ 'LandContour',
+ 'Utilities',
+ 'LotConfig',
+ 'LandSlope',
+ 'Neighborhood',
+ 'Condition1',
+ 'Condition2',
+ 'BldgType',
+ 'HouseStyle',
+ 'OverallQual',
+ 'OverallCond',
+ 'YearBuilt',
+ 'YearRemodAdd',
+ 'RoofStyle',
+ 'RoofMatl',
+ 'Exterior1st',
+ 'Exterior2nd',
+ 'MasVnrType',
+ 'MasVnrArea',
+ 'ExterQual',
+ 'ExterCond',
+ 'Foundation',
+ 'BsmtQual',
+ 'BsmtCond',
+ 'BsmtExposure',
+ 'BsmtFinType1',
+ 'BsmtFinSF1',
+ 'BsmtFinType2',
+ 'BsmtFinSF2',
+ 'BsmtUnfSF',
+ 'TotalBsmtSF',
+ 'Heating',
+ 'HeatingQC',
+ 'CentralAir',
+ 'Electrical',
+ '1stFlrSF',
+ '2ndFlrSF',
+ 'LowQualFinSF',
+ 'GrLivArea',
+ 'BsmtFullBath',
+ 'BsmtHalfBath',
+ 'FullBath',
+ 'HalfBath',
+ 'BedroomAbvGr',
+ 'KitchenAbvGr',
+ 'KitchenQual',
+ 'TotRmsAbvGrd',
+ 'Functional',
+ 'Fireplaces',
+ 'FireplaceQu',
+ 'GarageType',
+ 'GarageYrBlt',
+ 'GarageFinish',
+ 'GarageCars',
+ 'GarageArea',
+ 'GarageQual',
+ 'GarageCond',
+ 'PavedDrive',
+ 'WoodDeckSF',
+ 'OpenPorchSF',
+ 'EnclosedPorch',
+ '3SsnPorch',
+ 'ScreenPorch',
+ 'PoolArea',
+ 'PoolQC',
+ 'Fence',
+ 'MiscFeature',
+ 'MiscVal',
+ 'MoSold',
+ 'YrSold',
+ 'SaleType',
+ 'SaleCondition',
+ 'SalePrice']
+</output>
+</console>
+</listing>
+
+</paragraphs>
+<paragraphs>
+ <title> Manipulating Data
+</title>
+
+<p>First, we consider the effect of total square footage on the price of the house. Note that there is no feature that is <em>Total Square Footage</em>.  There is <em>1stFlrSF</em> and <em>2ndFlrSF</em>. So what we want to do is make a new feature that is the sum of these two. However the dataframe itself is big right now, so what I would also like to do is pair it down to only the features I want to consider.</p>
+<listing>
+<console>
+<input>
+# Make a new data frame using only the '1stFlrSF', '2ndFlrSF', and 'SalePrice' features
+
+hd2 = hd[['1stFlrSF', '2ndFlrSF', 'SalePrice']]
+hd2.head()
+</input>
+<output>
+   1stFlrSF  2ndFlrSF  SalePrice
+0       856       854     208500
+1      1262         0     181500
+2       920       866     223500
+3       961       756     140000
+4      1145      1053     250000
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Add a new feature by summing the '1stFlrSF' and '2ndFlrSF' features for each house
+# new features are added by referencing a subset of the rows with the feature named
+
+# While we are on the subject, I recomend using feature names that do not have spaces and do not start 
+# with digits these will behave better in Python overall.
+
+hd2 = hd2.assign(Total_SF=pa.Series(hd2['1stFlrSF'] + hd2['2ndFlrSF'], index=hd2.index))
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd2.head()
+</input>
+<output>
+   1stFlrSF  2ndFlrSF  SalePrice  Total_SF
+0       856       854     208500      1710
+1      1262         0     181500      1262
+2       920       866     223500      1786
+3       961       756     140000      1717
+4      1145      1053     250000      2198
+</output>
+</console>
+</listing>
+<p><alert>Warning</alert> if you do this the naive Python way (particular if you have used numpy arrays) you probably are getting a <em>SettingWithCopyWarning</em>. Using assign is now considered the best method. For more complicated transformations you would probably want to use a lambda or even a regular function.</p>
+
+<p>We will deal with manipulating categorical data later, thouigh you can also look back at the baseball player example in Chapter 1.</p>
+
+</paragraphs>
+<paragraphs>
+ <title> Exporting Data
+</title>
+
+<p>Occasionally you will need to export data from Python so that it can be used in other programs. The primary reasons I have to do this in my work are: </p>
+
+<p><ul>
+<li><p>I need to share the results of some analysis or transformation of the data, like we did here (particularly after using the pandas.groupby() and similar functions). Many people I work with do not use Python and so I need to export the data to a spreadsheet readable format so they can see it.</p>
+</li>
+<li><p>I am applying a complicated transformation that has taken some time to compute, and I want to save the result as a starting point for further analysis.</p>
+</li>
+</ul></p>
+
+<p>As you can imagine, pandas has a tool for that: </p>
+<p><url href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html"> pandas.DataFrame.to_csv </url> </p>
+<listing>
+<console>
+<input>
+# Note that you need to give a relative path (relative to the directory your notebook is in), 
+# or give an absolute path. I work on multiple machines and so relative paths are usually more reliable
+
+hd2.to_csv('total_sf.csv')
+</input>
+</console>
+</listing>
+
+</paragraphs>
+<paragraphs>
+ <title> Plotting
+</title>
+
+<p>We will use seaborn to plot data. A future class will go through more examples and additional detail about plotting. For now here is an example of a scatter plot we might use with the transformed data for housing prices:</p>
+<listing>
+<console>
+<input>
+# Import seaborn and matplotlib.pyplot
+
+import seaborn as sn
+import matplotlib.pyplot as plt
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+sn.set(style = 'darkgrid')
+plt.figure(figsize = (10, 8))
+
+sn.scatterplot(x='Total_SF', y='SalePrice', data=hd2, palette='winter');
+</input>
+</console>
+<figure source='Images/3_1.1.png' width='60%'/>
+</listing>
+
+</paragraphs>
+<paragraphs>
+ <title> Making Predictions
+</title>
+
+<p>So fine we have drawn a nice picture, but what we actually want is to use this model to make predictions. We will use the scikitlearn package. The linear regression command is <url href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html"> sklearn.linear_model.LinearRegression </url> </p>
+
+<p>In order to use this we also need to first convert our pandas DataFrame to a </p>
+<p><url href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html"> numpy.array </url> </p>
+
+<listing>
+<console>
+<input>
+# import the numpy and the Linear Regression tool from scikitlearn
+
+import numpy as np
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<p>First we make a numpy.array of the predictor features we want to include in the model. For today that is just the <em>Total_SF</em> feature.</p>
+
+<p>Then we make another numpy.array with the known value of the result feature. For today that is the <em>SalePrice</em> feature.</p>
+<listing>
+<console>
+<input>
+X = np.atleast_2d(np.array(hd2['Total_SF'])).transpose() 
+
+# There is an annoying scikitlearn thing here that it needs the X to be a 2-d array;
+# In our case the X is a 1-d object.
+
+# I need the transpose because numpy.atleast_2d() gives a (1, n) array and we want a (n, 1) array.
+
+X
+</input>
+<output>
+array([[1710],
+       [1262],
+       [1786],
+       ...,
+       [2340],
+       [1078],
+       [1256]])
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+y = np.array(hd2['SalePrice'])
+
+# scikitlearn wants the predictor to be a 1-d array, so no problems.
+
+y
+</input>
+<output>
+array([208500, 181500, 223500, ..., 266500, 142125, 147500])
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X, y)   # .fit(X, y) applies the model to the X features to predict the y values
+                                     # this syntax is identical throughout the scikitlearn functions
+reg.score(X, y)
+</input>
+<output>
+0.5139213494859829
+</output>
+</console>
+</listing>
+<p>Score here is what is called the <m>R^2</m> of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An <m>R^2</m> of <p><ol>
+<li><p>514 is not good (which we can see in the graph below).</p>
+</li>
+</ol></p>
+</p>
+<p>Later on we will go into further detail about Linear Regression and what <m>R^2</m> means.</p>
+<listing>
+<console>
+<input>
+b, m = reg.intercept_, *reg.coef_    # The intercept and slope(s) of the regression line can be pulled out
+
+# Also note that I used a little bit of python trickery here to unpack the array reg.coef_
+
+b, m
+</input>
+<output>
+(15955.120847421553, 109.27661587643645)
+</output>
+</console>
+</listing>
+<p>The prediction can be found using the scikitlearn builtin; or using the linear form <m>b + mx = y</m></p>
+<listing>
+<console>
+<input>
+x = 4500
+
+print(reg.predict(np.array(x).reshape(-1, 1))[0])   
+# Note a couple of annoying things. The built in expects a 2d array and returns an array.
+
+print(b+m*x)
+</input>
+<output>
+507699.89229138556
+507699.89229138556
+
+</output>
+</console>
+</listing>
+<p>We can plot this together with the data.</p>
+<listing>
+<console>
+<input>
+xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
+yvalues = reg.predict(xvalues)  # apply the models predictor
+
+plt.figure(figsize = (10, 8))
+
+plt.plot(X, y, 'b.')  # Plot the points from the dataset
+plt.plot(xvalues, yvalues, 'r-');  # plot the regression line
+
+# Note the syntax for the plot function here. It is identical to that of Matlab.
+
+plt.xlabel('Total_SF') # Apply the axis labels
+plt.ylabel('SalePrice');
+</input>
+</console>
+<figure source='Images/3_1.2.png' width='60%'/>
+</listing>
+
+</paragraphs>
+
+</subsubsection>
+
+</subsection>
+<subsection>
+ <title> Development
+</title>
+
+<p>The data science workflow, which we will spend the next few weeks learning in greater detail, is:</p>
+
+<p><ol>
+<li><p> Examine the ethics of the question and the data gathering you are about to do;</p>
+</li>
+<li><p> Gather the data following any procedures you have established to address ethical concerns;</p>
+</li>
+<li><p> Make a plan for controling for and estimating error in the model (at a minimum set aside some testing data);</p>
+</li>
+<li><p> Do exploratory data analysis:  Look for missing values, relationships between features, or clustering;</p>
+</li>
+<li><p> Determine the question to be asked (what feature is the result and what features could be predictors);</p>
+</li>
+<li><p> Develop the model;</p>
+</li>
+<li><p> Once the final model is chosen and ready, apply it to your testing data and discuss the results;</p>
+</li>
+<li><p> Take a step back and ask if you have missed anything that might make your conclusions or your error estimate invalid or unethical;</p>
+</li>
+<li><p> Make the decision to move the model into production/presentation or not.</p>
+</li>
+</ol></p>
+
+<p>Note that if we were to break step 6 into pieces, it would looke a little similar to the whole cycle. In fact you would probably take additional test sets out of the data as you explore different models. Your goal is to already have a sense of what the error will be as you head into the final testing phase in step <p><ol>
+<li>
+</li>
+</ol></p>
+</p>
+<p><alert>Warning</alert> Failing to take appropriate precautions to estimate the error of the model, or adjusting your model after you have used the test data can lead to overfiting. Your model will look better on the data you have, but when you put it into production it may behave poorly.</p>
+
+</subsection>
+<subsection>
+ <title> Versioning Control
+</title>
+
+<p>A major part of any work using significant computing software like Data Science, is versioning control. Projects are usually done by a team and usually run through multiple stages of development before their final production or presentation steps. This means a challenge of the work is keeping track of what changes have been made, providing a system for changes to be vetted by the team, having a way to keep track of and resolve conflicts between versions, and possibly creating different versions that evolve independently.</p>
+
+<p>Add to this that for many employers their datascience (or mathematics, engineering, or programing) teams may be spread out around the country or the world. So we need to keep track of versions, but we also need to be able to distribute them.</p>
+
+<p>All of this means that we need to learn how to do what is called <em>versioning control</em>. </p>
+
+<p><ol>
+<li><p> The absolute simplest versioning control is to add numbers/names incrementally to the file names. The files can then be shared by email or a file sharing service. Problem: once two people on a team have made changes how do we resolve and incorporate the changes? At the least we need to set a standard for how the file names are choosen. We need to keep each file to preserve the history. It is also tough for the two people to be working on different parts of the project at the same time.</p>
+</li>
+</ol></p>
+
+<p><ol>
+<li><p> Some file sharing service (Google, Dropbox, and Outlook) will keep track of the history of a file. However they do not provide a system for resolving conflicts between versions, and often conflcited versions will spawn new copies of a file.</p>
+</li>
+</ol></p>
+
+<p><ol>
+<li><p> The Industry Standard for Versioning Control is Git (though there are other similar programs out there). A highly used service that is integrated with Git is <url href="http://github.com"> Github </url> . </p>
+</li>
+</ol></p>
+
+<subsubsection>
+ <title> Git
+</title>
+
+<p>Git keeps track of the history of a project. It does this by tracking differences in the versions for each file in the project (rather than making new copies of the whole file).</p>
+
+<p>It provides a formal structure for negotiating conflicts between versions, and for creating new versions.</p>
+
+<p>Using a service like Github it also allows for easy distribution of the project.</p>
+
+<p>The downside of Git is that it is very formal. It is capable of managing large projects like the </p>
+<p><url href="https://github.com/torvalds/linux"> Linux kernel </url>  with so many users making changes that github has given up trying to count them, and the only way to do that is with formality. That means it is possible to get into a frustrating situation where Git will not let you do what you want to do. We will talk about how to avoid this, and some options for what to do when it happens.</p>
+
+<p>Ultimately I am asking you to use Git and Github for this class because the employers I have talked to in Data Science, Mathematics, and Statistics have said that a candidate with experience using Git will have an advantage when interviewing with them. At the end of the day, understanding how to use Git will make you a better member of any team, however they do Versioning Control. </p>
+
+
+</subsubsection>
+<subsubsection>
+ <title> Using Github/Git with your Team
+</title>
+
+<p>Github now comes with a desktop application that provides some help for working with it. To get started someone from your team should do the following:</p>
+
+<p><ul>
+<li><p>Create an account on Github.</p>
+</li>
+<li><p>Under the <em>Repositories</em> tab, click the <alert>New</alert> button.</p>
+</li>
+<li><p>Enter a name for your respository (no spaces), choose <em>Private</em>, and click the <alert>Create Repository</alert> button. Note that there are other options here. We can discuss them in class if you are interested.</p>
+</li>
+<li><p>Click the <alert>Set up in Desktop</alert> button, it should prompt you to install the Github Desktop App if you have not already, and it should then prompt you to open the Desktop App.</p>
+</li>
+<li><p>In the Desktop App that is now open choose the directory where you want your project on your computer (note, not the directory it is currently in; I suggest keeping all of your Github projects in a Github directory), and click the <alert>Clone</alert> button.</p>
+</li>
+<li><p>If you open that directory on your computer you will see that it is empty. Add a text file to it.</p>
+</li>
+<li><p>Go back to the Github Desktop App, and you will see that it has now noticed you made a change in this directory. Because we changed a textfile it even gives us a little preview of what we changed.</p>
+</li>
+<li><p>Right now the change is not incorporated as part of the history of the project, we make it part of the history by adding a description of what we changed and clicking the <alert>Commit to master</alert> button.</p>
+</li>
+<li><p>The change is now part of the history of the project, but only on our local machine. We need to <em>Publish</em> the first branch of our project and <em>Push</em> the changes in it to Github so others can see them.</p>
+</li>
+<li><p>Now make another change to the file. When you go back to the Github Desktop App, it has noticed your change. Click the <alert>Commit to master</alert> button to make the change part of the history (or you can right click on the file and choose <em>Discard Changes</em> to drop them; or for a textfile you can even select which changes you want to keep and which you want to discard).</p>
+</li>
+<li><p>Then <em>Push</em> those changes to Github.</p>
+</li>
+</ul></p>
+
+<p>Going back to the website and reloading the page, you will see your file is now in the <em>Code</em> tab. To add the rest of your team to the project, under the <em>Settings</em> tab choose the <em>Collaborators</em> page. Enter the user names of each of your three teammates. Note this is one reason our teams are limited to 3-4 people; in order to have more collaborators on a project you need to have it be public. Note that there is an alternative process for public respositories to collaborators called <em>Forking</em>. This lets you work on the code for someone elses project without explicitly having their permission, you would just need their permission if you want your changes to be incorporated into the project.</p>
+
+<p>Your teammates will then need to go to the Github website, login, and then <em>Clone</em> the repository to their local machine.</p>
+
+</subsubsection>
+<subsubsection>
+ <title> Git Glossary
+</title>
+
+<p><em>Branch:</em> a part of the project that is currently being developed on its own. <alert>Suggestion:</alert> when you are working on a new component of your project, or when you are working independently of your team, do it in a branch. Two people working separately on the same branch is one of the main ways that conflicts will happen.</p>
+
+<p><em>Commit:</em> when changes are added by you to the current branch. Note if you change branches, changes you have made that are not committed are lost. Basically a commit represents a point in the history for the current branch that you want to record.</p>
+
+<p><em>Conflicts:</em> conflicts occur when changes have been made separately from the same commit. Once git sees a conflict, commits of the conflicted files cannot be made until they have been resolved. Resolving a conflict is done either by undoing one of the commits or by using a text editor to decide which changes to keep or remove. You may have to use a command line interface (Jupyter has one) in order to fix this.</p>
+
+<p>Save yourself some grief and try to avoid conflicts by always working in a development branch.</p>
+
+<p><em>Current Branch:</em> This is the branch your local machine has you working on. Note when you switch branches and do a fetch, your directory is updated to match the head of the branch (changes you have made but not committed are lost).</p>
+
+<p><em>Fetch:</em> a fetch checks for new commits to the current branch from the Github repository and downloads or uploads them them.</p>
+
+<p><em>Fork:</em> a fork is a copy of a public project by a non-collaborator or a copy of the project with an intent of making a major change.</p>
+
+<p><em>Merge:</em> a merge combines two branches following a pull request. Usually this will be a development branch into <em>master</em>. </p>
+
+<p><alert>Suggestion:</alert> Merges will result in conflicts if the branch being merged started from an earlier commit of the one being merged into. So development should happen in branches other than master. You can always abandon a branch.</p>
+
+<p><em>Pull:</em> a pull request is a request that essentially asks other collaborators on a project to review the branch. It can be followed by further commits, and ends in a either a merge or a close. (well not entirely, it is possible to take some changes but not all of them).</p>
+
+<p><em>Publish:</em> send a new local branch to Github. This makes the branch accessible to the rest of your team. I suggest Publishing your development branches and doing frequent commits and pushes of them as a backup measure.</p>
+
+<p><em>Push:</em> a push sends the commits on your current branch to Github (that have not been sent already). Effectively it publishes what you have done so that a teammate following your branch can then fetch them and see what you have changed.</p>
+
+
+</subsubsection>
+<subsubsection>
+ <title> Suggestions
+</title>
+
+<p>So the suggestion for you and your team is to take this class as an opportunity to learn how to use Git and Github. However it is definitely possible to get into a situation where the formality of Git brings things to a halt. </p>
+
+<p><ol>
+<li><p> Frequently make a copy of the files and save it somewhere else on your local machine so you have a place to get back to.</p>
+</li>
+<li><p> Use development branches to try and avoid conflicts when merging with master. This means after a merge you probably want to abandon other branches unless they were modifying files that were not part of the merge.</p>
+</li>
+<li><p> Which means using separate files is a good idea too.</p>
+</li>
+<li><p> Done right Git gives you: a history of your project including developments that were abandoned and an easy way to share your work with each other.</p>
+</li>
+</ol></p>
+
+<listing>
+<console>
+<input>
+
+</input>
+</console>
+</listing>
+
+</subsubsection>
+
+</subsection>
+
+</section>
+</article>
+</pretext>
