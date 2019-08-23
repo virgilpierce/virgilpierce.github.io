@@ -50,6 +50,8 @@
 <!-- Chapter Four - Tools of the Trade -->
 
 <xi:include href='tools.xml'/>
+
+<!-- Chapter Five - The Data Science Process -->
         
 </book>
 </pretext>

@@ -1,0 +1,873 @@
+<chapter xml:id="process">
+<title> The Data Science Process
+</title>
+
+
+<section>
+ <title> Professional Ethics
+</title>
+
+<p>Data Science and Machine Learning (and more broadly Computer Science) have great power. The techniques we will learn in this class are leading to algorithms giving computers the ability to make decisions based on a wealth of information. Facial recongition, credit and loan decisions, insurance pricing, are all examples of ways in which the tools we are learning in this class are being used.</p>
+
+<p>It is not then surprising that with these tools comes some questions of professional ethics. Today we will discuss a few things to keep in mind. The first step in our Data Science process is to consider the ethical implications of the data collection and question we are setting out on.</p>
+
+<subsection>
+ <title></title><paragraphs>
+ <title> Models Inherit Biases from the Data
+</title>
+
+<p>If your model is built upon data from a system with biases (credit data for example), it is likely your model will inherit those biases. It is not enough to say that the process of building the model does not introduce bias, we also must be aware of whether the data we build that model from has biases. </p>
+
+
+</paragraphs>
+<paragraphs>
+ <title> Keep in Mind the Consequences of Errors
+</title>
+
+<p>As you build your model keep in mind the consequences of the errors in your model in the event it goes into production. These should guide you in the level of accuracy and the types and proportions of errors you can tolerate. An algorithm estimating the age of a tree from some features versus one being used to determine a likliehood that a prisoner will reoffend if paroled have different tolerances of error. </p>
+
+
+</paragraphs>
+<paragraphs>
+ <title> Research on Human Subjects
+</title>
+
+<p>There are restrictions on how data can be collected and used when the research is being conducted on human subjects. At federally funded institutions, proposals to do research on human subjects must be reviewed by institutional review boards. They are looking for among other things: How the privacy of subjects is being protected, how the risk of harm to subjects is being minimized, and how subjects are informed of their rights. Of particular importance is protecting vulnerable subjects (minors and prisoners for example).</p>
+
+<p>This review must be done before data collection can be begin (typically).</p>
+
+<p>There are similar reviews that must occur for Research on Animals.</p>
+
+
+</paragraphs>
+<paragraphs>
+ <title> Commitments Made about Data and Data Analysis
+</title>
+
+<p>In obtaining permission from an Institutional Review Board, or permission from a company or individual owning data you wish to use, you or your company might make some promises about how that data will be used or how it will be protected. For example, in obtaining permission from Twitter to access their API you will be required to promise that you will not seek to obtain information about the political affiliation of an individual user, or that you will not publish content from Twitter without their permission. You need to honor promises that you or your employer have made regarding data and its protection. This is essential to ensuring trust in the profession, and to protecting vulnerable populations and individuals' privacy, and it is essential to protecting yourself. </p>
+
+
+</paragraphs>
+<paragraphs>
+ <title> Follow the Error Control Process
+</title>
+
+<p>It is essential that when you finish the development of your model that you have as good an understanding of the accuracy of your model as you can. For example, the accuracy of your model, and the consequences for error may be one of the ethical issues you have dealt with. However even if your model is realtively innocous, you need to be able to understand its utility and pay off were it to be used in production. </p>
+
+<p>It is essnetial in your data science work that you follow a process that will result in an valid esitmate of the accuracy of your model. </p>
+
+
+</paragraphs>
+
+</subsection>
+
+</section>
+<section>
+ <title> Controlling for Error
+</title>
+
+<subsection>
+ <title> Error in Regression Problems
+</title>
+
+<p>For today the gathering data process will be something we do here in Python by simmulating some data. Before we dive into an exploratory data analysis and developing a model, we should make a plan for how we will estimate the error of our model. Or even what we mean by the error of our model.</p>
+
+<p>Today, because I want us to be sure we understand the sources of error in our analysis we will build the dataset in Python in a way where we actually know the <em>correct model</em>. You should be thinking about the House Pricing problem or one of the other regression problems we have talked about.</p>
+
+<p>Suppose we have a predictor feature <m>x</m> and a resulting value <m>y</m> that have a linear relationship, however because we cannot possibly account for all of the variation there is some <em>Irreducible Error</em>. That is when we build our sample, there is a random variable that comes along with it.</p>
+<listing>
+<console>
+<input>
+# Using the usual packages, plus scikitlearns LinearRegression tool; and numpy.random.
+
+import pandas as pa
+import numpy as np
+import numpy.random as rn
+import seaborn as sn
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Building a sample with a linear relationship y = 10 x + 7 + E; where E is a random normally 
+# distributed error term with mean 0 and variance 200.
+
+x = 500*rn.random_sample(20)
+y = 10*x + 7 + 200*rn.randn(20)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Furthermore let's suppose there are a couple of data points that have a different E for
+# some reason 
+
+xa = np.array([700, 300])
+ya = np.array([10*700 + 7 - 1500, 10*300 + 7 + 1500])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Make a pandas.DataFrame of this data
+
+dfx = pa.DataFrame(x, columns=['x'])
+dfx['a'] = 0
+dfx['y'] = y
+dfx2 = pa.DataFrame(xa, columns=['x'])
+dfx2['a'] = 1
+dfx2['y'] = ya
+df = dfx.append(dfx2, ignore_index=True)
+df.tail()
+</input>
+<output>
+             x  a            y
+17  393.780773  0  4062.040697
+18  364.160146  0  3829.393889
+19   64.538402  0   650.280882
+20  700.000000  1  5507.000000
+21  300.000000  1  4507.000000
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize=(10, 8))
+
+sn.scatterplot(x='x', y='y', hue='a', data=df);
+
+plt.savefig('3_2.1.png')
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>Note the presence of a relationship between predictor and result is readily apparent: </p>
+<p><me> y = m x + b + E</me></p>
+<p>The goal of regression is to estimate the true values of the slope and intercept <m>(m, b)</m> of this relationship. So note that there will be two sources of error: </p>
+
+<p><ul>
+<li><p>Reduccible Error: This is error that we can eliminate by using a better model for the relationship. It is due in this example to us using a sample.</p>
+</li>
+<li><p>Irreduccible Error, <m>E</m>: This is the underlying error we introduced when we simulated the data. In real data it is due to factors not included in the model. This cannot be removed and our goal is instead to understand this term.</p>
+</li>
+</ul></p>
+
+
+</subsection>
+<subsection>
+ <title> Making Test and Training Sets
+</title>
+
+<p>The first control measure we will make is to divide our data into a <em>test set</em> and a <em>training set</em>. We will build our model from the training set with the goal of making it perform as well on that as we can. We will then apply it to the test set to determine how well we did. This partitioning method will protect us from overfitting (as we get to more complicated examples we will see examples where overfitting is likely and a big concern). </p>
+
+<p>What is <em>overfitting</em>?  Overfitting is when the model we have built was based on the sample of the data we were given and was led astray from the true relationship. This leads to models that will perform well on their training data but poorly when applied to new data. For linear relationships and linear models, overfitting is not a big problem, but for nonlinear and higher dimensional relations it becomes more likely.</p>
+<listing>
+<console>
+<input>
+# First convert the predictor and result variables into numpy.arrays suitable for applying in 
+# scikitlearn functions (recall we did this last class)
+
+# We will keep the 'a' flag identifying our special points
+
+X = np.array(df[['x', 'a']])
+y = np.array(df['y'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Make sure the a=1 points are in X_train
+
+set(X_test[:, 1])
+</input>
+<output>
+{0.0}
+</output>
+</console>
+</listing>
+
+</subsubsection>
+<subsubsection>
+ <title> Regression Error
+</title>
+
+<p>Let us take an estimate for the slope and intercept, choosen mostly at random.</p>
+<listing>
+<console>
+<input>
+m, b = 9, 0
+</input>
+</console>
+</listing>
+<p>We then use this to estimate <me>\hat{y} = m x + </me></p>
+<listing>
+<console>
+<input>
+plt.figure(figsize=(10, 8))
+
+plt.plot(X_train[X_train[:, 1]==0, 0], y_train[X_train[:, 1]==0], 'b.')
+plt.plot(X_train[X_train[:, 1]==1, 0], y_train[X_train[:, 1]==1], 'r.')
+x = np.linspace(0, 800, 10)
+yhat = m*x + b
+plt.plot(x, yhat, 'g-');
+
+plt.savefig('3_2.2.png')
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>We need a measurement of the error between our estimates <m>\hat{y}</m> and the actual training data. We will then choose <m>m</m> and <m>b</m> so that this error is minmized. There are then two tricks: </p>
+
+<p><ul>
+<li><p>There are different choices of error that may make sense.</p>
+</li>
+<li><p>Once we have choosen one we need to choose the parameters that minimize it (or at least estimate them)</p>
+</li>
+</ul></p>
+
+<p>A common choice of the error is sum of the square residual errors of the predicted <m>\hat{y}</m> from the sample values <m>y_i</m> in the training set. We will learn in a future class how to compute the linear regression minimizing this choice of error. This gives the <em>Explained Variance</em> of the training set by the model.</p>
+<listing>
+<console>
+<input>
+yhat = m*X_train[:, 0]+b
+EV = sum( (yhat - y_train)**2 )
+EV
+</input>
+<output>
+5108853.051597417
+</output>
+</console>
+</listing>
+<p>The scikitlearn LinearRegression function will determine the model that minimizes this error.</p>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train[:, 0].reshape(-1, 1), y_train)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+b, m = reg.intercept_, *reg.coef_
+b, m
+</input>
+<output>
+(315.44054876863675, 8.614509265674547)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize=(10, 8))
+
+plt.plot(X_train[X_train[:, 1]==0, 0], y_train[X_train[:, 1]==0], 'b.')
+plt.plot(X_train[X_train[:, 1]==1, 0], y_train[X_train[:, 1]==1], 'r.')
+x = np.linspace(0, 800, 10)
+yhat = m*x + b
+plt.plot(x, yhat, 'g-');
+
+plt.savefig('3_2.3.png')
+</input>
+<output>
+&lt;Figure size 720x576 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Explained Variance using these values:
+
+yhat = m*X_train[:, 0]+b
+EV = sum( (yhat - y_train)**2 )
+EV
+</input>
+<output>
+4226179.880094271
+</output>
+</console>
+</listing>
+<p>Note: We missed the true relationship, particularly the intercept. Why?</p>
+<p>Of course this total error (<em>Explained Variance</em>) is not a great measure of how good our model was, as obviously it depends on the magnitudes and variations of the sample <m>y_i</m>. </p>
+
+<p>The <em>Total Variance</em> is given by the sum of the squares of the differences of the training data and the mean of the training data. </p>
+<listing>
+<console>
+<input>
+y_mean = np.mean(y_train)
+TV = sum( (y_train - y_mean)**2 )
+TV
+</input>
+<output>
+37395104.69610516
+</output>
+</console>
+</listing>
+<p>If the regression line correctly explains the variations of the data, i.e. if our model correctly accounts for all of the errors relative to the extent to which the <m>y_i</m> vary anyway, then the ratio of <em>Explained Variance</em> to <em>Total Variance</em> will be small; <m>R^2</m> is defined to be 1 minus this ratio. Notice though that if the Total Variance is large compared to the Explained Variance this will also result in an <m>R^2</m> that is near 1.
+</p>
+<listing>
+<console>
+<input>
+R2 = 1 - EV/TV
+R2
+</input>
+<output>
+0.886985745475545
+</output>
+</console>
+</listing>
+<p>Note each time we run the cells above, with the dataset fixed, for this computation we will get slightly different values of <m>m</m>, <m>b</m>, and <m>R^2</m>. This is because the sample and the division into training and testing sets is different each time.</p>
+
+</subsection>
+<subsection>
+ <title> Checking the Influence of Individual Points
+</title>
+
+<p>Note that we have, or suspect we have, some samples that do not fit the same pattern as the rest of the data. An important question is to consider the impact that these samples have on the model we have computed. We do that by computing the linear regression with each point removed. Normally we would not know what points do not fit with the others (though we may have suspicions) so the best practice is to go through all of them.</p>
+<listing>
+<console>
+<input>
+n = X_train.shape[0]
+lin_reg = [0 for k in range(n)]
+R2p = [0 for k in range(n)]
+for k in range(n):
+    Xtemp = np.append(X_train[:k], X_train[k+1:], axis=0)
+    ytemp = np.append(y_train[:k], y_train[k+1:], axis=0)
+    lin_reg[k] = LinearRegression().fit(Xtemp[:, 0].reshape(-1, 1), ytemp)
+    kEV = sum( (lin_reg[k].predict(X_train[:, 0].reshape(-1, 1)) - y_train)**2 ) 
+    R2p[k] = 1 - kEV / TV
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(range(n), R2p);  # Plot the sizes of the R2s
+
+plt.savefig('3_2.4.png')
+</input>
+<output>
+&lt;Figure size 432x288 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+min(R2p), R2    # Compare the values of R2
+</input>
+<output>
+(0.8541484312627452, 0.886985745475545)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+m1 = R2p.index(min(R2p)) # Note the location of the minimum
+X_train[m1, :] 
+
+# And we see that the off-pattern value at x=700 gives the minimum R2
+</input>
+<output>
+array([700.,   1.])
+</output>
+</console>
+</listing>
+<p>This indicates that this sample has a disproportionate impact on our model. That should make us supicious that there is overfitting being caused by it.</p>
+
+<p>The coefficients without the first one are given below.</p>
+<listing>
+<console>
+<input>
+b2, m2 = lin_reg[m1].intercept_, *lin_reg[m1].coef_
+b2, m2
+</input>
+<output>
+(-9.68337679768456, 10.1725546119756)
+</output>
+</console>
+</listing>
+<p>Points with much different <m>y</m> values from other <m>y</m> values with similar <m>x</m> values (<em>outliers</em>), or points with much different <m>x</m> values from the mean of the <m>x</m> values (<em>high leverage samples</em>) have the potnetial to impact the model disproportinately like both of these. It is tempting to treat them differently (i.e. to accept the model computed without them). However we must proceed with caution. These samples may be the result of some error in the data collection, however they may also be valid samples.</p>
+
+<p>Should we include them or not?  A model that has been greatly swayed by a high leverage point may not perform as well on the test data because it has been overfit to these samples. However these high leverage and outlier samples may also be indicative of a pattern in the data. The thing that should give us pause is what happened with the water samples in Flint, MI.</p>
+
+
+</subsection>
+<subsection>
+ <title> Using the Test Set
+</title>
+
+<p>Of course we prepared for this by sequestering some of our data from the training (development) of our model. We can now use this data to check how accurate our model is on data it has not seen. We will run the test on the model computed with all of the training points <m>(b, m)</m>, and on the model computed without the outlier point <m>(b_2, m_2)</m>. What erorr expression should we use? We have the ready made one given by the <em>Explained Variance</em> and <m>R^2</m>. </p>
+<listing>
+<console>
+<input>
+# Explained Variance of the Training and Testing Sets
+
+yhat_train = m*X_train[:, 0] + b
+EV_train = sum( (yhat_train - y_train)**2)
+
+yhat_test = m*X_test[:, 0] + b
+EV_test = sum( (yhat_test - y_test)**2)
+
+'Explained Variance for Train and Test: {:.0f}, {:.0f}'.format(EV_train, EV_test)
+</input>
+<output>
+'Explained Variance for Train and Test: 4226180, 290580'
+</output>
+</console>
+</listing>
+<p>Note right away this shows why <em>Explained Variance</em> is problematic <p><ul>
+<li><p>because the sample sizes are different between testing and training sets these numbers are incomparable.</li>
+</p></ul>
+</p>
+</p>
+<listing>
+<console>
+<input>
+# Compute R2 of the Training and Testing Sets
+
+y_train_mean = np.mean(y_train)
+TV_train = sum( (y_train - y_train_mean)**2)
+R2_train = 1 - EV_train / TV_train
+
+y_test_mean = np.mean(y_test)
+TV_test = sum( (y_test - y_test_mean)**2)
+R2_test = 1 - EV_test / TV_test
+
+'R2 for Train and Test: {}, {}'.format(R2_train, R2_test)
+</input>
+<output>
+'R2 for Train and Test: 0.886985745475545, 0.8937238721814674'
+</output>
+</console>
+</listing>
+<p>Now lets do the same computation for the second regression expression and see if there is a difference:</p>
+<listing>
+<console>
+<input>
+yhat_train = m2*X_train[:, 0] + b2
+EV_train = sum( (yhat_train - y_train)**2)
+
+yhat_test = m2*X_test[:, 0] + b2
+EV_test = sum( (yhat_test - y_test)**2) 
+
+y_train_mean = np.mean(y_train)
+TV_train = sum( (y_train - y_train_mean)**2)
+R2_train_2 = 1 - EV_train / TV_train
+
+y_test_mean = np.mean(y_test)
+TV_test = sum( (y_test - y_test_mean)**2)
+R2_test_2 = 1 - EV_test / TV_test
+
+'R2 for Train and Test (model 2): {}, {}'.format(R2_train_2, R2_test_2)
+</input>
+<output>
+'R2 for Train and Test (model 2): 0.8541484312627452, 0.9823655619729722'
+</output>
+</console>
+</listing>
+
+</subsection>
+<subsection>
+ <title> Understanding Training and Testing Error
+</title>
+
+<p>So remember our model has been choosen, under the restriction of being a linear model, to minimize the training error (giving us the <m>R^2</m> closest to 1). It has never seen the testing data. So we typically expect the testing error to be worse than the training error. Note that the model did better on the testing data without the high impact point. If you increase the size of the sample following the pattern, this difference will decrease.</p>
+
+
+</subsection>
+
+</section>
+<section>
+ <title> Error in Categorization Problems
+</title>
+
+<p>Consider a categorization problem, this dataset is a collection of data related to study of chronic kidney disease (from the UCI archive). </p>
+<listing>
+<console>
+<input>
+kd = pa.read_csv('Data Sets/Kidney/chronic_kidney_disease.csv', 
+                 names=['age', 'bp', 'specific_gravity', 'albumin', 'sugar', 'red_blood_cells', 'pus_cell',
+                        'pus_cell_clumps', 'bacteria', 'blood_glucose', 'blood_urea', 'serum_creatinine', 
+                        'sodium', 'potassium', 'hemoglobin', 'packed_cell_volume', 'white_blood_cell_count',
+                        'red_blood_cell_count', 'hypertension', 'diabetes_mellitus', 'coronary_artery_disease',
+                        'appetite', 'pedal_edema', 'anemia', 'class'])
+
+kd.loc[kd.loc[:, 'class'] == 'ckd\t', 'class'] = 'ckd'  # There is an extra tab character on some of the ckd values
+
+kd.head()
+</input>
+<output>
+  age  bp specific_gravity albumin sugar red_blood_cells  pus_cell  \
+0  48  80            1.020       1     0               ?    normal   
+1   7  50            1.020       4     0               ?    normal   
+2  62  80            1.010       2     3          normal    normal   
+3  48  70            1.005       4     0          normal  abnormal   
+4  51  80            1.010       2     0          normal    normal   
+
+  pus_cell_clumps    bacteria blood_glucose  ... packed_cell_volume  \
+0      notpresent  notpresent           121  ...                 44   
+1      notpresent  notpresent             ?  ...                 38   
+2      notpresent  notpresent           423  ...                 31   
+3         present  notpresent           117  ...                 32   
+4      notpresent  notpresent           106  ...                 35   
+
+  white_blood_cell_count red_blood_cell_count hypertension diabetes_mellitus  \
+0                   7800                  5.2          yes               yes   
+1                   6000                    ?           no                no   
+2                   7500                    ?           no               yes   
+3                   6700                  3.9          yes                no   
+4                   7300                  4.6           no                no   
+
+  coronary_artery_disease appetite pedal_edema anemia class  
+0                      no     good          no     no   ckd  
+1                      no     good          no     no   ckd  
+2                      no     poor          no    yes   ckd  
+3                      no     poor         yes    yes   ckd  
+4                      no     good          no     no   ckd  
+
+[5 rows x 25 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# There are some missing values for hemoglobin
+
+kd = kd[kd.hemoglobin != '?']  
+</input>
+</console>
+</listing>
+<p>Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em>Chronic Kidney Disease</em>.</p>
+<subsection>
+ <title> Logistic Regression (Classification)
+</title>
+
+<p>We first need to develop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em>Linear Regression</em> model we were using above. </p>
+
+<p>We will consider two models. The first is based on the linear interpolation we used above, and is what we might consider a <em>naive</em> generalization. The second is <em>Logistic Regression</em>, which despite its name, is derived first as a classification method.</p>
+
+<p>In order to compare our two methods, we will use the <em>test</em> set method we introduced above and set aside a portion of our samples to use to train or develop the models and a separate portion to use for testing the models.</p>
+<listing>
+<console>
+<input>
+# First convert the data to numerical data in numpy arrays
+# Note a problem with this data is that the float values for hemoglobin (and other variables) were read as strings
+# We need to convert them
+
+X = np.atleast_2d(np.array([float(h) for h in kd.loc[:, 'hemoglobin']])).transpose()
+
+# We need to recode the values for the class to be numeric
+rename_class = { 'ckd':1, 'notckd':0}  
+y = np.array([rename_class[c] for c in np.array(kd.loc[:, 'class'])])
+
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (8, 6))
+plt.plot(X, y, 'b.');
+
+plt.savefig('3_2.5.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>Note that other than the fact that the <m>y</m> values take only 0 or 1 values, this is a similar problem to the regression problem above. So we could try Linear Regression. First we divide the data into testing and training sets.</p>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, y_train)
+
+b, m = reg.intercept_, *reg.coef_
+b, m
+</input>
+<output>
+(2.2345537069285486, -0.13212090094166123)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# we round the resulting y values to get the nearest value of 1 or 0
+# we round the resulting y values to get the nearest value of 1 or 0
+
+xhat = np.linspace(2, 18, 100)
+yhat = m*xhat+b
+plt.figure(figsize = (8, 6))
+plt.plot(X_train, y_train, 'b.')
+plt.plot(xhat, yhat, 'r-');
+
+plt.savefig('3_2.6.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# we round the resulting y values to get the nearest value of 1 or 0
+
+xhat = np.linspace(2, 18, 100)
+fix_yhat = {2:1, 1:1, 0:0}
+yhat = [fix_yhat[h] for h in np.round(m*xhat+b)]
+plt.figure(figsize = (8, 6))
+plt.plot(X_train, y_train, 'b.')
+plt.plot(xhat, yhat, 'r-');
+
+plt.savefig('3_2.7.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>The decision boundary is where <m>y =  mx + b = 0.5</m>. </p>
+<listing>
+<console>
+<input>
+dec_boundary = (0.5 - b)/m
+dec_boundary
+</input>
+<output>
+13.128533748755249
+</output>
+</console>
+</listing>
+<p>The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. However note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (8, 6))
+
+plt.plot(X_train[(X_train &lt; dec_boundary)[:, 0]], y_train[(X_train &lt; dec_boundary)[:, 0]], 'b.');
+plt.plot(X_train[(X_train > dec_boundary)[:, 0]], y_train[(X_train > dec_boundary)[:, 0]], 'r.');
+plt.plot(X_test[(X_test &lt; dec_boundary)[:, 0]], y_test[(X_test &lt; dec_boundary)[:, 0]], 'b+');
+plt.plot(X_test[(X_test > dec_boundary)[:, 0]], y_test[(X_test > dec_boundary)[:, 0]], 'r+');
+
+plt.savefig('3_2.8.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+Error_train = (sum( y_train[(X_train &lt; dec_boundary)[:, 0]] == 0 ) + 
+               sum( y_train[(X_train > dec_boundary)[:, 0]] == 1) )/y_train.shape[0]
+Error_test = (sum( y_test[(X_test &lt; dec_boundary)[:, 0]] == 0 ) + 
+               sum( y_test[(X_test > dec_boundary)[:, 0]] == 1) )/y_test.shape[0]
+
+print('Training Error: {}'.format(Error_train))
+print('Testing Error: {}'.format(Error_test))
+</input>
+<output>
+Training Error: 0.06093189964157706
+Testing Error: 0.10144927536231885
+
+</output>
+</console>
+</listing>
+<paragraphs>
+ <title> The Logistic Model
+</title>
+
+<p>Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable <m>y</m>. In this case <m>y</m> only takes values <m>1</m> or <m>0</m> and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
+
+<p>What we need is a method of categorization that is built on the categorical problem itself. </p>
+
+<p>What we are trying to predict is the probability that a patient has <em>Chronic Kidney Disease</em> given a hemoglobin level <m>x</m>.</p>
+
+<p><me> p(x) = P(y=1 | x)</me></p>
+
+<p>Note that with <em>Linear Regression</em> what we have attempted to do is estimate this probability with a linear function:</p>
+
+<p><me> p(x) = P(y=1 | x) = m x + b</me></p>
+
+<p>But immediately notice the problem, this returns values bigger than 1 and less than 0 for some choices of <m>x</m>.</p>
+
+<p>So what we would prefer is to estimate <m>p(x) = P(y=1 | x) </m> with some function that only returns values between 0 and 1 and thus gives a valid probability. We could use the logistic function:</p>
+
+<p><me> p(x) = P(y=1 | x) = \frac{\exp(m x + b)}{1 + \exp(m x + b)}</me></p>
+
+<p>You may have seen this function before in modeling population growth with a carrying capacity.</p>
+
+<p>So the idea is to find values of <m>m</m> and <m>b</m> that give the best estimate for <m>p(x)</m> that we can find.</p>
+
+<p>We will skip for now how these values are actually computed and instead use the scikitlearn function LogisticRegression.</p>
+<listing>
+<console>
+<input>
+# Import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Make an instance of the model and fit it to the training data
+lgreg = LogisticRegression(solver='lbfgs')
+lgreg.fit(X_train, y_train);
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+b, m = *lgreg.intercept_, *lgreg.coef_[0]
+b, m
+</input>
+<output>
+(21.633631288846512, -1.613513243575066)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (8, 6))
+plt.plot(X_train, y_train, 'b.')
+xx = np.linspace(0, 20, 100)
+yy = np.exp(m*xx+b)/(1 + np.exp(m*xx+b))
+plt.plot(xx, yy, 'g-');
+
+plt.savefig('3_2.9.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<p>The decsision boundary happens again where the probability becomes <p><ol>
+<li><p>5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.</li>
+</p></ol>
+</p>
+</p>
+<listing>
+<console>
+<input>
+dec_bd = -b/m  # Solving for the logistic function = 0.5 gives - b/m
+dec_bd
+</input>
+<output>
+13.407780428819295
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Plotting the classification of the training and testing sets.
+
+plt.figure(figsize = (8, 6))
+
+plt.plot(X_train[(X_train &lt; dec_bd)[:, 0]], y_train[(X_train &lt; dec_bd)[:, 0]], 'b.')
+plt.plot(X_train[(X_train > dec_bd)[:, 0]], y_train[(X_train > dec_bd)[:, 0]], 'r.')
+plt.plot(X_test[(X_test &lt; dec_bd)[:, 0]], y_test[(X_test &lt; dec_bd)[:, 0]], 'b+')
+plt.plot(X_test[(X_test > dec_bd)[:, 0]], y_test[(X_test > dec_bd)[:, 0]], 'r+')
+plt.plot(xx, yy, 'g-');
+
+plt.savefig('3_2.10.png')
+</input>
+<output>
+&lt;Figure size 576x432 with 1 Axes>
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Computing the error of the training and testing sets.
+
+Error_train = (sum( y_train[(X_train &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_train[(X_train > dec_bd)[:, 0]] == 1) )/y_train.shape[0]
+Error_test = (sum( y_test[(X_test &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_test[(X_test > dec_bd)[:, 0]] == 1) )/y_test.shape[0]
+
+print('Training Error: {}'.format(Error_train))
+print('Testing Error: {}'.format(Error_test))
+</input>
+<output>
+Training Error: 0.07885304659498207
+Testing Error: 0.08695652173913043
+
+</output>
+</console>
+</listing>
+<p>In this case the error was comparable, and slightly better (although it changes each time you run it).</p>
+
+<p>In future weeks we will get into the details of how these models are computed.</p>
+<listing>
+<console>
+<input>
+
+</input>
+</console>
+</listing>
+
+</paragraphs>
+
+</subsection>
+
+</section>
+
+</chapter>
