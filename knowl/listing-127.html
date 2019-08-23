@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Computing the error of the training and testing sets.
+
+Error_train = (sum( y_train[(X_train &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_train[(X_train &gt; dec_bd)[:, 0]] == 1) )/y_train.shape[0]
+Error_test = (sum( y_test[(X_test &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_test[(X_test &gt; dec_bd)[:, 0]] == 1) )/y_test.shape[0]
+
+print('Training Error: {}'.format(Error_train))
+print('Testing Error: {}'.format(Error_test))
+</b>Training Error: 0.07885304659498207
+Testing Error: 0.08695652173913043
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.18.</span> </figcaption></figure><span class="incontext"><a href="section-33.html#listing-127">in-context</a></span>
+</body>
+</html>

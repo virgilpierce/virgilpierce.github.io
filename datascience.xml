@@ -52,6 +52,8 @@
 <xi:include href='tools.xml'/>
 
 <!-- Chapter Five - The Data Science Process -->
+
+<xi:include href='process.xml'/>
         
 </book>
 </pretext>

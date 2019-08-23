@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<article class="paragraphs"><h5 class="heading"><span class="title">The Logistic Model.</span></h5>
+<p>Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable \(y\text{.}\) In this case \(y\) only takes values \(1\) or \(0\) and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
+<p>What we need is a method of categorization that is built on the categorical problem itself.</p>
+<p>What we are trying to predict is the probability that a patient has <em class="emphasis">Chronic Kidney Disease</em> given a hemoglobin level \(x\text{.}\)</p>
+<div class="displaymath">
+\begin{equation*}
+p(x) = P(y=1 | x)
+\end{equation*}
+</div>
+<p>Note that with <em class="emphasis">Linear Regression</em> what we have attempted to do is estimate this probability with a linear function:</p>
+<div class="displaymath">
+\begin{equation*}
+p(x) = P(y=1 | x) = m x + b
+\end{equation*}
+</div>
+<p>But immediately notice the problem, this returns values bigger than 1 and less than 0 for some choices of \(x\text{.}\)</p>
+<p>So what we would prefer is to estimate \(p(x) = P(y=1 | x) \) with some function that only returns values between 0 and 1 and thus gives a valid probability. We could use the logistic function:</p>
+<div class="displaymath">
+\begin{equation*}
+p(x) = P(y=1 | x) = \frac{\exp(m x + b)}{1 + \exp(m x + b)}
+\end{equation*}
+</div>
+<p>You may have seen this function before in modeling population growth with a carrying capacity.</p>
+<p>So the idea is to find values of \(m\) and \(b\) that give the best estimate for \(p(x)\) that we can find.</p>
+<p>We will skip for now how these values are actually computed and instead use the scikitlearn function LogisticRegression.</p>
+<figure class="figure-like"><pre class="console"><b># Import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.12.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b># Make an instance of the model and fit it to the training data
+lgreg = LogisticRegression(solver='lbfgs')
+lgreg.fit(X_train, y_train);
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.13.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>b, m = *lgreg.intercept_, *lgreg.coef_[0]
+b, m
+</b>(21.633631288846512, -1.613513243575066)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.14.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b>plt.figure(figsize = (8, 6))
+plt.plot(X_train, y_train, 'b.')
+xx = np.linspace(0, 20, 100)
+yy = np.exp(m*xx+b)/(1 + np.exp(m*xx+b))
+plt.plot(xx, yy, 'g-');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.15.</span> </figcaption></figure><p>The decsision boundary happens again where the probability becomes &gt;0.5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.</p>
+<figure class="figure-like"><pre class="console"><b>dec_bd = -b/m  # Solving for the logistic function = 0.5 gives - b/m
+dec_bd
+</b>13.407780428819295
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.16.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b># Plotting the classification of the training and testing sets.
+
+plt.figure(figsize = (8, 6))
+
+plt.plot(X_train[(X_train &lt; dec_bd)[:, 0]], y_train[(X_train &lt; dec_bd)[:, 0]], 'b.')
+plt.plot(X_train[(X_train &gt; dec_bd)[:, 0]], y_train[(X_train &gt; dec_bd)[:, 0]], 'r.')
+plt.plot(X_test[(X_test &lt; dec_bd)[:, 0]], y_test[(X_test &lt; dec_bd)[:, 0]], 'b+')
+plt.plot(X_test[(X_test &gt; dec_bd)[:, 0]], y_test[(X_test &gt; dec_bd)[:, 0]], 'r+')
+plt.plot(xx, yy, 'g-');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.10.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.17.</span> </figcaption></figure><figure class="figure-like"><pre class="console"><b># Computing the error of the training and testing sets.
+
+Error_train = (sum( y_train[(X_train &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_train[(X_train &gt; dec_bd)[:, 0]] == 1) )/y_train.shape[0]
+Error_test = (sum( y_test[(X_test &lt; dec_bd)[:, 0]] == 0 ) + 
+               sum( y_test[(X_test &gt; dec_bd)[:, 0]] == 1) )/y_test.shape[0]
+
+print('Training Error: {}'.format(Error_train))
+print('Testing Error: {}'.format(Error_test))
+</b>Training Error: 0.07885304659498207
+Testing Error: 0.08695652173913043
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.18.</span> </figcaption></figure><p>In this case the error was comparable, and slightly better (although it changes each time you run it).</p>
+<p>In future weeks we will get into the details of how these models are computed.</p></article><span class="incontext"><a href="section-33.html#paragraphs-17">in-context</a></span>
+</body>
+</html>

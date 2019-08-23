@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># First convert the data to numerical data in numpy arrays
+# Note a problem with this data is that the float values for hemoglobin (and other variables) were read as strings
+# We need to convert them
+
+X = np.atleast_2d(np.array([float(h) for h in kd.loc[:, 'hemoglobin']])).transpose()
+
+# We need to recode the values for the class to be numeric
+rename_class = { 'ckd':1, 'notckd':0}  
+y = np.array([rename_class[c] for c in np.array(kd.loc[:, 'class'])])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.3.</span> </figcaption></figure><span class="incontext"><a href="section-33.html#listing-112">in-context</a></span>
+</body>
+</html>

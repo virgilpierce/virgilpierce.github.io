@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>n = X_train.shape[0]
+lin_reg = [0 for k in range(n)]
+R2p = [0 for k in range(n)]
+for k in range(n):
+    Xtemp = np.append(X_train[:k], X_train[k+1:], axis=0)
+    ytemp = np.append(y_train[:k], y_train[k+1:], axis=0)
+    lin_reg[k] = LinearRegression().fit(Xtemp[:, 0].reshape(-1, 1), ytemp)
+    kEV = sum( (lin_reg[k].predict(X_train[:, 0].reshape(-1, 1)) - y_train)**2 ) 
+    R2p[k] = 1 - kEV / TV
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.18.</span> </figcaption></figure><span class="incontext"><a href="section-32.html#listing-102">in-context</a></span>
+</body>
+</html>

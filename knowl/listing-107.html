@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Explained Variance of the Training and Testing Sets
+
+yhat_train = m*X_train[:, 0] + b
+EV_train = sum( (yhat_train - y_train)**2)
+
+yhat_test = m*X_test[:, 0] + b
+EV_test = sum( (yhat_test - y_test)**2)
+
+'Explained Variance for Train and Test: {:.0f}, {:.0f}'.format(EV_train, EV_test)
+</b>'Explained Variance for Train and Test: 4226180, 290580'
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.23.</span> </figcaption></figure><span class="incontext"><a href="section-32.html#listing-107">in-context</a></span>
+</body>
+</html>

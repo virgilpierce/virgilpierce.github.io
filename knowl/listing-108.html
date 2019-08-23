@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-23T17:44:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Compute R2 of the Training and Testing Sets
+
+y_train_mean = np.mean(y_train)
+TV_train = sum( (y_train - y_train_mean)**2)
+R2_train = 1 - EV_train / TV_train
+
+y_test_mean = np.mean(y_test)
+TV_test = sum( (y_test - y_test_mean)**2)
+R2_test = 1 - EV_test / TV_test
+
+'R2 for Train and Test: {}, {}'.format(R2_train, R2_test)
+</b>'R2 for Train and Test: 0.886985745475545, 0.8937238721814674'
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.24.</span> </figcaption></figure><span class="incontext"><a href="section-32.html#listing-108">in-context</a></span>
+</body>
+</html>

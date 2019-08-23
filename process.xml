@@ -7,9 +7,11 @@
  <title> Professional Ethics
 </title>
 
+<introduction>
 <p>Data Science and Machine Learning (and more broadly Computer Science) have great power. The techniques we will learn in this class are leading to algorithms giving computers the ability to make decisions based on a wealth of information. Facial recongition, credit and loan decisions, insurance pricing, are all examples of ways in which the tools we are learning in this class are being used.</p>
 
 <p>It is not then surprising that with these tools comes some questions of professional ethics. Today we will discuss a few things to keep in mind. The first step in our Data Science process is to consider the ethical implications of the data collection and question we are setting out on.</p>
+</introduction>
 
 <subsection>
  <title></title><paragraphs>
@@ -142,12 +144,9 @@ plt.figure(figsize=(10, 8))
 
 sn.scatterplot(x='x', y='y', hue='a', data=df);
 
-plt.savefig('3_2.1.png')
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.1.png'/>
 </listing>
 <p>Note the presence of a relationship between predictor and result is readily apparent: </p>
 <p><me> y = m x + b + E</me></p>
@@ -212,8 +211,8 @@ set(X_test[:, 1])
 </console>
 </listing>
 
-</subsubsection>
-<subsubsection>
+</subsection>
+<subsection>
  <title> Regression Error
 </title>
 
@@ -236,13 +235,9 @@ plt.plot(X_train[X_train[:, 1]==1, 0], y_train[X_train[:, 1]==1], 'r.')
 x = np.linspace(0, 800, 10)
 yhat = m*x + b
 plt.plot(x, yhat, 'g-');
-
-plt.savefig('3_2.2.png')
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.2.png'/>
 </listing>
 <p>We need a measurement of the error between our estimates <m>\hat{y}</m> and the actual training data. We will then choose <m>m</m> and <m>b</m> so that this error is minmized. There are then two tricks: </p>
 
@@ -295,13 +290,9 @@ plt.plot(X_train[X_train[:, 1]==1, 0], y_train[X_train[:, 1]==1], 'r.')
 x = np.linspace(0, 800, 10)
 yhat = m*x + b
 plt.plot(x, yhat, 'g-');
-
-plt.savefig('3_2.3.png')
 </input>
-<output>
-&lt;Figure size 720x576 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.3.png'/>
 </listing>
 <listing>
 <console>
@@ -373,13 +364,9 @@ for k in range(n):
 <console>
 <input>
 plt.plot(range(n), R2p);  # Plot the sizes of the R2s
-
-plt.savefig('3_2.4.png')
 </input>
-<output>
-&lt;Figure size 432x288 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.4.png'/>
 </listing>
 <listing>
 <console>
@@ -447,10 +434,7 @@ EV_test = sum( (yhat_test - y_test)**2)
 </output>
 </console>
 </listing>
-<p>Note right away this shows why <em>Explained Variance</em> is problematic <p><ul>
-<li><p>because the sample sizes are different between testing and training sets these numbers are incomparable.</li>
-</p></ul>
-</p>
+<p>Note right away this shows why <em>Explained Variance</em> is problematic - because the sample sizes are different between testing and training sets these numbers are incomparable.
 </p>
 <listing>
 <console>
@@ -513,6 +497,7 @@ R2_test_2 = 1 - EV_test / TV_test
  <title> Error in Categorization Problems
 </title>
 
+<introduction>
 <p>Consider a categorization problem, this dataset is a collection of data related to study of chronic kidney disease (from the UCI archive). </p>
 <listing>
 <console>
@@ -571,6 +556,9 @@ kd = kd[kd.hemoglobin != '?']
 </console>
 </listing>
 <p>Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em>Chronic Kidney Disease</em>.</p>
+</introduction>
+
+
 <subsection>
  <title> Logistic Regression (Classification)
 </title>
@@ -601,13 +589,9 @@ y = np.array([rename_class[c] for c in np.array(kd.loc[:, 'class'])])
 <input>
 plt.figure(figsize = (8, 6))
 plt.plot(X, y, 'b.');
-
-plt.savefig('3_2.5.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.5.png'/>
 </listing>
 <p>Note that other than the fact that the <m>y</m> values take only 0 or 1 values, this is a similar problem to the regression problem above. So we could try Linear Regression. First we divide the data into testing and training sets.</p>
 <listing>
@@ -651,13 +635,9 @@ yhat = m*xhat+b
 plt.figure(figsize = (8, 6))
 plt.plot(X_train, y_train, 'b.')
 plt.plot(xhat, yhat, 'r-');
-
-plt.savefig('3_2.6.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.6.png'/>
 </listing>
 <listing>
 <console>
@@ -670,13 +650,9 @@ yhat = [fix_yhat[h] for h in np.round(m*xhat+b)]
 plt.figure(figsize = (8, 6))
 plt.plot(X_train, y_train, 'b.')
 plt.plot(xhat, yhat, 'r-');
-
-plt.savefig('3_2.7.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.7.png'/>
 </listing>
 <p>The decision boundary is where <m>y =  mx + b = 0.5</m>. </p>
 <listing>
@@ -700,13 +676,9 @@ plt.plot(X_train[(X_train &lt; dec_boundary)[:, 0]], y_train[(X_train &lt; dec_b
 plt.plot(X_train[(X_train > dec_boundary)[:, 0]], y_train[(X_train > dec_boundary)[:, 0]], 'r.');
 plt.plot(X_test[(X_test &lt; dec_boundary)[:, 0]], y_test[(X_test &lt; dec_boundary)[:, 0]], 'b+');
 plt.plot(X_test[(X_test > dec_boundary)[:, 0]], y_test[(X_test > dec_boundary)[:, 0]], 'r+');
-
-plt.savefig('3_2.8.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.8.png'/>
 </listing>
 <listing>
 <console>
@@ -789,18 +761,11 @@ plt.plot(X_train, y_train, 'b.')
 xx = np.linspace(0, 20, 100)
 yy = np.exp(m*xx+b)/(1 + np.exp(m*xx+b))
 plt.plot(xx, yy, 'g-');
-
-plt.savefig('3_2.9.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.9.png'/>
 </listing>
-<p>The decsision boundary happens again where the probability becomes <p><ol>
-<li><p>5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.</li>
-</p></ol>
-</p>
+<p>The decsision boundary happens again where the probability becomes >0.5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.
 </p>
 <listing>
 <console>
@@ -825,13 +790,9 @@ plt.plot(X_train[(X_train > dec_bd)[:, 0]], y_train[(X_train > dec_bd)[:, 0]], '
 plt.plot(X_test[(X_test &lt; dec_bd)[:, 0]], y_test[(X_test &lt; dec_bd)[:, 0]], 'b+')
 plt.plot(X_test[(X_test > dec_bd)[:, 0]], y_test[(X_test > dec_bd)[:, 0]], 'r+')
 plt.plot(xx, yy, 'g-');
-
-plt.savefig('3_2.10.png')
 </input>
-<output>
-&lt;Figure size 576x432 with 1 Axes>
-</output>
 </console>
+<image source='Images/5.10.png'/>
 </listing>
 <listing>
 <console>
@@ -856,13 +817,7 @@ Testing Error: 0.08695652173913043
 <p>In this case the error was comparable, and slightly better (although it changes each time you run it).</p>
 
 <p>In future weeks we will get into the details of how these models are computed.</p>
-<listing>
-<console>
-<input>
 
-</input>
-</console>
-</listing>
 
 </paragraphs>
 
