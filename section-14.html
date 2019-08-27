@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:02-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -401,48 +401,28 @@ plt.legend();
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.4.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">2.5.14.</span> </figcaption></figure></section><section class="subsection" id="subsection-29"><h3 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">2.5.3</span> <span class="title">What is Data Science or Why Data Science</span>
+<span class="type">Subsection</span> <span class="codenumber">2.5.3</span> <span class="title">A World of Data and a World of Computation</span>
 </h3>
-<p id="p-203">You might be familiar with hypothesis testing already, for instance an appropriate test for the example above is that the distribution of heights of pitchers differs from that of non-pitchers. A couple of things to remind you of:</p>
-<ol id="p-204" class="decimal">
-<li id="li-69"><p id="p-205">Hypothesis testing requires us to know (or assume) the distribution of players' heights.</p></li>
-<li id="li-70">
-<p id="p-206">Hypothesis testing requires us to use the data to estimate the parameters of the distribution of players' heights.</p>
-<p id="p-207">These are not theoretical concerns:  Note there are some classic examples of samples taken from different distributions that have the same means and standard deviations.</p>
-<p id="p-208">These problems become worse the larger the dimension we work with - the more features we include. This is called the curse of dimensionality:  Suppose we had n data points estimating a distribution in one dimension. The amount of data we need in order to be as certain of our estimates of a distribution for dimension d, is proportional to $ n^d $.</p>
-</li>
-<li id="li-71">
-<p id="p-209">The question we answered with the T-test or Confidence Interval computation is not really very instructive.</p>
-<p id="p-210">Pitchers are, on the mean, taller. But that does not tell us necessarily given a players height (and weight and age) whether they are likely to be a pitcher or not. In other words, what we have is a rather blunt instrument: Given that a player is a pitcher, we have an estimate of their height. We could give an interval estimate for an individuals height and vary it to balance the Type 1 and Type 2 errors.</p>
-</li>
-<li id="li-72">
-<p id="p-211">Maybe a 4th problem: We have only used 1/3 of the numerical data we had about players.</p>
-<p id="p-212">While generally speaking we do not just want to use all of the data just because we have it, we will discuss the downsides later, we do though want to consider whether the data we have helps clarify the question.</p>
-</li>
-</ol></section><section class="subsection" id="subsection-30"><h3 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">2.5.4</span> <span class="title">A World of Data and a World of Computation</span>
+<ul id="p-203" class="disc"><li id="li-69"><p id="p-204">Data has become <em class="alert">VERY</em> cheap</p></li></ul>
+<p id="p-205">High dimensional data (data with lots of features) is now (sometimes) really easy and cheap to collect, and to collect in ways that computers can use (even on the fly). We will look at some methods of collecting data.</p>
+<ul id="p-206" class="disc"><li id="li-70"><p id="p-207">Computational power has become <em class="alert">VERY</em> cheap</p></li></ul>
+<p id="p-208">You can rent time on Google Cloud or the Amazon Web Servers for small fractions of a penny per minute. Your company can do it on-demand. At the end of class we will take a look at how to use Google Cloud or Amazon Web Servers. Depending on your teams project, you may want to use it!</p></section><section class="subsection" id="subsection-30"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">2.5.4</span> <span class="title">Results are What Matters</span>
 </h3>
-<p id="p-213">Two things have been happening over the last decades that promise to rescue us from the curse of dimensionality and simmultaneously free us from having to assume the distrubtion in statistical questions.</p>
-<ul id="p-214" class="disc"><li id="li-73"><p id="p-215">Data has become <em class="alert">VERY</em> cheap</p></li></ul>
-<p id="p-216">High dimensional data (data with lots of features) is now (sometimes) really easy and cheap to collect, and to collect in ways that computers can use (even on the fly). We will look at some methods of collecting data.</p>
-<ul id="p-217" class="disc"><li id="li-74"><p id="p-218">Computational power has become <em class="alert">VERY</em> cheap</p></li></ul>
-<p id="p-219">You can rent time on Google Cloud or the Amazon Web Servers for small fractions of a penny per minute. Your company can do it on-demand. At the end of class we will take a look at how to use Google Cloud or Amazon Web Servers. Depending on your teams project, you may want to use it!</p></section><section class="subsection" id="subsection-31"><h3 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">2.5.5</span> <span class="title">Results are What Matters</span>
+<p id="p-209">In this class we will build models for <em class="emphasis">Regression</em> (estimating values of a numerical parameter) and for <em class="emphasis">Categorization</em> (estimating values for a categorical parameter) from high dimensional data (data with many features). We will use a process for doing this that will produce a model and an estimate on the error of our model.</p>
+<p id="p-210">In <em class="emphasis">some</em> cases we will do it without even worrying or understanding why the model works.</p>
+<p id="p-211">In any case it is possible because data has become cheap enough that we can in many examples afford to set aside a large random sample of our data for testing our algorithm and estimating its error. We will discuss this more when we come to the Data Science Process.</p></section><section class="subsection" id="subsection-31"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">2.5.5</span> <span class="title">High Dimensional Problems</span>
 </h3>
-<p id="p-220">In this class we will build models for <em class="emphasis">Regression</em> (estimating values of a numerical parameter) and for <em class="emphasis">Categorization</em> (estimating values for a categorical parameter) from high dimensional data (data with many features). We will use a process for doing this that will produce a model and an estimate on the error of our model.</p>
-<p id="p-221">In <em class="emphasis">some</em> cases we will do it without even worrying or understanding why the model works.</p>
-<p id="p-222">In any case it is possible because data has become cheap enough that we can in many examples afford to set aside a large random sample of our data for testing our algorithm and estimating its error. We will discuss this more when we come to the Data Science Process.</p></section><section class="subsection" id="subsection-32"><h3 class="heading hide-type">
-<span class="type">Subsection</span> <span class="codenumber">2.5.6</span> <span class="title">High Dimensional Problems</span>
-</h3>
-<p id="p-223">Okay so there is a lot going on here. Let us start with an example of what we mean by high dimensional questions. Consider one of the off diagonal scatter plots from the facet-grid above: Height versus Weight.</p>
+<p id="p-212">Okay so there is a lot going on here. Let us start with an example of what we mean by high dimensional questions. Consider one of the off diagonal scatter plots from the facet-grid above: Height versus Weight.</p>
 <figure class="figure-like" id="listing-23"><pre class="console"><b>sn.set(style = 'darkgrid')
 plt.figure(figsize = (10, 8))
 
 sn.scatterplot(x='Weight', y='Height', data=major_2);
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.5.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.15.</span> </figcaption></figure><p id="p-224">Okay fair enough. There seems to be something of a relationship between height and weight for our players. You may have already learned about <em class="emphasis">Linear Regression</em> in another class (Linear Algebra or Calculus 1). We can use seaborn to plot the least squares regression line for these data points.</p>
-<p id="p-225">We will learn some ways later in class of actually computing this line and its slope. It is not important today.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.5.15.</span> </figcaption></figure><p id="p-213">Okay fair enough. There seems to be something of a relationship between height and weight for our players. You may have already learned about <em class="emphasis">Linear Regression</em> in another class (Linear Algebra or Calculus 1). We can use seaborn to plot the least squares regression line for these data points.</p>
+<p id="p-214">We will learn some ways later in class of actually computing this line and its slope. It is not important today.</p>
 <figure class="figure-like" id="listing-24"><pre class="console"><b>plt.figure(figsize = (10, 8))
 sn.set(style = 'darkgrid')
 sn.regplot(x='Weight', y='Height', data=major_2);

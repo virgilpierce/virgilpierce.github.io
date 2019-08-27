@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:03-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -137,13 +137,13 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-20"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">2.11</span> <span class="title">Seventh Motivating Example - Berlin Airbnb Data</span>
 </h2>
-<section class="introduction" id="introduction-10"><p id="p-252">This is a regression problem, however it is also an example of what to me is the most promosing aspect of Data Science as a field <ul id="p-253" class="disc"><li id="li-77"><p id="p-254">the development of algorithms that interpret and react to human language.</p></li></ul></p>
-<p id="p-255">note: the other really promising aspect of the field is computer vision <ul id="p-256" class="disc"><li id="li-78"><p id="p-257">the development of algorithms that interpret and react to images.</p></li></ul></p>
-<p id="p-258">This example is also unique in that there are a number of data files attached to it, and to analyze it well they need to be connected.</p></section><section class="subsection" id="subsection-35"><h3 class="heading hide-type">
+<section class="introduction" id="introduction-10"><p id="p-241">This is a regression problem, however it is also an example of what to me is the most promosing aspect of Data Science as a field <ul id="p-242" class="disc"><li id="li-73"><p id="p-243">the development of algorithms that interpret and react to human language.</p></li></ul></p>
+<p id="p-244">note: the other really promising aspect of the field is computer vision <ul id="p-245" class="disc"><li id="li-74"><p id="p-246">the development of algorithms that interpret and react to images.</p></li></ul></p>
+<p id="p-247">This example is also unique in that there are a number of data files attached to it, and to analyze it well they need to be connected.</p></section><section class="subsection" id="subsection-34"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">2.11.1</span> <span class="title">Big Data</span>
 </h3>
-<p id="p-259">This is also an example of what we might call big data (though this is small big). The files are too big for Excell. <em class="emphasis">We could not analyze them without using technology like Python or R.</em></p>
-<p id="p-260">The files are also too big for Github, so we will need to load them from a dropbox link. Strangely this is easy, there is just one thing to change in the link Dropbox gives us for the file.</p>
+<p id="p-248">This is also an example of what we might call big data (though this is small big). The files are too big for Excell. <em class="emphasis">We could not analyze them without using technology like Python or R.</em></p>
+<p id="p-249">The files are also too big for Github, so we will need to load them from a dropbox link. Strangely this is easy, there is just one thing to change in the link Dropbox gives us for the file.</p>
 <figure class="figure-like" id="listing-50"><pre class="console"><b># First we get a link from dropbox
 # https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=0
 
@@ -178,11 +178,11 @@ print(calendar.shape)
 calendar.iloc[[random.randint(0, calendar.shape[0]) for x in range(10)], :]
 </b>(1800841, 4)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.11.5.</span> </figcaption></figure><p id="p-261">So notice the issues:</p>
-<ol id="p-262" class="decimal">
-<li id="li-79"><p id="p-263">We will need to use the listing id to follow from one of the facets to the other</p></li>
-<li id="li-80"><p id="p-264">While the airbnb supplied data - listings and neighborhood descriptions are in English, the reviews are in multiple languages.</p></li>
-<li id="li-81"><p id="p-265">In addition to the text for the listings we also have dates, geocoordinates, and some numerical data.</p></li>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.11.5.</span> </figcaption></figure><p id="p-250">So notice the issues:</p>
+<ol id="p-251" class="decimal">
+<li id="li-75"><p id="p-252">We will need to use the listing id to follow from one of the facets to the other</p></li>
+<li id="li-76"><p id="p-253">While the airbnb supplied data - listings and neighborhood descriptions are in English, the reviews are in multiple languages.</p></li>
+<li id="li-77"><p id="p-254">In addition to the text for the listings we also have dates, geocoordinates, and some numerical data.</p></li>
 </ol></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>

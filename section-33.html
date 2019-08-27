@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:03-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -137,7 +137,7 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-33"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">5.3</span> <span class="title">Error in Categorization Problems</span>
 </h2>
-<section class="introduction" id="introduction-16"><p id="p-499">Consider a categorization problem, this dataset is a collection of data related to study of chronic kidney disease (from the UCI archive).</p>
+<section class="introduction" id="introduction-16"><p id="p-488">Consider a categorization problem, this dataset is a collection of data related to study of chronic kidney disease (from the UCI archive).</p>
 <figure class="figure-like" id="listing-110"><pre class="console"><b>kd = pa.read_csv('Data Sets/Kidney/chronic_kidney_disease.csv', 
                  names=['age', 'bp', 'specific_gravity', 'albumin', 'sugar', 'red_blood_cells', 'pus_cell',
                         'pus_cell_clumps', 'bacteria', 'blood_glucose', 'blood_urea', 'serum_creatinine', 
@@ -182,12 +182,12 @@ kd.head()
 
 kd = kd[kd.hemoglobin != '?']
 </b></pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.2.</span> </figcaption></figure><p id="p-500">Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em class="emphasis">Chronic Kidney Disease</em>.</p></section><section class="subsection" id="subsection-57"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.2.</span> </figcaption></figure><p id="p-489">Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em class="emphasis">Chronic Kidney Disease</em>.</p></section><section class="subsection" id="subsection-56"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.3.1</span> <span class="title">Logistic Regression (Classification)</span>
 </h3>
-<p id="p-501">We first need to develop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em class="emphasis">Linear Regression</em> model we were using above.</p>
-<p id="p-502">We will consider two models. The first is based on the linear interpolation we used above, and is what we might consider a <em class="emphasis">naive</em> generalization. The second is <em class="emphasis">Logistic Regression</em>, which despite its name, is derived first as a classification method.</p>
-<p id="p-503">In order to compare our two methods, we will use the <em class="emphasis">test</em> set method we introduced above and set aside a portion of our samples to use to train or develop the models and a separate portion to use for testing the models.</p>
+<p id="p-490">We first need to develop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em class="emphasis">Linear Regression</em> model we were using above.</p>
+<p id="p-491">We will consider two models. The first is based on the linear interpolation we used above, and is what we might consider a <em class="emphasis">naive</em> generalization. The second is <em class="emphasis">Logistic Regression</em>, which despite its name, is derived first as a classification method.</p>
+<p id="p-492">In order to compare our two methods, we will use the <em class="emphasis">test</em> set method we introduced above and set aside a portion of our samples to use to train or develop the models and a separate portion to use for testing the models.</p>
 <figure class="figure-like" id="listing-112"><pre class="console"><b># First convert the data to numerical data in numpy arrays
 # Note a problem with this data is that the float values for hemoglobin (and other variables) were read as strings
 # We need to convert them
@@ -202,7 +202,7 @@ y = np.array([rename_class[c] for c in np.array(kd.loc[:, 'class'])])
 plt.plot(X, y, 'b.');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.5.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.4.</span> </figcaption></figure><p id="p-504">Note that other than the fact that the \(y\) values take only 0 or 1 values, this is a similar problem to the regression problem above. So we could try Linear Regression. First we divide the data into testing and training sets.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.4.</span> </figcaption></figure><p id="p-493">Note that other than the fact that the \(y\) values take only 0 or 1 values, this is a similar problem to the regression problem above. So we could try Linear Regression. First we divide the data into testing and training sets.</p>
 <figure class="figure-like" id="listing-114"><pre class="console"><b># We shuffle the data using a random permutation
 
 n = X.shape[0]
@@ -241,12 +241,12 @@ plt.plot(X_train, y_train, 'b.')
 plt.plot(xhat, yhat, 'r-');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.7.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.8.</span> </figcaption></figure><p id="p-505">The decision boundary is where \(y =  mx + b = 0.5\text{.}\)</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.8.</span> </figcaption></figure><p id="p-494">The decision boundary is where \(y =  mx + b = 0.5\text{.}\)</p>
 <figure class="figure-like" id="listing-118"><pre class="console"><b>dec_boundary = (0.5 - b)/m
 dec_boundary
 </b>13.128533748755249
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.9.</span> </figcaption></figure><p id="p-506">The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. However note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.9.</span> </figcaption></figure><p id="p-495">The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. However note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
 <figure class="figure-like" id="listing-119"><pre class="console"><b>plt.figure(figsize = (8, 6))
 
 plt.plot(X_train[(X_train &lt; dec_boundary)[:, 0]], y_train[(X_train &lt; dec_boundary)[:, 0]], 'b.');
@@ -266,30 +266,30 @@ print('Testing Error: {}'.format(Error_test))
 Testing Error: 0.10144927536231885
 </pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">5.3.11.</span> </figcaption></figure><article class="paragraphs" id="paragraphs-17"><h5 class="heading"><span class="title">The Logistic Model.</span></h5>
-<p id="p-507">Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable \(y\text{.}\) In this case \(y\) only takes values \(1\) or \(0\) and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
-<p id="p-508">What we need is a method of categorization that is built on the categorical problem itself.</p>
-<p id="p-509">What we are trying to predict is the probability that a patient has <em class="emphasis">Chronic Kidney Disease</em> given a hemoglobin level \(x\text{.}\)</p>
-<div class="displaymath" id="p-510">
+<p id="p-496">Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable \(y\text{.}\) In this case \(y\) only takes values \(1\) or \(0\) and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
+<p id="p-497">What we need is a method of categorization that is built on the categorical problem itself.</p>
+<p id="p-498">What we are trying to predict is the probability that a patient has <em class="emphasis">Chronic Kidney Disease</em> given a hemoglobin level \(x\text{.}\)</p>
+<div class="displaymath" id="p-499">
 \begin{equation*}
 p(x) = P(y=1 | x)
 \end{equation*}
 </div>
-<p id="p-511">Note that with <em class="emphasis">Linear Regression</em> what we have attempted to do is estimate this probability with a linear function:</p>
-<div class="displaymath" id="p-512">
+<p id="p-500">Note that with <em class="emphasis">Linear Regression</em> what we have attempted to do is estimate this probability with a linear function:</p>
+<div class="displaymath" id="p-501">
 \begin{equation*}
 p(x) = P(y=1 | x) = m x + b
 \end{equation*}
 </div>
-<p id="p-513">But immediately notice the problem, this returns values bigger than 1 and less than 0 for some choices of \(x\text{.}\)</p>
-<p id="p-514">So what we would prefer is to estimate \(p(x) = P(y=1 | x) \) with some function that only returns values between 0 and 1 and thus gives a valid probability. We could use the logistic function:</p>
-<div class="displaymath" id="p-515">
+<p id="p-502">But immediately notice the problem, this returns values bigger than 1 and less than 0 for some choices of \(x\text{.}\)</p>
+<p id="p-503">So what we would prefer is to estimate \(p(x) = P(y=1 | x) \) with some function that only returns values between 0 and 1 and thus gives a valid probability. We could use the logistic function:</p>
+<div class="displaymath" id="p-504">
 \begin{equation*}
 p(x) = P(y=1 | x) = \frac{\exp(m x + b)}{1 + \exp(m x + b)}
 \end{equation*}
 </div>
-<p id="p-516">You may have seen this function before in modeling population growth with a carrying capacity.</p>
-<p id="p-517">So the idea is to find values of \(m\) and \(b\) that give the best estimate for \(p(x)\) that we can find.</p>
-<p id="p-518">We will skip for now how these values are actually computed and instead use the scikitlearn function LogisticRegression.</p>
+<p id="p-505">You may have seen this function before in modeling population growth with a carrying capacity.</p>
+<p id="p-506">So the idea is to find values of \(m\) and \(b\) that give the best estimate for \(p(x)\) that we can find.</p>
+<p id="p-507">We will skip for now how these values are actually computed and instead use the scikitlearn function LogisticRegression.</p>
 <figure class="figure-like" id="listing-121"><pre class="console"><b># Import LogisticRegression
 from sklearn.linear_model import LogisticRegression
 </b></pre>
@@ -308,7 +308,7 @@ yy = np.exp(m*xx+b)/(1 + np.exp(m*xx+b))
 plt.plot(xx, yy, 'g-');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.9.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.15.</span> </figcaption></figure><p id="p-519">The decsision boundary happens again where the probability becomes &gt;0.5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.15.</span> </figcaption></figure><p id="p-508">The decsision boundary happens again where the probability becomes &gt;0.5; although note that we could actually tune the location of the decsision boundary based on the extent to which we want to avoid false positives or false negatives.</p>
 <figure class="figure-like" id="listing-125"><pre class="console"><b>dec_bd = -b/m  # Solving for the logistic function = 0.5 gives - b/m
 dec_bd
 </b>13.407780428819295
@@ -336,8 +336,8 @@ print('Testing Error: {}'.format(Error_test))
 </b>Training Error: 0.07885304659498207
 Testing Error: 0.08695652173913043
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.18.</span> </figcaption></figure><p id="p-520">In this case the error was comparable, and slightly better (although it changes each time you run it).</p>
-<p id="p-521">In future weeks we will get into the details of how these models are computed.</p></article></section></section></div></main>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.18.</span> </figcaption></figure><p id="p-509">In this case the error was comparable, and slightly better (although it changes each time you run it).</p>
+<p id="p-510">In future weeks we will get into the details of how these models are computed.</p></article></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
 <script src="https://pretextbook.org/js/0.12/login.js"></script>

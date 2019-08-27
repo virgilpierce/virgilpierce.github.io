@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:03-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -137,42 +137,42 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-28"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">4.1</span> <span class="title">Python and Jupyter</span>
 </h2>
-<section class="introduction" id="introduction-13"><p id="p-354">We discussed in Chapter 2 why we will be using Python and Jupyter in this class and how to get them. A few more notes are worthwhile about Python, and what we will do today is work through an example carefully illustrating some of the tools we will use. Let's use the dataset on house prices.</p></section><section class="subsection" id="subsection-43"><h3 class="heading hide-type">
+<section class="introduction" id="introduction-13"><p id="p-343">We discussed in Chapter 2 why we will be using Python and Jupyter in this class and how to get them. A few more notes are worthwhile about Python, and what we will do today is work through an example carefully illustrating some of the tools we will use. Let's use the dataset on house prices.</p></section><section class="subsection" id="subsection-42"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">4.1.1</span> <span class="title">Markdown</span>
 </h3>
-<p id="p-355">Before we get started in that, note that one of the big features we get with Jupyter (Notebooks or Labs) is the <em class="emphasis">Markdown</em> cells in addition to the <em class="emphasis">Code</em> cells. Markdown is a simple language for adding some features to regular text. It is a WYSIWYG (What You See Is What You Get text processing language, unlike say \(\LaTeX\) which is a compiled text processing language). The markdown used by Jupyter is identical to that used by Github; and is not far from the markdown language used by wikipedia. Some quick points about using markdown:</p>
-<ul id="p-356" class="disc">
-<li id="li-103"><p id="p-357">Section headers are identified with '#' symbols.</p></li>
-<li id="li-104"><p id="p-358">You can add mathematics using dollar symbols enclosing LaTeX commands.</p></li>
-<li id="li-105"><p id="p-359">Single dollar symbols are for inline mathematics, for example \(f(x) = \sin(x^2)\)</p></li>
-<li id="li-106">
-<p id="p-360">Double dollar symbols are for a mathematics environment, for example</p>
+<p id="p-344">Before we get started in that, note that one of the big features we get with Jupyter (Notebooks or Labs) is the <em class="emphasis">Markdown</em> cells in addition to the <em class="emphasis">Code</em> cells. Markdown is a simple language for adding some features to regular text. It is a WYSIWYG (What You See Is What You Get text processing language, unlike say \(\LaTeX\) which is a compiled text processing language). The markdown used by Jupyter is identical to that used by Github; and is not far from the markdown language used by wikipedia. Some quick points about using markdown:</p>
+<ul id="p-345" class="disc">
+<li id="li-99"><p id="p-346">Section headers are identified with '#' symbols.</p></li>
+<li id="li-100"><p id="p-347">You can add mathematics using dollar symbols enclosing LaTeX commands.</p></li>
+<li id="li-101"><p id="p-348">Single dollar symbols are for inline mathematics, for example \(f(x) = \sin(x^2)\)</p></li>
+<li id="li-102">
+<p id="p-349">Double dollar symbols are for a mathematics environment, for example</p>
 <div class="displaymath">
 \begin{equation*}
 \int x dx = \frac{1}{2} x^2 + C
 \end{equation*}
 </div>
 </li>
-<li id="li-107"><p id="p-361">For more help with LaTeX, just google things. There are now tools that can take a picture of handwritten mathematics and give you the LaTeX code to creat it.</p></li>
-<li id="li-108"><p id="p-362">Images can be include using a sort of html like tag (see the example notebooks)</p></li>
-<li id="li-109"><p id="p-363">Star symbols are used for italics and two star symbols for bold</p></li>
+<li id="li-103"><p id="p-350">For more help with LaTeX, just google things. There are now tools that can take a picture of handwritten mathematics and give you the LaTeX code to creat it.</p></li>
+<li id="li-104"><p id="p-351">Images can be include using a sort of html like tag (see the example notebooks)</p></li>
+<li id="li-105"><p id="p-352">Star symbols are used for italics and two star symbols for bold</p></li>
 </ul>
-<p id="p-364">You render the markdown code by typing shift+enter in the cell just as you would for executing code in a code cell.</p></section><section class="subsection" id="subsection-44"><h3 class="heading hide-type">
+<p id="p-353">You render the markdown code by typing shift+enter in the cell just as you would for executing code in a code cell.</p></section><section class="subsection" id="subsection-43"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">4.1.2</span> <span class="title">Python for Data Science</span>
 </h3>
-<p id="p-365">So the best way to learn is to do, so lets start with an example. Many data sets arrive as a comma separated variable (CSV) file. This is a text file representing a spreadsheet where each entry in different columns are separated by a variable. It is worth opening a CSV file in a text editor on your computer and making sure you recognize the structure. If you have received the data as another type of spreadsheet you should open it in its native application and then save it as or export it as a CSV file.</p>
-<p id="p-366">Other common types of data are:</p>
-<ul id="p-367" class="disc">
-<li id="li-110"><p id="p-368">Images</p></li>
-<li id="li-111"><p id="p-369">Text Files</p></li>
-<li id="li-112"><p id="p-370">Data scrapped from APIs (like the Twitter API)</p></li>
+<p id="p-354">So the best way to learn is to do, so lets start with an example. Many data sets arrive as a comma separated variable (CSV) file. This is a text file representing a spreadsheet where each entry in different columns are separated by a variable. It is worth opening a CSV file in a text editor on your computer and making sure you recognize the structure. If you have received the data as another type of spreadsheet you should open it in its native application and then save it as or export it as a CSV file.</p>
+<p id="p-355">Other common types of data are:</p>
+<ul id="p-356" class="disc">
+<li id="li-106"><p id="p-357">Images</p></li>
+<li id="li-107"><p id="p-358">Text Files</p></li>
+<li id="li-108"><p id="p-359">Data scrapped from APIs (like the Twitter API)</p></li>
 </ul>
-<p id="p-371">If you look at the last example from Chapter 2 you will see an example of working with image files as data, and later in the class we will explore how to handle text and interact with the Twitter API to gather data.</p></section><section class="subsection" id="subsection-45"><h3 class="heading hide-type">
+<p id="p-360">If you look at the last example from Chapter 2 you will see an example of working with image files as data, and later in the class we will explore how to handle text and interact with the Twitter API to gather data.</p></section><section class="subsection" id="subsection-44"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">4.1.3</span> <span class="title">Example</span>
 </h3>
 <article class="paragraphs" id="paragraphs-7"><h5 class="heading"><span class="title">Import Data.</span></h5>
-<p id="p-372">The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html" target="_blank">pandas.read_csv</a>. Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
-<p id="p-373"><em class="alert">Warning</em> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
+<p id="p-361">The first thing to do is to load the data into a Python instance from a file. Pandas provides a one-step method <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html" target="_blank">pandas.read_csv</a>. Note that if your file is using something other than a comma to identify columns you can specify that as an option.</p>
+<p id="p-362"><em class="alert">Warning</em> we will discuss Big Data later in class, but it is possible for a CSV file to contain too much information for it to be imported like this (depending on your computers RAM).</p>
 <figure class="figure-like" id="listing-68"><pre class="console"><b># Start with importing the pandas package
 
 import pandas as pa
@@ -205,9 +205,9 @@ hd.head()
 
 [5 rows x 81 columns]
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.2.</span> </figcaption></figure><p id="p-374">The <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank">pandas.dataframe</a>  object type is a structured array. It is a collection of rows and columns with names for the rows and colummns. Note there is a special <em class="emphasis">NaN</em> character that represents entries that were missing in the dataset.</p>
-<p id="p-375">Not surprinsingly with the house pricing dataset <em class="emphasis">PoolQC</em> (Pool Quality) is a missing value for many houses.</p>
-<p id="p-376">Typically the columns should be the features, and each row should represent one of the samples or instances. We can get a list of the features:</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.2.</span> </figcaption></figure><p id="p-363">The <a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank">pandas.dataframe</a>  object type is a structured array. It is a collection of rows and columns with names for the rows and colummns. Note there is a special <em class="emphasis">NaN</em> character that represents entries that were missing in the dataset.</p>
+<p id="p-364">Not surprinsingly with the house pricing dataset <em class="emphasis">PoolQC</em> (Pool Quality) is a missing value for many houses.</p>
+<p id="p-365">Typically the columns should be the features, and each row should represent one of the samples or instances. We can get a list of the features:</p>
 <figure class="figure-like" id="listing-70"><pre class="console"><b># I wrap it in a list command because it returns an np.array element with some additional information otherwise
 
 list(hd.columns.values)
@@ -294,7 +294,7 @@ list(hd.columns.values)
  'SalePrice']
 </pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">4.1.3.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-8"><h5 class="heading"><span class="title">Manipulating Data.</span></h5>
-<p id="p-377">First, we consider the effect of total square footage on the price of the house. Note that there is no feature that is <em class="emphasis">Total Square Footage</em>.  There is <em class="emphasis">1stFlrSF</em> and <em class="emphasis">2ndFlrSF</em>. So what we want to do is make a new feature that is the sum of these two. However the dataframe itself is big right now, so what I would also like to do is pair it down to only the features I want to consider.</p>
+<p id="p-366">First, we consider the effect of total square footage on the price of the house. Note that there is no feature that is <em class="emphasis">Total Square Footage</em>.  There is <em class="emphasis">1stFlrSF</em> and <em class="emphasis">2ndFlrSF</em>. So what we want to do is make a new feature that is the sum of these two. However the dataframe itself is big right now, so what I would also like to do is pair it down to only the features I want to consider.</p>
 <figure class="figure-like" id="listing-71"><pre class="console"><b># Make a new data frame using only the '1stFlrSF', '2ndFlrSF', and 'SalePrice' features
 
 hd2 = hd[['1stFlrSF', '2ndFlrSF', 'SalePrice']]
@@ -322,22 +322,22 @@ hd2 = hd2.assign(Total_SF=pa.Series(hd2['1stFlrSF'] + hd2['2ndFlrSF'], index=hd2
 3       961       756     140000      1717
 4      1145      1053     250000      2198
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.6.</span> </figcaption></figure><p id="p-378"><em class="alert">Warning</em> if you do this the naive Python way (particular if you have used numpy arrays) you probably are getting a <em class="emphasis">SettingWithCopyWarning</em>. Using assign is now considered the best method. For more complicated transformations you would probably want to use a lambda or even a regular function.</p>
-<p id="p-379">We will deal with manipulating categorical data later, thouigh you can also look back at the baseball player example in Chapter 1.</p></article><article class="paragraphs" id="paragraphs-9"><h5 class="heading"><span class="title">Exporting Data.</span></h5>
-<p id="p-380">Occasionally you will need to export data from Python so that it can be used in other programs. The primary reasons I have to do this in my work are:</p>
-<ul id="p-381" class="disc">
-<li id="li-113"><p id="p-382">I need to share the results of some analysis or transformation of the data, like we did here (particularly after using the pandas.groupby() and similar functions). Many people I work with do not use Python and so I need to export the data to a spreadsheet readable format so they can see it.</p></li>
-<li id="li-114"><p id="p-383">I am applying a complicated transformation that has taken some time to compute, and I want to save the result as a starting point for further analysis.</p></li>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.6.</span> </figcaption></figure><p id="p-367"><em class="alert">Warning</em> if you do this the naive Python way (particular if you have used numpy arrays) you probably are getting a <em class="emphasis">SettingWithCopyWarning</em>. Using assign is now considered the best method. For more complicated transformations you would probably want to use a lambda or even a regular function.</p>
+<p id="p-368">We will deal with manipulating categorical data later, thouigh you can also look back at the baseball player example in Chapter 1.</p></article><article class="paragraphs" id="paragraphs-9"><h5 class="heading"><span class="title">Exporting Data.</span></h5>
+<p id="p-369">Occasionally you will need to export data from Python so that it can be used in other programs. The primary reasons I have to do this in my work are:</p>
+<ul id="p-370" class="disc">
+<li id="li-109"><p id="p-371">I need to share the results of some analysis or transformation of the data, like we did here (particularly after using the pandas.groupby() and similar functions). Many people I work with do not use Python and so I need to export the data to a spreadsheet readable format so they can see it.</p></li>
+<li id="li-110"><p id="p-372">I am applying a complicated transformation that has taken some time to compute, and I want to save the result as a starting point for further analysis.</p></li>
 </ul>
-<p id="p-384">As you can imagine, pandas has a tool for that:</p>
-<p id="p-385"><a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html" target="_blank">pandas.DataFrame.to_csv</a></p>
+<p id="p-373">As you can imagine, pandas has a tool for that:</p>
+<p id="p-374"><a class="external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html" target="_blank">pandas.DataFrame.to_csv</a></p>
 <figure class="figure-like" id="listing-74"><pre class="console"><b># Note that you need to give a relative path (relative to the directory your notebook is in), 
 # or give an absolute path. I work on multiple machines and so relative paths are usually more reliable
 
 hd2.to_csv('total_sf.csv')
 </b></pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">4.1.7.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-10"><h5 class="heading"><span class="title">Plotting.</span></h5>
-<p id="p-386">We will use seaborn to plot data. A future class will go through more examples and additional detail about plotting. For now here is an example of a scatter plot we might use with the transformed data for housing prices:</p>
+<p id="p-375">We will use seaborn to plot data. A future class will go through more examples and additional detail about plotting. For now here is an example of a scatter plot we might use with the transformed data for housing prices:</p>
 <figure class="figure-like" id="listing-75"><pre class="console"><b># Import seaborn and matplotlib.pyplot
 
 import seaborn as sn
@@ -350,16 +350,16 @@ sn.scatterplot(x='Total_SF', y='SalePrice', data=hd2, palette='winter');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/4_1.1.png" style="width: 100%; height: auto;" alt=""></div>
 <figcaption><span class="type">Listing</span> <span class="codenumber">4.1.9.</span> </figcaption></figure></article><article class="paragraphs" id="paragraphs-11"><h5 class="heading"><span class="title">Making Predictions.</span></h5>
-<p id="p-387">So fine we have drawn a nice picture, but what we actually want is to use this model to make predictions. We will use the scikitlearn package. The linear regression command is <a class="external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank">sklearn.linear_model.LinearRegression</a></p>
-<p id="p-388">In order to use this we also need to first convert our pandas DataFrame to a</p>
-<p id="p-389"><a class="external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html" target="_blank">numpy.array</a></p>
+<p id="p-376">So fine we have drawn a nice picture, but what we actually want is to use this model to make predictions. We will use the scikitlearn package. The linear regression command is <a class="external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank">sklearn.linear_model.LinearRegression</a></p>
+<p id="p-377">In order to use this we also need to first convert our pandas DataFrame to a</p>
+<p id="p-378"><a class="external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html" target="_blank">numpy.array</a></p>
 <figure class="figure-like" id="listing-77"><pre class="console"><b># import the numpy and the Linear Regression tool from scikitlearn
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
 </b></pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.10.</span> </figcaption></figure><p id="p-390">First we make a numpy.array of the predictor features we want to include in the model. For today that is just the <em class="emphasis">Total_SF</em> feature.</p>
-<p id="p-391">Then we make another numpy.array with the known value of the result feature. For today that is the <em class="emphasis">SalePrice</em> feature.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.10.</span> </figcaption></figure><p id="p-379">First we make a numpy.array of the predictor features we want to include in the model. For today that is just the <em class="emphasis">Total_SF</em> feature.</p>
+<p id="p-380">Then we make another numpy.array with the known value of the result feature. For today that is the <em class="emphasis">SalePrice</em> feature.</p>
 <figure class="figure-like" id="listing-78"><pre class="console"><b>X = np.atleast_2d(np.array(hd2['Total_SF'])).transpose() 
 
 # There is an annoying scikitlearn thing here that it needs the X to be a 2-d array;
@@ -388,7 +388,7 @@ y
 reg.score(X, y)
 </b>0.5139213494859829
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p id="p-392">Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of 0.514 is not good (which we can see in the graph below). Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.13.</span> </figcaption></figure><p id="p-381">Score here is what is called the \(R^2\) of the prediction. It is a measure of the extent to which the regression model we found predicts the data; close to 1 is a good fit. An \(R^2\) of 0.514 is not good (which we can see in the graph below). Later on we will go into further detail about Linear Regression and what \(R^2\) means.</p>
 <figure class="figure-like" id="listing-81"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_    # The intercept and slope(s) of the regression line can be pulled out
 
 # Also note that I used a little bit of python trickery here to unpack the array reg.coef_
@@ -396,7 +396,7 @@ reg.score(X, y)
 b, m
 </b>(15955.120847421553, 109.27661587643645)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p id="p-393">The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.14.</span> </figcaption></figure><p id="p-382">The prediction can be found using the scikitlearn builtin; or using the linear form \(b + mx = y\)</p>
 <figure class="figure-like" id="listing-82"><pre class="console"><b>x = 4500
 
 print(reg.predict(np.array(x).reshape(-1, 1))[0])   
@@ -406,7 +406,7 @@ print(b+m*x)
 </b>507699.89229138556
 507699.89229138556
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p id="p-394">We can plot this together with the data.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">4.1.15.</span> </figcaption></figure><p id="p-383">We can plot this together with the data.</p>
 <figure class="figure-like" id="listing-83"><pre class="console"><b>xvalues = np.atleast_2d(np.array(np.linspace(0, 6000, 10))).transpose()   # Build a set of Total_SF values
 yvalues = reg.predict(xvalues)  # apply the models predictor
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:03-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -137,7 +137,7 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-21"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">2.12</span> <span class="title">Eighth Motivating Example - Colorado Child Care</span>
 </h2>
-<p id="p-266"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/child-care.jpeg" style="width: 100%; height: auto;" alt=""></div></p>
+<p id="p-255"><div class="image-box" style="width: 60%; margin-left: 20%; margin-right: 20%;"><img src="Images/child-care.jpeg" style="width: 100%; height: auto;" alt=""></div></p>
 <figure class="figure-like" id="listing-55"><pre class="console"><b># Consider the following data set of licenses for child care business in Colorado 
 #   (from https://data.colorado.gov/)
 
@@ -211,8 +211,8 @@ Adams  Arvada Child Care Center                       2
               Family Child Care Home                  2
               Preschool Program                       7
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.2.</span> </figcaption></figure><p id="p-267">Worth pausing here and making sure we understand what we have done: We have created a new data frame whose rows are now the County, City, and Provider Type factors; and the single Column is the Count of the number of</p>
-<p id="p-268">that Provider Type in the City.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.2.</span> </figcaption></figure><p id="p-256">Worth pausing here and making sure we understand what we have done: We have created a new data frame whose rows are now the County, City, and Provider Type factors; and the single Column is the Count of the number of</p>
+<p id="p-257">that Provider Type in the City.</p>
 <figure class="figure-like" id="listing-57"><pre class="console"><b>temp = cocc.reset_index().loc[:, ['COUNTY', 'PROVIDER SERVICE TYPE', 'COUNT']]  
 
 # Drop the city and go back to a full data frame.
@@ -233,7 +233,7 @@ sn.barplot(x='COUNT', y='COUNTY', data=temp)
 plt.title('Preschool Programs');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.20.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.3.</span> </figcaption></figure><p id="p-269">Fine for someone from Colorado. But can we do better?</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.3.</span> </figcaption></figure><p id="p-258">Fine for someone from Colorado. But can we do better?</p>
 <figure class="figure-like" id="listing-58"><pre class="console"><b>cocc = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
 temp = cocc.loc[:, ['PROVIDER SERVICE TYPE', 'LONG-LAT'] ]
 
@@ -256,10 +256,10 @@ sn.relplot(x='Lat', y='Long', hue='PROVIDER SERVICE TYPE',
 plt.title('Location of Child Care Businesses');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/2.21.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.5.</span> </figcaption></figure><p id="p-270">A couple of notes of things we should learn how to do in the future:</p>
-<ol id="p-271" class="decimal">
-<li id="li-82"><p id="p-272">It would be nice to put these points on a map of Colorado; or to put points for the larger cities in the state.</p></li>
-<li id="li-83"><p id="p-273">It would also be nice to change it to combine near by points and make a bigger point.</p></li>
+<figcaption><span class="type">Listing</span> <span class="codenumber">2.12.5.</span> </figcaption></figure><p id="p-259">A couple of notes of things we should learn how to do in the future:</p>
+<ol id="p-260" class="decimal">
+<li id="li-78"><p id="p-261">It would be nice to put these points on a map of Colorado; or to put points for the larger cities in the state.</p></li>
+<li id="li-79"><p id="p-262">It would also be nice to change it to combine near by points and make a bigger point.</p></li>
 </ol>
 <article class="paragraphs" id="paragraphs-1"><h5 class="heading"><span class="title">What is a good question for this data set?</span></h5></article></section></div></main>
 </div>

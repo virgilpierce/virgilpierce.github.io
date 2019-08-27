@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-08-23T17:44:12-06:00    *-->
+<!--*    on 2019-08-27T15:11:03-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -137,12 +137,12 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-32"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">5.2</span> <span class="title">Controlling for Error</span>
 </h2>
-<section class="subsection" id="subsection-51"><h3 class="heading hide-type">
+<section class="subsection" id="subsection-50"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.1</span> <span class="title">Error in Regression Problems</span>
 </h3>
-<p id="p-466">For today the gathering data process will be something we do here in Python by simmulating some data. Before we dive into an exploratory data analysis and developing a model, we should make a plan for how we will estimate the error of our model. Or even what we mean by the error of our model.</p>
-<p id="p-467">Today, because I want us to be sure we understand the sources of error in our analysis we will build the dataset in Python in a way where we actually know the <em class="emphasis">correct model</em>. You should be thinking about the House Pricing problem or one of the other regression problems we have talked about.</p>
-<p id="p-468">Suppose we have a predictor feature \(x\) and a resulting value \(y\) that have a linear relationship, however because we cannot possibly account for all of the variation there is some <em class="emphasis">Irreducible Error</em>. That is when we build our sample, there is a random variable that comes along with it.</p>
+<p id="p-455">For today the gathering data process will be something we do here in Python by simmulating some data. Before we dive into an exploratory data analysis and developing a model, we should make a plan for how we will estimate the error of our model. Or even what we mean by the error of our model.</p>
+<p id="p-456">Today, because I want us to be sure we understand the sources of error in our analysis we will build the dataset in Python in a way where we actually know the <em class="emphasis">correct model</em>. You should be thinking about the House Pricing problem or one of the other regression problems we have talked about.</p>
+<p id="p-457">Suppose we have a predictor feature \(x\) and a resulting value \(y\) that have a linear relationship, however because we cannot possibly account for all of the variation there is some <em class="emphasis">Irreducible Error</em>. That is when we build our sample, there is a random variable that comes along with it.</p>
 <figure class="figure-like" id="listing-85"><pre class="console"><b># Using the usual packages, plus scikitlearns LinearRegression tool; and numpy.random.
 
 import pandas as pa
@@ -186,21 +186,21 @@ df.tail()
 sn.scatterplot(x='x', y='y', hue='a', data=df);
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.1.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.5.</span> </figcaption></figure><p id="p-469">Note the presence of a relationship between predictor and result is readily apparent:</p>
-<div class="displaymath" id="p-470">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.5.</span> </figcaption></figure><p id="p-458">Note the presence of a relationship between predictor and result is readily apparent:</p>
+<div class="displaymath" id="p-459">
 \begin{equation*}
 y = m x + b + E
 \end{equation*}
 </div>
-<p id="p-471">The goal of regression is to estimate the true values of the slope and intercept \((m, b)\) of this relationship. So note that there will be two sources of error:</p>
-<ul id="p-472" class="disc">
-<li id="li-142"><p id="p-473">Reduccible Error: This is error that we can eliminate by using a better model for the relationship. It is due in this example to us using a sample.</p></li>
-<li id="li-143"><p id="p-474">Irreduccible Error, \(E\text{:}\) This is the underlying error we introduced when we simulated the data. In real data it is due to factors not included in the model. This cannot be removed and our goal is instead to understand this term.</p></li>
-</ul></section><section class="subsection" id="subsection-52"><h3 class="heading hide-type">
+<p id="p-460">The goal of regression is to estimate the true values of the slope and intercept \((m, b)\) of this relationship. So note that there will be two sources of error:</p>
+<ul id="p-461" class="disc">
+<li id="li-138"><p id="p-462">Reduccible Error: This is error that we can eliminate by using a better model for the relationship. It is due in this example to us using a sample.</p></li>
+<li id="li-139"><p id="p-463">Irreduccible Error, \(E\text{:}\) This is the underlying error we introduced when we simulated the data. In real data it is due to factors not included in the model. This cannot be removed and our goal is instead to understand this term.</p></li>
+</ul></section><section class="subsection" id="subsection-51"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.2</span> <span class="title">Making Test and Training Sets</span>
 </h3>
-<p id="p-475">The first control measure we will make is to divide our data into a <em class="emphasis">test set</em> and a <em class="emphasis">training set</em>. We will build our model from the training set with the goal of making it perform as well on that as we can. We will then apply it to the test set to determine how well we did. This partitioning method will protect us from overfitting (as we get to more complicated examples we will see examples where overfitting is likely and a big concern).</p>
-<p id="p-476">What is <em class="emphasis">overfitting</em>?  Overfitting is when the model we have built was based on the sample of the data we were given and was led astray from the true relationship. This leads to models that will perform well on their training data but poorly when applied to new data. For linear relationships and linear models, overfitting is not a big problem, but for nonlinear and higher dimensional relations it becomes more likely.</p>
+<p id="p-464">The first control measure we will make is to divide our data into a <em class="emphasis">test set</em> and a <em class="emphasis">training set</em>. We will build our model from the training set with the goal of making it perform as well on that as we can. We will then apply it to the test set to determine how well we did. This partitioning method will protect us from overfitting (as we get to more complicated examples we will see examples where overfitting is likely and a big concern).</p>
+<p id="p-465">What is <em class="emphasis">overfitting</em>?  Overfitting is when the model we have built was based on the sample of the data we were given and was led astray from the true relationship. This leads to models that will perform well on their training data but poorly when applied to new data. For linear relationships and linear models, overfitting is not a big problem, but for nonlinear and higher dimensional relations it becomes more likely.</p>
 <figure class="figure-like" id="listing-90"><pre class="console"><b># First convert the predictor and result variables into numpy.arrays suitable for applying in 
 # scikitlearn functions (recall we did this last class)
 
@@ -226,13 +226,13 @@ y_train = y[test:]
 set(X_test[:, 1])
 </b>{0.0}
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.8.</span> </figcaption></figure></section><section class="subsection" id="subsection-53"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.8.</span> </figcaption></figure></section><section class="subsection" id="subsection-52"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.3</span> <span class="title">Regression Error</span>
 </h3>
-<p id="p-477">Let us take an estimate for the slope and intercept, choosen mostly at random.</p>
+<p id="p-466">Let us take an estimate for the slope and intercept, choosen mostly at random.</p>
 <figure class="figure-like" id="listing-93"><pre class="console"><b>m, b = 9, 0
 </b></pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.9.</span> </figcaption></figure><p id="p-478">We then use this to estimate</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.9.</span> </figcaption></figure><p id="p-467">We then use this to estimate</p>
 <div class="displaymath">
 \begin{equation*}
 \hat{y} = m x + 
@@ -247,18 +247,18 @@ yhat = m*x + b
 plt.plot(x, yhat, 'g-');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/5.2.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.10.</span> </figcaption></figure><p id="p-479">We need a measurement of the error between our estimates \(\hat{y}\) and the actual training data. We will then choose \(m\) and \(b\) so that this error is minmized. There are then two tricks:</p>
-<ul id="p-480" class="disc">
-<li id="li-144"><p id="p-481">There are different choices of error that may make sense.</p></li>
-<li id="li-145"><p id="p-482">Once we have choosen one we need to choose the parameters that minimize it (or at least estimate them)</p></li>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.10.</span> </figcaption></figure><p id="p-468">We need a measurement of the error between our estimates \(\hat{y}\) and the actual training data. We will then choose \(m\) and \(b\) so that this error is minmized. There are then two tricks:</p>
+<ul id="p-469" class="disc">
+<li id="li-140"><p id="p-470">There are different choices of error that may make sense.</p></li>
+<li id="li-141"><p id="p-471">Once we have choosen one we need to choose the parameters that minimize it (or at least estimate them)</p></li>
 </ul>
-<p id="p-483">A common choice of the error is sum of the square residual errors of the predicted \(\hat{y}\) from the sample values \(y_i\) in the training set. We will learn in a future class how to compute the linear regression minimizing this choice of error. This gives the <em class="emphasis">Explained Variance</em> of the training set by the model.</p>
+<p id="p-472">A common choice of the error is sum of the square residual errors of the predicted \(\hat{y}\) from the sample values \(y_i\) in the training set. We will learn in a future class how to compute the linear regression minimizing this choice of error. This gives the <em class="emphasis">Explained Variance</em> of the training set by the model.</p>
 <figure class="figure-like" id="listing-95"><pre class="console"><b>yhat = m*X_train[:, 0]+b
 EV = sum( (yhat - y_train)**2 )
 EV
 </b>5108853.051597417
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.11.</span> </figcaption></figure><p id="p-484">The scikitlearn LinearRegression function will determine the model that minimizes this error.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.11.</span> </figcaption></figure><p id="p-473">The scikitlearn LinearRegression function will determine the model that minimizes this error.</p>
 <figure class="figure-like" id="listing-96"><pre class="console"><b>reg = LinearRegression().fit(X_train[:, 0].reshape(-1, 1), y_train)
 </b></pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">5.2.12.</span> </figcaption></figure><figure class="figure-like" id="listing-97"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_
@@ -281,23 +281,23 @@ EV = sum( (yhat - y_train)**2 )
 EV
 </b>4226179.880094271
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.15.</span> </figcaption></figure><p id="p-485">Note: We missed the true relationship, particularly the intercept. Why?</p>
-<p id="p-486">Of course this total error (<em class="emphasis">Explained Variance</em>) is not a great measure of how good our model was, as obviously it depends on the magnitudes and variations of the sample \(y_i\text{.}\)</p>
-<p id="p-487">The <em class="emphasis">Total Variance</em> is given by the sum of the squares of the differences of the training data and the mean of the training data.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.15.</span> </figcaption></figure><p id="p-474">Note: We missed the true relationship, particularly the intercept. Why?</p>
+<p id="p-475">Of course this total error (<em class="emphasis">Explained Variance</em>) is not a great measure of how good our model was, as obviously it depends on the magnitudes and variations of the sample \(y_i\text{.}\)</p>
+<p id="p-476">The <em class="emphasis">Total Variance</em> is given by the sum of the squares of the differences of the training data and the mean of the training data.</p>
 <figure class="figure-like" id="listing-100"><pre class="console"><b>y_mean = np.mean(y_train)
 TV = sum( (y_train - y_mean)**2 )
 TV
 </b>37395104.69610516
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.16.</span> </figcaption></figure><p id="p-488">If the regression line correctly explains the variations of the data, i.e. if our model correctly accounts for all of the errors relative to the extent to which the \(y_i\) vary anyway, then the ratio of <em class="emphasis">Explained Variance</em> to <em class="emphasis">Total Variance</em> will be small; \(R^2\) is defined to be 1 minus this ratio. Notice though that if the Total Variance is large compared to the Explained Variance this will also result in an \(R^2\) that is near 1.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.16.</span> </figcaption></figure><p id="p-477">If the regression line correctly explains the variations of the data, i.e. if our model correctly accounts for all of the errors relative to the extent to which the \(y_i\) vary anyway, then the ratio of <em class="emphasis">Explained Variance</em> to <em class="emphasis">Total Variance</em> will be small; \(R^2\) is defined to be 1 minus this ratio. Notice though that if the Total Variance is large compared to the Explained Variance this will also result in an \(R^2\) that is near 1.</p>
 <figure class="figure-like" id="listing-101"><pre class="console"><b>R2 = 1 - EV/TV
 R2
 </b>0.886985745475545
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.17.</span> </figcaption></figure><p id="p-489">Note each time we run the cells above, with the dataset fixed, for this computation we will get slightly different values of \(m\text{,}\) \(b\text{,}\) and \(R^2\text{.}\) This is because the sample and the division into training and testing sets is different each time.</p></section><section class="subsection" id="subsection-54"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.17.</span> </figcaption></figure><p id="p-478">Note each time we run the cells above, with the dataset fixed, for this computation we will get slightly different values of \(m\text{,}\) \(b\text{,}\) and \(R^2\text{.}\) This is because the sample and the division into training and testing sets is different each time.</p></section><section class="subsection" id="subsection-53"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.4</span> <span class="title">Checking the Influence of Individual Points</span>
 </h3>
-<p id="p-490">Note that we have, or suspect we have, some samples that do not fit the same pattern as the rest of the data. An important question is to consider the impact that these samples have on the model we have computed. We do that by computing the linear regression with each point removed. Normally we would not know what points do not fit with the others (though we may have suspicions) so the best practice is to go through all of them.</p>
+<p id="p-479">Note that we have, or suspect we have, some samples that do not fit the same pattern as the rest of the data. An important question is to consider the impact that these samples have on the model we have computed. We do that by computing the linear regression with each point removed. Normally we would not know what points do not fit with the others (though we may have suspicions) so the best practice is to go through all of them.</p>
 <figure class="figure-like" id="listing-102"><pre class="console"><b>n = X_train.shape[0]
 lin_reg = [0 for k in range(n)]
 R2p = [0 for k in range(n)]
@@ -320,17 +320,17 @@ X_train[m1, :]
 # And we see that the off-pattern value at x=700 gives the minimum R2
 </b>array([700.,   1.])
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.21.</span> </figcaption></figure><p id="p-491">This indicates that this sample has a disproportionate impact on our model. That should make us supicious that there is overfitting being caused by it.</p>
-<p id="p-492">The coefficients without the first one are given below.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.21.</span> </figcaption></figure><p id="p-480">This indicates that this sample has a disproportionate impact on our model. That should make us supicious that there is overfitting being caused by it.</p>
+<p id="p-481">The coefficients without the first one are given below.</p>
 <figure class="figure-like" id="listing-106"><pre class="console"><b>b2, m2 = lin_reg[m1].intercept_, *lin_reg[m1].coef_
 b2, m2
 </b>(-9.68337679768456, 10.1725546119756)
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.22.</span> </figcaption></figure><p id="p-493">Points with much different \(y\) values from other \(y\) values with similar \(x\) values (<em class="emphasis">outliers</em>), or points with much different \(x\) values from the mean of the \(x\) values (<em class="emphasis">high leverage samples</em>) have the potnetial to impact the model disproportinately like both of these. It is tempting to treat them differently (i.e. to accept the model computed without them). However we must proceed with caution. These samples may be the result of some error in the data collection, however they may also be valid samples.</p>
-<p id="p-494">Should we include them or not?  A model that has been greatly swayed by a high leverage point may not perform as well on the test data because it has been overfit to these samples. However these high leverage and outlier samples may also be indicative of a pattern in the data. The thing that should give us pause is what happened with the water samples in Flint, MI.</p></section><section class="subsection" id="subsection-55"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.22.</span> </figcaption></figure><p id="p-482">Points with much different \(y\) values from other \(y\) values with similar \(x\) values (<em class="emphasis">outliers</em>), or points with much different \(x\) values from the mean of the \(x\) values (<em class="emphasis">high leverage samples</em>) have the potnetial to impact the model disproportinately like both of these. It is tempting to treat them differently (i.e. to accept the model computed without them). However we must proceed with caution. These samples may be the result of some error in the data collection, however they may also be valid samples.</p>
+<p id="p-483">Should we include them or not?  A model that has been greatly swayed by a high leverage point may not perform as well on the test data because it has been overfit to these samples. However these high leverage and outlier samples may also be indicative of a pattern in the data. The thing that should give us pause is what happened with the water samples in Flint, MI.</p></section><section class="subsection" id="subsection-54"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.5</span> <span class="title">Using the Test Set</span>
 </h3>
-<p id="p-495">Of course we prepared for this by sequestering some of our data from the training (development) of our model. We can now use this data to check how accurate our model is on data it has not seen. We will run the test on the model computed with all of the training points \((b, m)\text{,}\) and on the model computed without the outlier point \((b_2, m_2)\text{.}\) What erorr expression should we use? We have the ready made one given by the <em class="emphasis">Explained Variance</em> and \(R^2\text{.}\)</p>
+<p id="p-484">Of course we prepared for this by sequestering some of our data from the training (development) of our model. We can now use this data to check how accurate our model is on data it has not seen. We will run the test on the model computed with all of the training points \((b, m)\text{,}\) and on the model computed without the outlier point \((b_2, m_2)\text{.}\) What erorr expression should we use? We have the ready made one given by the <em class="emphasis">Explained Variance</em> and \(R^2\text{.}\)</p>
 <figure class="figure-like" id="listing-107"><pre class="console"><b># Explained Variance of the Training and Testing Sets
 
 yhat_train = m*X_train[:, 0] + b
@@ -342,7 +342,7 @@ EV_test = sum( (yhat_test - y_test)**2)
 'Explained Variance for Train and Test: {:.0f}, {:.0f}'.format(EV_train, EV_test)
 </b>'Explained Variance for Train and Test: 4226180, 290580'
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.23.</span> </figcaption></figure><p id="p-496">Note right away this shows why <em class="emphasis">Explained Variance</em> is problematic - because the sample sizes are different between testing and training sets these numbers are incomparable.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.23.</span> </figcaption></figure><p id="p-485">Note right away this shows why <em class="emphasis">Explained Variance</em> is problematic - because the sample sizes are different between testing and training sets these numbers are incomparable.</p>
 <figure class="figure-like" id="listing-108"><pre class="console"><b># Compute R2 of the Training and Testing Sets
 
 y_train_mean = np.mean(y_train)
@@ -356,7 +356,7 @@ R2_test = 1 - EV_test / TV_test
 'R2 for Train and Test: {}, {}'.format(R2_train, R2_test)
 </b>'R2 for Train and Test: 0.886985745475545, 0.8937238721814674'
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.24.</span> </figcaption></figure><p id="p-497">Now lets do the same computation for the second regression expression and see if there is a difference:</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.24.</span> </figcaption></figure><p id="p-486">Now lets do the same computation for the second regression expression and see if there is a difference:</p>
 <figure class="figure-like" id="listing-109"><pre class="console"><b>yhat_train = m2*X_train[:, 0] + b2
 EV_train = sum( (yhat_train - y_train)**2)
 
@@ -374,10 +374,10 @@ R2_test_2 = 1 - EV_test / TV_test
 'R2 for Train and Test (model 2): {}, {}'.format(R2_train_2, R2_test_2)
 </b>'R2 for Train and Test (model 2): 0.8541484312627452, 0.9823655619729722'
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.25.</span> </figcaption></figure></section><section class="subsection" id="subsection-56"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.2.25.</span> </figcaption></figure></section><section class="subsection" id="subsection-55"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.2.6</span> <span class="title">Understanding Training and Testing Error</span>
 </h3>
-<p id="p-498">So remember our model has been choosen, under the restriction of being a linear model, to minimize the training error (giving us the \(R^2\) closest to 1). It has never seen the testing data. So we typically expect the testing error to be worse than the training error. Note that the model did better on the testing data without the high impact point. If you increase the size of the sample following the pattern, this difference will decrease.</p></section></section></div></main>
+<p id="p-487">So remember our model has been choosen, under the restriction of being a linear model, to minimize the training error (giving us the \(R^2\) closest to 1). It has never seen the testing data. So we typically expect the testing error to be worse than the training error. Note that the model did better on the testing data without the high impact point. If you increase the size of the sample following the pattern, this difference will decrease.</p></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
 <script src="https://pretextbook.org/js/0.12/login.js"></script>
