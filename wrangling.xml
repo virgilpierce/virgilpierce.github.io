@@ -1,0 +1,849 @@
+<chapter xml:id='wrangling'>
+ <title> Wrangling the Data
+</title>
+
+<introduction>
+<p>Real world data has problems. The most obvious, that we have seen multiple times so far is the presence of missing or incomplete data. Invalid or innaccurate data is a somewhat less common and much harder to detect problem (as we have discussed before we need to approach rejecting data with great caution). </p>
+
+<p>We will take this class to discuss a broad approach to data and cover some common problems that come up for various types of data. We will end with an introduction to dealing with images.</p>
+</introduction>
+
+<section>
+ <title> Formatting the Data
+</title>
+
+<p>Putting aside the issue of Big Data (data that is so large that it cannot be loaded into a pandas.DataFrame all at once), the main goal in formatting the data is to set it up so that it can be represented by a pandas.DataFrame structure. Most of the examples we have seen in class have been delivered as CSV files that are ready to be read into a dataframe. The primary exceptions so far have been the Berlin Airbnb data that arrived as multiple cross referenced CSV files, and the image recognition example whose data was a collection of JPG files.</p>
+
+<p>We will consider the Airbnb data:</p>
+<listing>
+<console>
+<input>
+import numpy as np
+import pandas as pa
+import seaborn as sn
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# First we get a link from drop box
+# https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=0
+
+# The trick here is that the last digit 'dl=0' needs to be changed to 'dl=1' and then 
+# we just feed it into pandas.read_csv as we have above.
+
+# This takes a while - it is downloading the information and then processing it, and it is more data
+# than our other examples have used.
+
+calendar = pa.read_csv('https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=1')
+listings_sum = pa.read_csv('https://www.dropbox.com/s/5noljx9qipcyyul/listings_summary.csv?dl=1')
+listings = pa.read_csv('https://www.dropbox.com/s/xtkx018qxjfjlah/listings.csv?dl=1')
+neighborhoods = pa.read_csv('https://www.dropbox.com/s/rfqozggf5f2kzlu/neighbourhoods.csv?dl=1')
+reviews_sum = pa.read_csv('https://www.dropbox.com/s/o8gvfm708g1cocf/reviews_summary.csv?dl=1')
+reviews = pa.read_csv('https://www.dropbox.com/s/8dfu8qyc6n6cw3p/reviews.csv?dl=1')
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+listings.tail()
+</input>
+<output>
+             id                                               name    host_id  \
+22547  29856708       Cozy Apartment right in the center of Berlin   87555909   
+22548  29857108             Altbau/ Schöneberger Kiez / Schlafsofa   67537363   
+22549  29864272   Artists loft with garden in the center of Berlin    3146923   
+22550  29866805              Room for two with private shower / WC   36961901   
+22551  29867352  Sunny, modern and cozy flat in Berlin Neukölln :)  177464875   
+
+        host_name     neighbourhood_group            neighbourhood   latitude  \
+22547     Ulisses                   Mitte          Brunnenstr. Süd  52.533865   
+22548        Jörg  Tempelhof - Schöneberg          Schöneberg-Nord  52.496211   
+22549      Martin                  Pankow  Prenzlauer Berg Südwest  52.531800   
+22550  Arte Luise                   Mitte           Alexanderplatz  52.520802   
+22551   Sebastian                Neukölln        Schillerpromenade  52.473762   
+
+       longitude        room_type  price  minimum_nights  number_of_reviews  \
+22547  13.400731  Entire home/apt     60               2                  0   
+22548  13.341738      Shared room     20               1                  0   
+22549  13.411999  Entire home/apt     85               3                  0   
+22550  13.378688     Private room     99               1                  0   
+22551  13.424447     Private room     45               5                  0   
+
+      last_review  reviews_per_month  calculated_host_listings_count  \
+22547         NaN                NaN                               1   
+22548         NaN                NaN                               6   
+22549         NaN                NaN                               2   
+22550         NaN                NaN                               3   
+22551         NaN                NaN                               1   
+
+       availability_365  
+22547               314  
+22548                78  
+22549                15  
+22550                 6  
+22551                21  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# There are many entries in Calendar.price that are NaN. It is not clear what that means
+calendar = calendar[pa.notna(calendar.price)]
+
+# Given an listing_id we get when it was booked and for what price
+calendar[calendar.listing_id==29857108].head()
+</input>
+<output>
+         listing_id        date available   price
+8212563    29857108  2019-02-04         t  $17.00
+8212564    29857108  2019-02-03         t  $17.00
+8212565    29857108  2019-02-02         t  $18.00
+8212566    29857108  2019-02-01         t  $18.00
+8212567    29857108  2019-01-31         t  $17.00
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# For each list we could compute the mean of its price. When you first do it, you get an error
+# because the price has been read as a string.
+
+# So first we need to convert these strings to floats/integers
+# The first character is '$' so we skip that one;
+# Some of them also contain ',' if they are in the thousands in price.
+np.mean([float(x[1:].replace(',', '')) for x in calendar.price[calendar.listing_id==29857108]])
+</input>
+<output>
+17.141025641025642
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Let's go through the listing data and add the mean price for each listing:
+
+for x in listings.index:
+    bookings = calendar.price[calendar.listing_id==listings.loc[x, 'id']]
+    listings.loc[x, 'mean_price'] = np.mean(
+        [float(x[1:].replace(',', '')) for x in bookings])
+    listings.loc[x, 'number_of_bookings'] = len(bookings)
+    
+# I'm going to ignore the warning that comes up. The way to fix it is to checking that bookings
+# is not empty beroe passing it to the next two statements.
+</input>
+<output>
+/anaconda3/envs/jupyterlab/lib/python3.7/site-packages/numpy/core/fromnumeric.py:3118: RuntimeWarning: Mean of empty slice.
+  out=out, **kwargs)
+/anaconda3/envs/jupyterlab/lib/python3.7/site-packages/numpy/core/_methods.py:85: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+listings.head()
+</input>
+<output>
+     id                                              name  host_id host_name  \
+0  2015  Berlin-Mitte Value! Quiet courtyard/very central     2217       Ian   
+1  2695                Prenzlauer Berg close to Mauerpark     2986   Michael   
+2  3176                   Fabulous Flat in great Location     3718    Britta   
+3  3309                 BerlinSpot Schöneberg near KaDeWe     4108      Jana   
+4  7071                  BrightRoom with sunny greenview!    17391    Bright   
+
+      neighbourhood_group             neighbourhood   latitude  longitude  \
+0                   Mitte           Brunnenstr. Süd  52.534537  13.402557   
+1                  Pankow  Prenzlauer Berg Nordwest  52.548513  13.404553   
+2                  Pankow   Prenzlauer Berg Südwest  52.534996  13.417579   
+3  Tempelhof - Schöneberg           Schöneberg-Nord  52.498855  13.349065   
+4                  Pankow            Helmholtzplatz  52.543157  13.415091   
+
+         room_type  price  minimum_nights  number_of_reviews last_review  \
+0  Entire home/apt     60               4                118  2018-10-28   
+1     Private room     17               2                  6  2018-10-01   
+2  Entire home/apt     90              62                143  2017-03-20   
+3     Private room     26               5                 25  2018-08-16   
+4     Private room     42               2                197  2018-11-04   
+
+   reviews_per_month  calculated_host_listings_count  availability_365  \
+0               3.76                               4               141   
+1               1.42                               1                 0   
+2               1.25                               1               220   
+3               0.39                               1               297   
+4               1.75                               1                26   
+
+   mean_price  number_of_bookings  
+0   81.900709               141.0  
+1         NaN                 0.0  
+2   90.000000               220.0  
+3   27.131313               297.0  
+4   44.384615                26.0  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We should drop the listings that had no bookings, for one thing their price is obviously not telling us 
+# something real (Lesson #1 from Pawn Stars)
+
+listings = listings[listings.number_of_bookings!=0]
+</input>
+</console>
+</listing>
+<p>So to recap in this example we have shown the following <em>Data Wrangling</em> techniques:</p>
+
+<p><ul>
+<li><p>Cross referencing one dataframe with another</p>
+</li>
+<li><p>Unpacking a number represented as a string using some of the string tools from Python</p>
+</li>
+<li><p>Computing a new feature from other data</p>
+</li>
+<li><p>Removing NaN values</p>
+</li>
+</ul></p>
+
+<p>What could we do with this new information. Consider the neighborhoods, what is the mean price in each neighborhood.</p>
+<listing>
+<console>
+<input>
+# Make a list of all the neighborhoods (note that the data gave us a list, but it is safer to take the
+# actual values from the feature). Though to be super careful we should take some time to check 
+# that they have been coded correctly.
+
+# I pass it through set to eliminate duplicates, then I convert it to a data frame
+nbhds = pa.DataFrame(set(listings.neighbourhood), columns = ['Neighbourhood'])
+nbhds.head()
+</input>
+<output>
+         Neighbourhood
+0  Rummelsburger Bucht
+1               Nord 2
+2    Regierungsviertel
+3            Barstraße
+4        Marzahn-Mitte
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# now for each neighborhood compute the mean and standard deviation of the price paid
+# Note that this means we have to unpack the mean price we computed for each booking by the number
+# of booksings; we will also need the total number of bookings for each neighborhood.
+save = []
+
+for x in nbhds.index:
+    nbook = []
+    xlist = listings.id[listings.neighbourhood==nbhds.loc[x, 'Neighbourhood']]
+    for l in xlist:
+        bookings_price = calendar.price[calendar.listing_id==l]
+        bookings = [float(x[1:].replace(',', '')) for x in bookings_price]
+        nbook += bookings
+       
+    nbhds.loc[x, 'bookings'] = len(nbook)
+    nbhds.loc[x, 'mean_price'] = np.mean(nbook)
+    nbhds.loc[x, 'sdv_price'] = np.std(nbook)
+    nbhds.loc[x, 'median_price'] = np.median(nbook)
+    if np.std(nbook)>np.mean(nbook):
+        save += [nbook]
+    
+    
+nbhds.tail()
+</input>
+<output>
+            Neighbourhood  bookings  mean_price   sdv_price  median_price
+131             Fennpfuhl    2261.0   42.515259   14.076130          40.0
+132        Helmholtzplatz   35101.0  130.613914  467.020025          70.0
+133  Prenzlauer Berg Nord   33982.0   70.496557   46.438737          59.0
+134                 Ost 1    4191.0   45.807683   23.735564          40.0
+135            Müggelheim     487.0   71.987680   35.502666         100.0
+</output>
+</console>
+</listing>
+<p>Note that there are some mismatches between mean and standard deviation. I have pulled out one of them so we can check on what is happening. What we see is that the distribution of prices in a neighborhood are not normal.</p>
+
+<p>This is an example where Median and Percentiles may be a better notion of center and spread of the data</p>
+<listing>
+<console>
+<input>
+sn.distplot(save[0]);
+</input>
+</console>
+<image source='Images/6.1.png' />
+</listing>
+
+</section>
+<section>
+ <title> Dealing with Strings
+</title>
+
+<p>Now we will consider some techniques for dealing with strings. Attached to the Berlin Airbnb data is a set of reviewer comments for eaching listing. Again we need to cross reference this list with the listing id.</p>
+<listing>
+<console>
+<input>
+import string
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+listingreview = reviews_sum.comments[reviews_sum.listing_id == 2015]
+listingreview[0:5]
+</input>
+<output>
+0    Mein Freund und ich hatten gute gemütliche vie...
+1    Jan was very friendly and welcoming host! The ...
+2    Un appartement tres bien situé dans un quartie...
+3    It is really nice area, food, park, transport ...
+4    Buena ubicación, el departamento no está orden...
+Name: comments, dtype: object
+</output>
+</console>
+</listing>
+<p>A common technique is to count the frequency of words and look for patterns. It is somewhat more complicated in this case because of the various languages being used. </p>
+<listing>
+<console>
+<input>
+# make a list of the all the reviews used in a listing. Note that I am also removing any punctuation.
+
+words = []
+for x in listingreview:
+    words += x.translate(str.maketrans('', '', string.punctuation)).split()
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+words[100:105]  # One issue is that people misspell words - a lot!
+</input>
+<output>
+['area', 'is', 'sooo', 'amazing', 'lots']
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We do not care so much about words with only a few letters, so lets drop them.
+
+words2 = pa.DataFrame([x for x in words if len(x)>3])
+words2.loc[:, 'count'] = 1 # Add a counter
+words2[1000:1005]
+</input>
+<output>
+                0  count
+1000         near      1
+1001       public      1
+1002    transport      1
+1003  restaurants      1
+1004        about      1
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Use groupby to collect them and sum up the count;
+
+# Then send it through .sort_values to bring the top responses to the top
+
+word_freq = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+word_freq.head(10)
+</input>
+<output>
+           count
+0               
+very          49
+apartment     39
+Berlin        34
+location      30
+sehr          30
+stay          29
+great         27
+place         26
+with          26
+Wohnung       24
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We could make a function to produce the word frequency from a listing_id.
+
+def word_freq(id):
+    listingreview = reviews_sum.comments[reviews_sum.listing_id == id]
+    words = []
+    for x in listingreview:
+        words += x.translate(str.maketrans('', '', string.punctuation)).split()
+    words2 = pa.DataFrame([x for x in words if len(x)>3])
+    words2.loc[:, 'count'] = 1 # Add a counter 
+    
+    temp = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+    total = sum(temp.loc[:, 'count'])
+    for x in temp.index:
+        temp.loc[x, 'freq'] = temp.loc[x, 'count'] / total
+        
+    return temp
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+id = 3309
+print('Mean Price for this listing: {}'.format(listings.mean_price[listings.id == id].iloc[0]))
+word_freq(id).head(10)
+</input>
+<output>
+Mean Price for this listing: 27.13131313131313
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+id = 3176
+print('Mean Price for this listing: {}'.format(listings.mean_price[listings.id == id].iloc[0]))
+word_freq(id).head(10)
+</input>
+<output>
+Mean Price for this listing: 90.0
+
+</output>
+</console>
+</listing>
+<p>One problem you might notice if you do this enough is that not all listings have review comments.</p>
+
+<p><ul>
+<li><p>What could we do from here?</p>
+</li>
+<li><p>What ideas do you have for dealing with the multiple languages?</p></li>
+</ul>
+</p>
+
+</section>
+<section>
+ <title> Dealing with Categorical Data
+</title>
+
+<introduction>
+<p>There are couple of techniques for working with categorical data you should be aware of. The major issue is that the algorithms in scikitlearn have been designed to work on categorical data represented as integers. This makes sense because the authors of the algorithms do not know what your categories are.</p>
+</introduction>
+
+<subsection>
+ <title> Binary Data
+</title>
+<p>The simplest case is a categorical variable that takes on only two values. These we can safetely code as a <m>0</m> or <m>1</m>; or <m>-1</m> or <m>1</m> if that makes more sense for the problem.</p>
+<listing>
+<console>
+<input>
+# Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# For example the Street feature takes only two values
+set(hd.Street)
+</input>
+<output>
+{'Grvl', 'Pave'}
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We can recode it using a dictionary and .map()
+Street_dict = {'Grvl':0, 'Pave':1, 0:0, 1:1}  
+# Note we include the trivial coding of the new values as otherwise if we run this twice
+# it produces NaN values for the Street feature.
+hd.Street = hd.Street.map(Street_dict)
+set(hd.Street)
+</input>
+<output>
+{0, 1}
+</output>
+</console>
+</listing>
+
+</subsection>
+<subsection>
+ <title> Non Binary Data
+</title>
+
+<p>Categorical data could be ordered or unordered. It is tempting to to take ordered data and code it as 0, 1, 2, <p><ol>
+<li><p> However we need ot be careful. Consider the following examples:</p></li>
+</ol>
+</p>
+</p>
+<listing>
+<console>
+<input>
+set(hd.Alley)
+</input>
+<output>
+{'Grvl', 'Pave', nan}
+</output>
+</console>
+</listing>
+<p>nan in this case almost certainly means that the house does not have an Alley. Note that we could recode this feature as: 'Pave' = 1; 'Grvl'=<p><ol>
+<li><p>5; and nan=0. </p>
+</li>
+</ol></p>
+</p>
+<p>However this implies that the difference between No Alley and a Gravel Alley is equal to the difference beetween a Gravel Alley and a Paved Alley, and we really have no way of judging that.</p>
+
+<p>The way to deal with these non-binary cases is to use what is called <em>One Hot Encoding</em>. We create three new features:  Alley_Grvl, Alley_Pave, and Alley_nan and then code them each as a 1 if the Alley feature has that value and a 0 otherwise. Here is a code snippet One Hot Encoding a feature.</p>
+<listing>
+<console>
+<input>
+def onehot(df, feature):
+    '''A function to do one-hot-encoding of a feature from a dataframe. df = dataframe'''
+
+    v = list(set(df[feature])) # Make an iterable of the unique values for the feature
+    
+    for c in df.index: # cycle through the samples
+        t = df.loc[c, feature]
+        
+        for test in v:
+            if pa.isna(test):  # nan values are sort of a problem and have to be handled separately
+                if pa.isna(t):
+                    df.loc[c, '{}_nan'.format(feature)] = 1
+                else:
+                    df.loc[c, '{}_nan'.format(feature)] = 0
+            else:
+                if t == test:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 1  # Makes a new feature with name feature_value
+                                                              # and codes it as a 1 if that was the value
+                else:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 0  # and 0 otherwise
+            
+    return df.drop(feature, axis=1) # returns a dataframe with the encoded feature removed
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd2 = onehot(hd, 'Alley')
+hd2[30:40]
+</input>
+<output>
+    Id  MSSubClass MSZoning  LotFrontage  LotArea  Street LotShape  \
+30  31          70  C (all)         50.0     8500       1      Reg   
+31  32          20       RL          NaN     8544       1      IR1   
+32  33          20       RL         85.0    11049       1      Reg   
+33  34          20       RL         70.0    10552       1      IR1   
+34  35         120       RL         60.0     7313       1      Reg   
+35  36          60       RL        108.0    13418       1      Reg   
+36  37          20       RL        112.0    10859       1      Reg   
+37  38          20       RL         74.0     8532       1      Reg   
+38  39          20       RL         68.0     7922       1      Reg   
+39  40          90       RL         65.0     6040       1      Reg   
+
+   LandContour Utilities LotConfig  ... MiscFeature MiscVal MoSold YrSold  \
+30         Lvl    AllPub    Inside  ...         NaN       0      7   2008   
+31         Lvl    AllPub   CulDSac  ...         NaN       0      6   2008   
+32         Lvl    AllPub    Corner  ...         NaN       0      1   2008   
+33         Lvl    AllPub    Inside  ...         NaN       0      4   2010   
+34         Lvl    AllPub    Inside  ...         NaN       0      8   2007   
+35         Lvl    AllPub    Inside  ...         NaN       0      9   2006   
+36         Lvl    AllPub    Corner  ...         NaN       0      6   2009   
+37         Lvl    AllPub    Inside  ...         NaN       0     10   2009   
+38         Lvl    AllPub    Inside  ...         NaN       0      1   2010   
+39         Lvl    AllPub    Inside  ...         NaN       0      6   2008   
+
+   SaleType SaleCondition  SalePrice  Alley_nan  Alley_Pave  Alley_Grvl  
+30       WD        Normal      40000        0.0         1.0         0.0  
+31       WD        Normal     149350        1.0         0.0         0.0  
+32       WD        Normal     179900        1.0         0.0         0.0  
+33       WD        Normal     165500        1.0         0.0         0.0  
+34       WD        Normal     277500        1.0         0.0         0.0  
+35       WD        Normal     309000        1.0         0.0         0.0  
+36       WD        Normal     145000        1.0         0.0         0.0  
+37       WD        Normal     153000        1.0         0.0         0.0  
+38       WD       Abnorml     109000        1.0         0.0         0.0  
+39       WD       AdjLand      82000        1.0         0.0         0.0  
+
+[10 rows x 83 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+set(hd.ExterQual)
+</input>
+<output>
+{'Ex', 'Fa', 'Gd', 'TA'}
+</output>
+</console>
+</listing>
+<p>For the Exterior Quality feature (and the other Quality features) there is a clear order to the values, but again what is not clear is if the distance between <em>Excellent</em> and <em>Good</em> is the same as the distance between <em>Good</em> and <em>Fair</em>. It is maybe not a bad assumption for these features, but might be one worth checking.</p>
+
+<p><alert>What do I mean by Checking?</alert> Develop a model using each encoding method and see what the effect on the errors is.</p>
+<listing>
+<console>
+<input>
+hd3 = onehot(hd2, 'ExterQual')
+</input>
+</console>
+</listing>
+<p>So notice what this means now: We can now produce a matrix with numerical entries that correspond to the categorical variables. So just with these two, plus the existing numerical features we have.</p>
+<listing>
+<console>
+<input>
+keep = ['LotArea', '1stFlrSF', '2ndFlrSF', 'BedroomAbvGr', 'FullBath', 'HalfBath', 'SalePrice', 
+      'Alley_nan', 'Alley_Pave', 'Alley_Grvl', 'ExterQual_Fa', 'ExterQual_Gd', 'ExterQual_TA', 'ExterQual_Ex']
+hd4 = hd3.loc[:, keep]
+hd4.head()
+</input>
+<output>
+   LotArea  1stFlrSF  2ndFlrSF  BedroomAbvGr  FullBath  HalfBath  SalePrice  \
+0     8450       856       854             3         2         1     208500   
+1     9600      1262         0             3         2         0     181500   
+2    11250       920       866             3         2         1     223500   
+3     9550       961       756             3         1         0     140000   
+4    14260      1145      1053             4         2         1     250000   
+
+   Alley_nan  Alley_Pave  Alley_Grvl  ExterQual_Fa  ExterQual_Gd  \
+0        1.0         0.0         0.0           0.0           1.0   
+1        1.0         0.0         0.0           0.0           0.0   
+2        1.0         0.0         0.0           0.0           1.0   
+3        1.0         0.0         0.0           0.0           0.0   
+4        1.0         0.0         0.0           0.0           1.0   
+
+   ExterQual_TA  ExterQual_Ex  
+0           0.0           0.0  
+1           1.0           0.0  
+2           0.0           0.0  
+3           1.0           0.0  
+4           0.0           0.0  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Convert them to Numpy Arrays X for predictors and y for result
+
+keep.remove('SalePrice')
+X = np.array(hd4.loc[:, keep])
+y = np.array(hd4.loc[:, 'SalePrice'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+import numpy.random as rn
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, y_train)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print('Training R2: {}'.format(reg.score(X_train, y_train)))
+print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+</input>
+<output>
+Training R2: 0.7146735662901889
+Testing R2: 0.7815549108505843
+
+</output>
+</console>
+</listing>
+
+</subsection>
+<subsection>
+ <title> Including Additional Features Gives a Better Prediction
+</title>
+
+<p>So rarely does this work as well as it did for me here, but sometimes (<alert>not always</alert>) including additional features improves our model. In this case we get a significant improvement in the <m>R^2</m> value.</p>
+<listing>
+<console>
+<input>
+# What if we did not use the categorical variables we included and just the numerical ones
+
+reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+print('Training R2: {}'.format(reg2.score(X_train[:, 0:6], y_train)))
+print('Testing R2: {}'.format(reg2.score(X_test[:, 0:6], y_test)))
+</input>
+<output>
+Training R2: 0.6299674886272887
+Testing R2: 0.676749202792158
+
+</output>
+</console>
+</listing>
+<p>That said. How important are the categorical features here in the model. We can check that by checking the value of their coeeficients:</p>
+<listing>
+<console>
+<input>
+coef = np.concatenate( (reg.coef_.reshape(1, 13), np.concatenate( (reg2.coef_, [0]*7) ).reshape(1, 13) ), 
+               axis = 0)
+coef_df = pa.DataFrame(coef, index = ['reg', 'reg2'], columns = keep)
+coef_df
+# I use a pandas.DataFrame here because it lets me line up the names of the features with the values
+</input>
+<output>
+       LotArea    1stFlrSF   2ndFlrSF  BedroomAbvGr      FullBath  \
+reg   0.710702   92.767874  54.369591  -8343.869009  13515.032172   
+reg2  0.451522  122.592604  62.175946 -20240.845648  34097.817634   
+
+          HalfBath     Alley_nan   Alley_Pave   Alley_Grvl  ExterQual_Fa  \
+reg   11782.730563  11127.877444 -1272.437752 -9855.439693 -67365.331855   
+reg2  23364.091628      0.000000     0.000000     0.000000      0.000000   
+
+      ExterQual_Gd  ExterQual_TA  ExterQual_Ex  
+reg   14352.873781  -32433.70115  85446.159224  
+reg2      0.000000       0.00000      0.000000  
+</output>
+</console>
+</listing>
+<p>The parameters for the model with categorical variables are significant. Note that the negative values mean that these features subtract from the value and the positive values add to them.</p>
+
+<p>For example Exterior Quality <em>Typical/Average</em> is a negative; and Exterior Quality <em>Fair</em> is a negative.</p>
+
+<p>But notice the interesting thing we learn:  <em>Alley Missing</em> is a positive, and <em>Alley Paved</em> and <em>Alley Gravel</em> are both negatives. This means our naive idea of coding <em>Alley</em> as 0, <p><ol>
+<li><p>5, 1.0 would have completely led our model astray!</p></li>
+</ol>
+</p>
+</p>
+
+</subsection>
+
+</section>
+<section>
+ <title> Dealing with Missing Data
+</title>
+
+<p>We have covered a number of examples where we made the decision to drop samples that had missing data. This is not always ideal, for example we may not have a large number of samples to begin with (which makes dividing the sample into testing / training sets problematic), we may have a large number of features and the sample with missing data may still have valuable information, and the sample might have unique values for some features that we need to make our model complete.</p>
+
+<p>Some other ideas for dealing with missing data:</p>
+<p><ul>
+<li><p>Using regression to fill in missing data. If the data field that is misisng is numerical we could use one of our regression techniques to compute an estimate for the missing value.</p>
+</li>
+<li><p>Using categorization to fill in misssing data. If the data field that is missing is categorical we could use one of our categorization techniques to compute an estimate for the missing value.</p>
+</li>
+<li><p>Using "Missing" as a category. If the data field that is missing is categorical, particularly if there are many missing it, we could use "Missing" or "NaN" as a value. In some cases (like surveys) this may even provide accurate information as sometimes no response is a response. (note the example above with <em>Alley Missing</em>)</p>
+</li>
+<li><p>Dropping the feature. An alternative to dropping samples is to drop the feature. This might be the right decision if you have plenty of other features, if it appears some other features are related to this one, and if there are many samples missing this feature.</p>
+</li>
+<li><p>Separating the analysis. Finally you could run the analysis separately for samples missing this feature. </p>
+</li>
+</ul></p>
+
+<p>In all of these cases what you could do is develop models with different methods of dealing with missing data and then check the error on a testing set.</p>
+
+
+</section>
+<section>
+ <title> Dealing with Images
+</title>
+
+<p>Finally I want add a bit about how we deal with images. Images ultimately are represented (for the purposes of this class) as values for the color or intensity of a pixel. As such they are essentially <alert>VERY</alert> large vectors. In fact Python easily lets us read in PNG images as a vector and can handle other image file types with some extra work.</p>
+<listing>
+<console>
+<input>
+import matplotlib.pyplot as plt
+from matplotlib.image import imread # We need the imread function from matplotlib.image
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+img = imread('Images/2.4.png')
+img.shape
+</input>
+<output>
+(576, 720, 4)
+</output>
+</console>
+</listing>
+<p>matplotlib.image.imread has read in the image as a set of 4 matrices of size 576x720 (these four are the Cyan-Magenta-Yellow-Black (CMYK) component colors). These four matrices are the four colors. What we could do to think about this as a sample for a dataframe is flatten it to just a single row vector of size</p>
+<listing>
+<console>
+<input>
+576*720*4
+</input>
+<output>
+1658880
+</output>
+</console>
+</listing>
+<p>Samples in these cases would be different images, and the features would be the values for the pixes. Note that this means we expect to have a DataFrame with many features. However one thing to realize is that there will be correlations between those features (if a pixel is a particular color, there is a strong possibility that nearby pixels are the same or a close color).</p>
+
+</section>
+
+</chapter>

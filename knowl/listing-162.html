@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># What if we did not use the categorical variables we included and just the numerical ones
+
+reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+print('Training R2: {}'.format(reg2.score(X_train[:, 0:6], y_train)))
+print('Testing R2: {}'.format(reg2.score(X_test[:, 0:6], y_test)))
+</b>Training R2: 0.6299674886272887
+Testing R2: 0.676749202792158
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.3.15.</span> </figcaption></figure><span class="incontext"><a href="section-36.html#listing-162">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+R2 = pa.DataFrame( np.array([ [0]*5, [0]*5, [0]*5, [0]*5]).transpose(), columns = ['train_1', 'test_1', 'train_2', 'test_2'])
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+    reg = LinearRegression().fit(X_train, y_train)
+    reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+    
+    R2.loc[k, 'train_1'] = reg.score(X_train, y_train)
+    R2.loc[k, 'test_1'] = reg.score(X_test, y_test)
+    R2.loc[k, 'train_2'] = reg2.score(X_train[:, 0:6], y_train)
+    R2.loc[k, 'test_2'] = reg2.score(X_test[:, 0:6], y_test)
+
+R2mean = [0]*4
+R2std = [0]*4
+for c in range(4):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+R2
+</b>                     train_1    test_1   train_2    test_2
+0                   0.717999  0.766001  0.622369  0.702223
+1                   0.719124  0.770141  0.631160  0.677054
+2                   0.732495  0.719630  0.639689  0.644250
+3                   0.726207  0.743215  0.640338  0.640395
+4                   0.760321  0.547615  0.674453  0.441998
+Mean                0.731229  0.709321  0.641602  0.621184
+Standard Deviation  0.015458  0.082844  0.017683  0.092410
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">7.1.1.</span> </figcaption></figure><span class="incontext"><a href="section-39.html#listing-167">in-context</a></span>
+</body>
+</html>

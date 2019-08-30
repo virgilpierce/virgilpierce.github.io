@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># now for each neighborhood compute the mean and standard deviation of the price paid
+# Note that this means we have to unpack the mean price we computed for each booking by the number
+# of booksings; we will also need the total number of bookings for each neighborhood.
+save = []
+
+for x in nbhds.index:
+    nbook = []
+    xlist = listings.id[listings.neighbourhood==nbhds.loc[x, 'Neighbourhood']]
+    for l in xlist:
+        bookings_price = calendar.price[calendar.listing_id==l]
+        bookings = [float(x[1:].replace(',', '')) for x in bookings_price]
+        nbook += bookings
+       
+    nbhds.loc[x, 'bookings'] = len(nbook)
+    nbhds.loc[x, 'mean_price'] = np.mean(nbook)
+    nbhds.loc[x, 'sdv_price'] = np.std(nbook)
+    nbhds.loc[x, 'median_price'] = np.median(nbook)
+    if np.std(nbook)&gt;np.mean(nbook):
+        save += [nbook]
+    
+    
+nbhds.tail()
+</b>            Neighbourhood  bookings  mean_price   sdv_price  median_price
+131             Fennpfuhl    2261.0   42.515259   14.076130          40.0
+132        Helmholtzplatz   35101.0  130.613914  467.020025          70.0
+133  Prenzlauer Berg Nord   33982.0   70.496557   46.438737          59.0
+134                 Ost 1    4191.0   45.807683   23.735564          40.0
+135            Müggelheim     487.0   71.987680   35.502666         100.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.10.</span> </figcaption></figure><span class="incontext"><a href="section-34.html#listing-137">in-context</a></span>
+</body>
+</html>

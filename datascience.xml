@@ -54,6 +54,15 @@
 <!-- Chapter Five - The Data Science Process -->
 
 <xi:include href='process.xml'/>
+
+<!-- Chapter Six - Wrangling Data -->
+
+<xi:include href='wrangling.xml'/>
+
+<!-- Chapter Seven - Resampling -->
+
+<xi:include href='resampling.xml'/>
+
         
 </book>
 </pretext>

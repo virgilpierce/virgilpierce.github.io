@@ -1,0 +1,169 @@
+<chapter xml:id='resampling'>
+ <title> Resampling
+</title>
+
+<introduction>
+<p>Remember that our goal is to estimate and assess the quality of our models. We have seen that dividing the data set into training / testing allows us to develop a model and then estimate the accuracy of the model. However just doing this once is unsatasfactory. You may have noticed for example that if you rerun this process you get different results for the model and for its testing and training error. </p>
+
+<p>Recall that <em>overfitting</em> is when the model fits the irreducible error and may lead to large errors on new data.</p>
+
+<p>The goal is understanding the potential error of our model. That means more than just finding the model that produces the best result on our testing set. We want to understand for example:</p>
+
+<p><ul>
+<li><p>the potential of our model to vary as the training data changes; high dependence on the training data is an indicator of overfitting.</p>
+</li>
+<li><p>the variation of the error of the model applied to new data; an error estimate is of little utility if it is not accompanied by an understanding of the expected spread of that error.</p>
+</li>
+</ul></p>
+
+<p>Note the problem though, we have (usually) a limited amount of data to work with. Sop we need some techniques for developing our model on different training sets and seeing how it changes. </p>
+</introduction>
+
+<section>
+ <title> Cross Validation
+</title>
+
+<p>The first method is for cross validation. It is essentially the same as the Training / Testing division of the dataset that we've used, except that the division is repeated, the model retrained, and the error recomputed for multiple divisions into training and testing sets. Here is an example where we repeat the process five times, using 20% of the data each time as a testing set. Note that the only randomness is the initial ordering of the dataset, and so this means that each sample is included in one of the testing sets and in four of the training sets. This will give us a sense of how our model depends on the training sets, and how the testing set error varies.</p>
+
+<p>We will apply it to the two housing price datasets above (the one with and the one without the <em>One-Hot Encoded</em> categorical data.</p>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+R2 = pa.DataFrame( np.array([ [0]*5, [0]*5, [0]*5, [0]*5]).transpose(), columns = ['train_1', 'test_1', 'train_2', 'test_2'])
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+    reg = LinearRegression().fit(X_train, y_train)
+    reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+    
+    R2.loc[k, 'train_1'] = reg.score(X_train, y_train)
+    R2.loc[k, 'test_1'] = reg.score(X_test, y_test)
+    R2.loc[k, 'train_2'] = reg2.score(X_train[:, 0:6], y_train)
+    R2.loc[k, 'test_2'] = reg2.score(X_test[:, 0:6], y_test)
+
+R2mean = [0]*4
+R2std = [0]*4
+for c in range(4):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+R2
+</input>
+<output>
+                     train_1    test_1   train_2    test_2
+0                   0.717999  0.766001  0.622369  0.702223
+1                   0.719124  0.770141  0.631160  0.677054
+2                   0.732495  0.719630  0.639689  0.644250
+3                   0.726207  0.743215  0.640338  0.640395
+4                   0.760321  0.547615  0.674453  0.441998
+Mean                0.731229  0.709321  0.641602  0.621184
+Standard Deviation  0.015458  0.082844  0.017683  0.092410
+</output>
+</console>
+</listing>
+<p>If you run this code snippet multiple times you will see that in the samples 0 to 4 there is significant variation in the R2 values; however the mean of the five samples varies much less. We can now conclude with some confidence that the model developed including the <em>Alley</em> and <em>Exterior Quality</em> categorical variables is more accurate.</p>
+
+</section>
+<section>
+ <title> Bootstraps
+</title>
+
+<p>In some cases we would like to have even more runs of our model and comparisons with training and testing sets. A bootstrap of a sample is a random sampling, with replacement, of the dataset of the same size as the dataset. With replacement menas that as we construct the boostrap, we select samples to include, but then we add them back to the dataset to possibly be selected again. As the bootsrap is the same size as the dataset, this means that we expect to have some samples repeated in the bootstrap, and we also expect there to be some samples from the dataset that are missed. We then run the bootstrapping multiple times, and these two features will give us a sense of  how sensitive the model is to variations in the training data.</p>
+
+<p>What makes the bootstrap so powerful is that with even a moderately sized dataset it gives a method of generating large numbers of training/testing sets on which to apply the model.</p>
+<listing>
+<console>
+<input>
+num = 40 # number of bootstraps to use
+Xboot = [0]*num
+yboot = [0]*num
+
+n = X.shape[0]
+for k in range(num):
+    sample = np.random.randint(0, n, n)  # Note here starting with a random permutation is not necessary
+    Xboot[k] = X[sample, :]
+    yboot[k] = y[sample]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+test = int(0.20*n)
+R2 = pa.DataFrame( np.array([ [0]*num]*4).transpose(), columns = ['train_1', 'test_1', 'train_2', 'test_2'])
+
+for k in range(num):
+    X_test = Xboot[k][:test]
+    y_test = yboot[k][:test]
+    X_train = Xboot[k][test:]
+    y_train = yboot[k][test:]
+    reg = LinearRegression().fit(X_train, y_train)
+    reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+    
+    R2.loc[k, 'train_1'] = reg.score(X_train, y_train)
+    R2.loc[k, 'test_1'] = reg.score(X_test, y_test)
+    R2.loc[k, 'train_2'] = reg2.score(X_train[:, 0:6], y_train)
+    R2.loc[k, 'test_2'] = reg2.score(X_test[:, 0:6], y_test)
+    
+R2mean = [0]*4
+R2std = [0]*4
+for c in range(4):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = list(range(num)) + ['Mean', 'Standard Deviation']
+R2.tail(10)
+</input>
+<output>
+                     train_1    test_1   train_2    test_2
+32                  0.790797  0.681818  0.726171  0.609352
+33                  0.731893  0.778107  0.648962  0.698952
+34                  0.731375  0.661693  0.651321  0.572230
+35                  0.799181  0.794047  0.691094  0.775330
+36                  0.793134  0.764714  0.687774  0.681141
+37                  0.708137  0.751653  0.605803  0.654156
+38                  0.759474  0.776732  0.669784  0.640066
+39                  0.788625  0.795102  0.694653  0.693174
+Mean                0.726067  0.711001  0.635465  0.631502
+Standard Deviation  0.053743  0.098840  0.053035  0.113921
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (10, 8))
+sn.distplot(R2.iloc[:num, 1], color='blue')
+f = sn.distplot(R2.iloc[:num, 3], color='red');
+f = f.get_figure()
+f.savefig('7.1.png')
+</input>
+</console>
+<image source='Images/7.1.png' />
+</listing>
+<listing>
+<console>
+<input>
+
+</input>
+</console>
+</listing>
+
+</section>
+</chapter>

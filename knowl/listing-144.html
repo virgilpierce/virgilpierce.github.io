@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Use groupby to collect them and sum up the count;
+
+# Then send it through .sort_values to bring the top responses to the top
+
+word_freq = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+word_freq.head(10)
+</b>           count
+0               
+very          49
+apartment     39
+Berlin        34
+location      30
+sehr          30
+stay          29
+great         27
+place         26
+with          26
+Wohnung       24
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.6.</span> </figcaption></figure><span class="incontext"><a href="section-35.html#listing-144">in-context</a></span>
+</body>
+</html>

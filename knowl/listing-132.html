@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># For each list we could compute the mean of its price. When you first do it, you get an error
+# because the price has been read as a string.
+
+# So first we need to convert these strings to floats/integers
+# The first character is '$' so we skip that one;
+# Some of them also contain ',' if they are in the thousands in price.
+np.mean([float(x[1:].replace(',', '')) for x in calendar.price[calendar.listing_id==29857108]])
+</b>17.141025641025642
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.5.</span> </figcaption></figure><span class="incontext"><a href="section-34.html#listing-132">in-context</a></span>
+</body>
+</html>

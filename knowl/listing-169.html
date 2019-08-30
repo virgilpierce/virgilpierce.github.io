@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>test = int(0.20*n)
+R2 = pa.DataFrame( np.array([ [0]*num]*4).transpose(), columns = ['train_1', 'test_1', 'train_2', 'test_2'])
+
+for k in range(num):
+    X_test = Xboot[k][:test]
+    y_test = yboot[k][:test]
+    X_train = Xboot[k][test:]
+    y_train = yboot[k][test:]
+    reg = LinearRegression().fit(X_train, y_train)
+    reg2 = LinearRegression().fit(X_train[:, 0:6], y_train)
+    
+    R2.loc[k, 'train_1'] = reg.score(X_train, y_train)
+    R2.loc[k, 'test_1'] = reg.score(X_test, y_test)
+    R2.loc[k, 'train_2'] = reg2.score(X_train[:, 0:6], y_train)
+    R2.loc[k, 'test_2'] = reg2.score(X_test[:, 0:6], y_test)
+    
+R2mean = [0]*4
+R2std = [0]*4
+for c in range(4):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = list(range(num)) + ['Mean', 'Standard Deviation']
+R2.tail(10)
+</b>                     train_1    test_1   train_2    test_2
+32                  0.790797  0.681818  0.726171  0.609352
+33                  0.731893  0.778107  0.648962  0.698952
+34                  0.731375  0.661693  0.651321  0.572230
+35                  0.799181  0.794047  0.691094  0.775330
+36                  0.793134  0.764714  0.687774  0.681141
+37                  0.708137  0.751653  0.605803  0.654156
+38                  0.759474  0.776732  0.669784  0.640066
+39                  0.788625  0.795102  0.694653  0.693174
+Mean                0.726067  0.711001  0.635465  0.631502
+Standard Deviation  0.053743  0.098840  0.053035  0.113921
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">7.2.2.</span> </figcaption></figure><span class="incontext"><a href="section-40.html#listing-169">in-context</a></span>
+</body>
+</html>

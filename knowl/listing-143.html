@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We do not care so much about words with only a few letters, so lets drop them.
+
+words2 = pa.DataFrame([x for x in words if len(x)&gt;3])
+words2.loc[:, 'count'] = 1 # Add a counter
+words2[1000:1005]
+</b>                0  count
+1000         near      1
+1001       public      1
+1002    transport      1
+1003  restaurants      1
+1004        about      1
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.5.</span> </figcaption></figure><span class="incontext"><a href="section-35.html#listing-143">in-context</a></span>
+</body>
+</html>

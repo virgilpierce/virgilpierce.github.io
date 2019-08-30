@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:01-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Dealing with Strings</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-34.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="wrangling.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-36.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-34.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="wrangling.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-36.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35" class="active">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-35"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">6.2</span> <span class="title">Dealing with Strings</span>
+</h2>
+<p id="p-524">Now we will consider some techniques for dealing with strings. Attached to the Berlin Airbnb data is a set of reviewer comments for eaching listing. Again we need to cross reference this list with the listing id.</p>
+<figure class="figure-like" id="listing-139"><pre class="console"><b>import string
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.1.</span> </figcaption></figure><figure class="figure-like" id="listing-140"><pre class="console"><b>listingreview = reviews_sum.comments[reviews_sum.listing_id == 2015]
+listingreview[0:5]
+</b>0    Mein Freund und ich hatten gute gemütliche vie...
+1    Jan was very friendly and welcoming host! The ...
+2    Un appartement tres bien situé dans un quartie...
+3    It is really nice area, food, park, transport ...
+4    Buena ubicación, el departamento no está orden...
+Name: comments, dtype: object
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.2.</span> </figcaption></figure><p id="p-525">A common technique is to count the frequency of words and look for patterns. It is somewhat more complicated in this case because of the various languages being used.</p>
+<figure class="figure-like" id="listing-141"><pre class="console"><b># make a list of the all the reviews used in a listing. Note that I am also removing any punctuation.
+
+words = []
+for x in listingreview:
+    words += x.translate(str.maketrans('', '', string.punctuation)).split()
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.3.</span> </figcaption></figure><figure class="figure-like" id="listing-142"><pre class="console"><b>words[100:105]  # One issue is that people misspell words - a lot!
+</b>['area', 'is', 'sooo', 'amazing', 'lots']
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.4.</span> </figcaption></figure><figure class="figure-like" id="listing-143"><pre class="console"><b># We do not care so much about words with only a few letters, so lets drop them.
+
+words2 = pa.DataFrame([x for x in words if len(x)&gt;3])
+words2.loc[:, 'count'] = 1 # Add a counter
+words2[1000:1005]
+</b>                0  count
+1000         near      1
+1001       public      1
+1002    transport      1
+1003  restaurants      1
+1004        about      1
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.5.</span> </figcaption></figure><figure class="figure-like" id="listing-144"><pre class="console"><b># Use groupby to collect them and sum up the count;
+
+# Then send it through .sort_values to bring the top responses to the top
+
+word_freq = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+word_freq.head(10)
+</b>           count
+0               
+very          49
+apartment     39
+Berlin        34
+location      30
+sehr          30
+stay          29
+great         27
+place         26
+with          26
+Wohnung       24
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.6.</span> </figcaption></figure><figure class="figure-like" id="listing-145"><pre class="console"><b># We could make a function to produce the word frequency from a listing_id.
+
+def word_freq(id):
+    listingreview = reviews_sum.comments[reviews_sum.listing_id == id]
+    words = []
+    for x in listingreview:
+        words += x.translate(str.maketrans('', '', string.punctuation)).split()
+    words2 = pa.DataFrame([x for x in words if len(x)&gt;3])
+    words2.loc[:, 'count'] = 1 # Add a counter 
+    
+    temp = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+    total = sum(temp.loc[:, 'count'])
+    for x in temp.index:
+        temp.loc[x, 'freq'] = temp.loc[x, 'count'] / total
+        
+    return temp
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.7.</span> </figcaption></figure><figure class="figure-like" id="listing-146"><pre class="console"><b>id = 3309
+print('Mean Price for this listing: {}'.format(listings.mean_price[listings.id == id].iloc[0]))
+word_freq(id).head(10)
+</b>Mean Price for this listing: 27.13131313131313
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.8.</span> </figcaption></figure><figure class="figure-like" id="listing-147"><pre class="console"><b>id = 3176
+print('Mean Price for this listing: {}'.format(listings.mean_price[listings.id == id].iloc[0]))
+word_freq(id).head(10)
+</b>Mean Price for this listing: 90.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.9.</span> </figcaption></figure><p id="p-526">One problem you might notice if you do this enough is that not all listings have review comments.</p>
+<ul id="p-527" class="disc">
+<li id="li-146"><p id="p-528">What could we do from here?</p></li>
+<li id="li-147"><p id="p-529">What ideas do you have for dealing with the multiple languages?</p></li>
+</ul></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

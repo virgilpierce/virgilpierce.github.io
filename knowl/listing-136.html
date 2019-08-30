@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Make a list of all the neighborhoods (note that the data gave us a list, but it is safer to take the
+# actual values from the feature). Though to be super careful we should take some time to check 
+# that they have been coded correctly.
+
+# I pass it through set to eliminate duplicates, then I convert it to a data frame
+nbhds = pa.DataFrame(set(listings.neighbourhood), columns = ['Neighbourhood'])
+nbhds.head()
+</b>         Neighbourhood
+0  Rummelsburger Bucht
+1               Nord 2
+2    Regierungsviertel
+3            Barstraße
+4        Marzahn-Mitte
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.9.</span> </figcaption></figure><span class="incontext"><a href="section-34.html#listing-136">in-context</a></span>
+</body>
+</html>

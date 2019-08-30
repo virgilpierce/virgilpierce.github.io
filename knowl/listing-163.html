@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>coef = np.concatenate( (reg.coef_.reshape(1, 13), np.concatenate( (reg2.coef_, [0]*7) ).reshape(1, 13) ), 
+               axis = 0)
+coef_df = pa.DataFrame(coef, index = ['reg', 'reg2'], columns = keep)
+coef_df
+# I use a pandas.DataFrame here because it lets me line up the names of the features with the values
+</b>       LotArea    1stFlrSF   2ndFlrSF  BedroomAbvGr      FullBath  \
+reg   0.710702   92.767874  54.369591  -8343.869009  13515.032172   
+reg2  0.451522  122.592604  62.175946 -20240.845648  34097.817634   
+
+          HalfBath     Alley_nan   Alley_Pave   Alley_Grvl  ExterQual_Fa  \
+reg   11782.730563  11127.877444 -1272.437752 -9855.439693 -67365.331855   
+reg2  23364.091628      0.000000     0.000000     0.000000      0.000000   
+
+      ExterQual_Gd  ExterQual_TA  ExterQual_Ex  
+reg   14352.873781  -32433.70115  85446.159224  
+reg2      0.000000       0.00000      0.000000
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.3.16.</span> </figcaption></figure><span class="incontext"><a href="section-36.html#listing-163">in-context</a></span>
+</body>
+</html>

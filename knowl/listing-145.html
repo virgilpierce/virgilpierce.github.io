@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We could make a function to produce the word frequency from a listing_id.
+
+def word_freq(id):
+    listingreview = reviews_sum.comments[reviews_sum.listing_id == id]
+    words = []
+    for x in listingreview:
+        words += x.translate(str.maketrans('', '', string.punctuation)).split()
+    words2 = pa.DataFrame([x for x in words if len(x)&gt;3])
+    words2.loc[:, 'count'] = 1 # Add a counter 
+    
+    temp = words2.groupby([0]).sum().sort_values(by=['count'], ascending = False)
+    total = sum(temp.loc[:, 'count'])
+    for x in temp.index:
+        temp.loc[x, 'freq'] = temp.loc[x, 'count'] / total
+        
+    return temp
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.2.7.</span> </figcaption></figure><span class="incontext"><a href="section-35.html#listing-145">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:01-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Formatting the Data</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="wrangling.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="wrangling.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-35.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="wrangling.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="wrangling.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-35.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34" class="active">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-34"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">6.1</span> <span class="title">Formatting the Data</span>
+</h2>
+<p id="p-513">Putting aside the issue of Big Data (data that is so large that it cannot be loaded into a pandas.DataFrame all at once), the main goal in formatting the data is to set it up so that it can be represented by a pandas.DataFrame structure. Most of the examples we have seen in class have been delivered as CSV files that are ready to be read into a dataframe. The primary exceptions so far have been the Berlin Airbnb data that arrived as multiple cross referenced CSV files, and the image recognition example whose data was a collection of JPG files.</p>
+<p id="p-514">We will consider the Airbnb data:</p>
+<figure class="figure-like" id="listing-128"><pre class="console"><b>import numpy as np
+import pandas as pa
+import seaborn as sn
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-129"><pre class="console"><b># First we get a link from drop box
+# https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=0
+
+# The trick here is that the last digit 'dl=0' needs to be changed to 'dl=1' and then 
+# we just feed it into pandas.read_csv as we have above.
+
+# This takes a while - it is downloading the information and then processing it, and it is more data
+# than our other examples have used.
+
+calendar = pa.read_csv('https://www.dropbox.com/s/lqin9zpgfwyt924/calendar_summary.csv?dl=1')
+listings_sum = pa.read_csv('https://www.dropbox.com/s/5noljx9qipcyyul/listings_summary.csv?dl=1')
+listings = pa.read_csv('https://www.dropbox.com/s/xtkx018qxjfjlah/listings.csv?dl=1')
+neighborhoods = pa.read_csv('https://www.dropbox.com/s/rfqozggf5f2kzlu/neighbourhoods.csv?dl=1')
+reviews_sum = pa.read_csv('https://www.dropbox.com/s/o8gvfm708g1cocf/reviews_summary.csv?dl=1')
+reviews = pa.read_csv('https://www.dropbox.com/s/8dfu8qyc6n6cw3p/reviews.csv?dl=1')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.2.</span> </figcaption></figure><figure class="figure-like" id="listing-130"><pre class="console"><b>listings.tail()
+</b>             id                                               name    host_id  \
+22547  29856708       Cozy Apartment right in the center of Berlin   87555909   
+22548  29857108             Altbau/ Schöneberger Kiez / Schlafsofa   67537363   
+22549  29864272   Artists loft with garden in the center of Berlin    3146923   
+22550  29866805              Room for two with private shower / WC   36961901   
+22551  29867352  Sunny, modern and cozy flat in Berlin Neukölln :)  177464875   
+
+        host_name     neighbourhood_group            neighbourhood   latitude  \
+22547     Ulisses                   Mitte          Brunnenstr. Süd  52.533865   
+22548        Jörg  Tempelhof - Schöneberg          Schöneberg-Nord  52.496211   
+22549      Martin                  Pankow  Prenzlauer Berg Südwest  52.531800   
+22550  Arte Luise                   Mitte           Alexanderplatz  52.520802   
+22551   Sebastian                Neukölln        Schillerpromenade  52.473762   
+
+       longitude        room_type  price  minimum_nights  number_of_reviews  \
+22547  13.400731  Entire home/apt     60               2                  0   
+22548  13.341738      Shared room     20               1                  0   
+22549  13.411999  Entire home/apt     85               3                  0   
+22550  13.378688     Private room     99               1                  0   
+22551  13.424447     Private room     45               5                  0   
+
+      last_review  reviews_per_month  calculated_host_listings_count  \
+22547         NaN                NaN                               1   
+22548         NaN                NaN                               6   
+22549         NaN                NaN                               2   
+22550         NaN                NaN                               3   
+22551         NaN                NaN                               1   
+
+       availability_365  
+22547               314  
+22548                78  
+22549                15  
+22550                 6  
+22551                21
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.3.</span> </figcaption></figure><figure class="figure-like" id="listing-131"><pre class="console"><b># There are many entries in Calendar.price that are NaN. It is not clear what that means
+calendar = calendar[pa.notna(calendar.price)]
+
+# Given an listing_id we get when it was booked and for what price
+calendar[calendar.listing_id==29857108].head()
+</b>         listing_id        date available   price
+8212563    29857108  2019-02-04         t  $17.00
+8212564    29857108  2019-02-03         t  $17.00
+8212565    29857108  2019-02-02         t  $18.00
+8212566    29857108  2019-02-01         t  $18.00
+8212567    29857108  2019-01-31         t  $17.00
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-132"><pre class="console"><b># For each list we could compute the mean of its price. When you first do it, you get an error
+# because the price has been read as a string.
+
+# So first we need to convert these strings to floats/integers
+# The first character is '$' so we skip that one;
+# Some of them also contain ',' if they are in the thousands in price.
+np.mean([float(x[1:].replace(',', '')) for x in calendar.price[calendar.listing_id==29857108]])
+</b>17.141025641025642
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-133"><pre class="console"><b># Let's go through the listing data and add the mean price for each listing:
+
+for x in listings.index:
+    bookings = calendar.price[calendar.listing_id==listings.loc[x, 'id']]
+    listings.loc[x, 'mean_price'] = np.mean(
+        [float(x[1:].replace(',', '')) for x in bookings])
+    listings.loc[x, 'number_of_bookings'] = len(bookings)
+    
+# I'm going to ignore the warning that comes up. The way to fix it is to checking that bookings
+# is not empty beroe passing it to the next two statements.
+</b>/anaconda3/envs/jupyterlab/lib/python3.7/site-packages/numpy/core/fromnumeric.py:3118: RuntimeWarning: Mean of empty slice.
+  out=out, **kwargs)
+/anaconda3/envs/jupyterlab/lib/python3.7/site-packages/numpy/core/_methods.py:85: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.6.</span> </figcaption></figure><figure class="figure-like" id="listing-134"><pre class="console"><b>listings.head()
+</b>     id                                              name  host_id host_name  \
+0  2015  Berlin-Mitte Value! Quiet courtyard/very central     2217       Ian   
+1  2695                Prenzlauer Berg close to Mauerpark     2986   Michael   
+2  3176                   Fabulous Flat in great Location     3718    Britta   
+3  3309                 BerlinSpot Schöneberg near KaDeWe     4108      Jana   
+4  7071                  BrightRoom with sunny greenview!    17391    Bright   
+
+      neighbourhood_group             neighbourhood   latitude  longitude  \
+0                   Mitte           Brunnenstr. Süd  52.534537  13.402557   
+1                  Pankow  Prenzlauer Berg Nordwest  52.548513  13.404553   
+2                  Pankow   Prenzlauer Berg Südwest  52.534996  13.417579   
+3  Tempelhof - Schöneberg           Schöneberg-Nord  52.498855  13.349065   
+4                  Pankow            Helmholtzplatz  52.543157  13.415091   
+
+         room_type  price  minimum_nights  number_of_reviews last_review  \
+0  Entire home/apt     60               4                118  2018-10-28   
+1     Private room     17               2                  6  2018-10-01   
+2  Entire home/apt     90              62                143  2017-03-20   
+3     Private room     26               5                 25  2018-08-16   
+4     Private room     42               2                197  2018-11-04   
+
+   reviews_per_month  calculated_host_listings_count  availability_365  \
+0               3.76                               4               141   
+1               1.42                               1                 0   
+2               1.25                               1               220   
+3               0.39                               1               297   
+4               1.75                               1                26   
+
+   mean_price  number_of_bookings  
+0   81.900709               141.0  
+1         NaN                 0.0  
+2   90.000000               220.0  
+3   27.131313               297.0  
+4   44.384615                26.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.7.</span> </figcaption></figure><figure class="figure-like" id="listing-135"><pre class="console"><b># We should drop the listings that had no bookings, for one thing their price is obviously not telling us 
+# something real (Lesson #1 from Pawn Stars)
+
+listings = listings[listings.number_of_bookings!=0]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.8.</span> </figcaption></figure><p id="p-515">So to recap in this example we have shown the following <em class="emphasis">Data Wrangling</em> techniques:</p>
+<ul id="p-516" class="disc">
+<li id="li-142"><p id="p-517">Cross referencing one dataframe with another</p></li>
+<li id="li-143"><p id="p-518">Unpacking a number represented as a string using some of the string tools from Python</p></li>
+<li id="li-144"><p id="p-519">Computing a new feature from other data</p></li>
+<li id="li-145"><p id="p-520">Removing NaN values</p></li>
+</ul>
+<p id="p-521">What could we do with this new information. Consider the neighborhoods, what is the mean price in each neighborhood.</p>
+<figure class="figure-like" id="listing-136"><pre class="console"><b># Make a list of all the neighborhoods (note that the data gave us a list, but it is safer to take the
+# actual values from the feature). Though to be super careful we should take some time to check 
+# that they have been coded correctly.
+
+# I pass it through set to eliminate duplicates, then I convert it to a data frame
+nbhds = pa.DataFrame(set(listings.neighbourhood), columns = ['Neighbourhood'])
+nbhds.head()
+</b>         Neighbourhood
+0  Rummelsburger Bucht
+1               Nord 2
+2    Regierungsviertel
+3            Barstraße
+4        Marzahn-Mitte
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.9.</span> </figcaption></figure><figure class="figure-like" id="listing-137"><pre class="console"><b># now for each neighborhood compute the mean and standard deviation of the price paid
+# Note that this means we have to unpack the mean price we computed for each booking by the number
+# of booksings; we will also need the total number of bookings for each neighborhood.
+save = []
+
+for x in nbhds.index:
+    nbook = []
+    xlist = listings.id[listings.neighbourhood==nbhds.loc[x, 'Neighbourhood']]
+    for l in xlist:
+        bookings_price = calendar.price[calendar.listing_id==l]
+        bookings = [float(x[1:].replace(',', '')) for x in bookings_price]
+        nbook += bookings
+       
+    nbhds.loc[x, 'bookings'] = len(nbook)
+    nbhds.loc[x, 'mean_price'] = np.mean(nbook)
+    nbhds.loc[x, 'sdv_price'] = np.std(nbook)
+    nbhds.loc[x, 'median_price'] = np.median(nbook)
+    if np.std(nbook)&gt;np.mean(nbook):
+        save += [nbook]
+    
+    
+nbhds.tail()
+</b>            Neighbourhood  bookings  mean_price   sdv_price  median_price
+131             Fennpfuhl    2261.0   42.515259   14.076130          40.0
+132        Helmholtzplatz   35101.0  130.613914  467.020025          70.0
+133  Prenzlauer Berg Nord   33982.0   70.496557   46.438737          59.0
+134                 Ost 1    4191.0   45.807683   23.735564          40.0
+135            Müggelheim     487.0   71.987680   35.502666         100.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.10.</span> </figcaption></figure><p id="p-522">Note that there are some mismatches between mean and standard deviation. I have pulled out one of them so we can check on what is happening. What we see is that the distribution of prices in a neighborhood are not normal.</p>
+<p id="p-523">This is an example where Median and Percentiles may be a better notion of center and spread of the data</p>
+<figure class="figure-like" id="listing-138"><pre class="console"><b>sn.distplot(save[0]);
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/6.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.1.11.</span> </figcaption></figure></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

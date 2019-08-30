@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-08-30T16:55:03-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>def onehot(df, feature):
+    '''A function to do one-hot-encoding of a feature from a dataframe. df = dataframe'''
+
+    v = list(set(df[feature])) # Make an iterable of the unique values for the feature
+    
+    for c in df.index: # cycle through the samples
+        t = df.loc[c, feature]
+        
+        for test in v:
+            if pa.isna(test):  # nan values are sort of a problem and have to be handled separately
+                if pa.isna(t):
+                    df.loc[c, '{}_nan'.format(feature)] = 1
+                else:
+                    df.loc[c, '{}_nan'.format(feature)] = 0
+            else:
+                if t == test:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 1  # Makes a new feature with name feature_value
+                                                              # and codes it as a 1 if that was the value
+                else:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 0  # and 0 otherwise
+            
+    return df.drop(feature, axis=1) # returns a dataframe with the encoded feature removed
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">6.3.5.</span> </figcaption></figure><span class="incontext"><a href="section-36.html#listing-152">in-context</a></span>
+</body>
+</html>
