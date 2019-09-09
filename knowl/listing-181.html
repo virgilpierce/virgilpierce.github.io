@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-09T14:45:07-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Produce a numpy array with the Length variable and another with the Whole_Weight
+
+X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Length']])).transpose()
+# Recall that we need an array of shape (n, 1) and so there are some numpy.array manipulations needed
+
+y = np.array(ab.loc[:, 'Whole_weight'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.1.</span> </figcaption></figure><span class="incontext"><a href="section-41.html#listing-181">in-context</a></span>
+</body>
+</html>

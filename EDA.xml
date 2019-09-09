@@ -1,0 +1,448 @@
+<chapter xml:id='EDA'>
+
+<title> Exploratory Data Analysis
+</title>
+
+<introduction>
+<p>Exploratory Data Analysis is essentially the first step in actually working with a data set. As we gain more experience with data and the things that can happen you'll see more examples of what we are looking for. </p>
+
+<p>Two main items we are looking for:</p>
+<p><ul>
+<li><p>Can we identify features that are important in the prediction</p>
+</li>
+<li><p>Can we identify features that are are related, particularly ones that are related to the outcome</p>
+</li>
+</ul></p>
+
+<p>Note that in both cases, we will eventually have some tools for at least to some extent automating the answering of these questions.</p>
+
+<p>We have used Linear Regression a few times in making predictions, but note that sometimes the relationship is not linear, yet the same tool could be used.</p>
+
+<p>The reason in identifying features that are important in the prediction is that these are the ones we will include in our algorithm, and if they are categorical, they are also the ones we will need to devote some time to decoding.</p>
+
+<p>The reason for identifying features that are related, is that this then identifies features that may not contribute new independent information to our model.</p>
+
+<p>Consider the abalone dataset.</p>
+<listing>
+<console>
+<input>
+import pandas as pa
+import numpy as np
+import seaborn as sn
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+ab = pa.read_csv('Data Sets/Abalone/abalone.csv', 
+                 names = ['Sex', 'Length', 'Diameter', 'Height', 'Whole_weight', 
+                      'Sucked_weight', 'Viscera_weight', 'Shell_weight',
+                                          'Rings'])
+
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_weight  Sucked_weight  Viscera_weight  \
+0   M   0.455     0.365   0.095        0.5140         0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255         0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770         0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160         0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050         0.0895          0.0395   
+
+   Shell_weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+p = sn.pairplot(ab, hue = 'Sex')
+p.fig.set_size_inches(9, 9)
+</input>
+</console>
+<image source='Images/8.1.png'/>
+</listing>
+<p>You might notice from the pairplots that it looks like there is a linear relationship between Length, Diameter, and Height. It is relatively robust. In fact we could apply our LinearRegression tool to it. </p>
+<listing>
+<console>
+<input>
+import matplotlib.pyplot as plt
+import numpy.random as rn
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Produce a numpy array with the Length variable and another with the Diameter
+
+X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Diameter']])).transpose()
+# Recall that we need an array of shape (n, 1) and so there are some numpy.array manipulations needed
+
+y = np.array(ab.loc[:, 'Length'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, y_train)
+b, m = reg.intercept_, *reg.coef_
+b, m
+</input>
+<output>
+(0.03810541331481182, 1.1910016964551684)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(X_train, y_train, 'b.')
+plt.plot(X_test, y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = b + m*xx
+plt.plot(xx, yy, 'r-');
+</input>
+</console>
+</listing>
+<image source='Images/8.2.png'/>
+<listing>
+<console>
+<input>
+print('The training R2: {}'.format(reg.score(X_train, y_train)))
+print('The testing R2: {}'.format(reg.score(X_test, y_test)))
+</input>
+<output>
+The training R2: 0.9743276375812088
+The testing R2: 0.9717722568405255
+
+</output>
+</console>
+</listing>
+<p>These are relatively close to one, implying that the line does a reasonable job of explaining the variation in the data.</p>
+</introduction>
+
+
+<section>
+ <title> Nonlinear Relations
+</title>
+
+<p>Notice that a relationship between length and whole weight appears to exist, but that it is non-linear.</p>
+<listing>
+<console>
+<input>
+# Produce a numpy array with the Length variable and another with the Whole_Weight
+
+X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Length']])).transpose()
+# Recall that we need an array of shape (n, 1) and so there are some numpy.array manipulations needed
+
+y = np.array(ab.loc[:, 'Whole_weight'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(X, y, 'b.');
+</input>
+</console>
+<image source='Images/8.3.png'/>
+</listing>
+<p>We could try using a quadratic relation such as <m>y = a x^2 + b x + c</m>. We could even do this with our existing Linear Regression tool by creating a new column with the values of <m>x^2</m>.</p>
+<listing>
+<console>
+<input>
+X2 = np.atleast_2d(np.array([x**2 for x in X]))
+X = np.concatenate([X, X2], axis=1)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X[:10]
+</input>
+<output>
+array([[0.455   , 0.207025],
+       [0.35    , 0.1225  ],
+       [0.53    , 0.2809  ],
+       [0.44    , 0.1936  ],
+       [0.33    , 0.1089  ],
+       [0.425   , 0.180625],
+       [0.53    , 0.2809  ],
+       [0.545   , 0.297025],
+       [0.475   , 0.225625],
+       [0.55    , 0.3025  ]])
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, y_train)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+c, b, a = reg.intercept_, *reg.coef_
+c, b, a
+</input>
+<output>
+(0.4465389216286053, -3.2825531868932525, 7.275878178000219)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = a*xx**2 + b*xx + c
+plt.plot(xx, yy, 'r-');
+</input>
+</console>
+</listing>
+<image source='Images/8.4.png'/>
+<listing>
+<console>
+<input>
+print('The training R2: {}'.format(reg.score(X_train, y_train)))
+print('The testing R2: {}'.format(reg.score(X_test, y_test)))
+</input>
+<output>
+The training R2: 0.9324862119840669
+The testing R2: 0.9272305124767107
+
+</output>
+</console>
+</listing>
+<p>Worth noting that the quadratic relation we found seems to breakdown substantially for Lengths less than 2. It might be worth exploring a different type of non-linear model. For example an exponential model might describe the data: <m> y = e^{m x +b}</m>. 
+</p>
+<p>To modify our dataset so that we can apply the Linear Regression tool with this relation, we transform the equation by taking the logarithm of both sides: <m> \log(y) = m x + b</m>. </p>
+<listing>
+<console>
+<input>
+X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Length']])).transpose() # Reseting X
+y = np.array(ab.loc[:, 'Whole_weight'])  # Reseting y
+logy = np.log(y)  # Simple enough to transform the y values with log.
+</input>
+</console>
+</listing>
+<p>Sidenote: If you are new to a programing language, it is always worth checking what the base of the log function is. <url href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.log.html"> numpy.log </url>  We see here that numpy.log refers to the natural logarithm which is what we want.</p>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+logy = logy[perm]
+y = y[perm]   # Note that I am shuffling both y and logy, this will allow us to use y in plots
+# If we did not shuffle y in the same ways at X we would have a problem.
+X_test = X[:test]       # Then create the test
+logy_test = logy[:test]
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+logy_train = logy[test:]
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, logy_train)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+b, m = reg.intercept_, *reg.coef_
+b, m
+</input>
+<output>
+(-3.963695520701095, 6.724647571594421)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = np.exp(m*xx + b)
+plt.plot(xx, yy, 'r-');
+</input>
+</console>
+</listing>
+<image source='Images/8.5.png'/>
+<listing>
+<console>
+<input>
+print('The training R2: {}'.format(reg.score(X_train, logy_train))) 
+# first we can compute the R2 score from the LinearRegression method. However note that this is 
+# really working from the log error, so it is not comparable to the errors above.
+print('The testing R2: {}'.format(reg.score(X_test, logy_test)))
+</input>
+<output>
+The training R2: 0.9322667524941314
+The testing R2: 0.9395629727215006
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+yhat_train = np.exp(reg.predict(X_train))
+yhat_test = np.exp(reg.predict(X_test))
+y_train_mean = np.mean(y_train)
+y_test_mean = np.mean(y_test)
+EV_train = sum( (yhat_train - y_train)**2 )
+EV_test = sum( (yhat_test - y_test)**2 )
+TV_train = sum( (y_train - y_train_mean)**2 )
+TV_test = sum( (y_test - y_test_mean)**2 )
+R2_train = 1 - EV_train/TV_train
+R2_test = 1 - EV_test/TV_test
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print('The training R2: {}'.format(R2_train))
+print('The testing R2: {}'.format(R2_test))
+</input>
+<output>
+The training R2: 0.8338421806085136
+The testing R2: 0.8617863264102406
+
+</output>
+</console>
+</listing>
+<p>Why is it so far off from the <m>R^2</m> values we had for the quadratic model, even though the qualitative part of the model looks better? The problem is that the LinearRegression method is designed to maximize the <m>R^2</m> for the <m>X</m> and <m>y</m> values it is passed, and for this model that means it maximized the values for the <m>\log(y)</m> values.</p>
+
+<p>The problem is that the LinearRegression is then overvaluing data points with small values of <m>y</m> because in the transformation to <m>\log(y)</m> they become large negative values.</p>
+
+<p>The solution is to using a weight <m>w</m> passed to LinearRegression that is proportional to the value of <m>y</m> rather than the default equal weight.</p>
+<listing>
+<console>
+<input>
+reg = LinearRegression().fit(X_train, logy_train, sample_weight=y_train)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+b, m = reg.intercept_, *reg.coef_
+b, m
+</input>
+<output>
+(-3.293457107496078, 5.581497615436184)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = np.exp(m*xx + b)
+plt.plot(xx, yy, 'r-');
+</input>
+</console>
+<image source='Images/8.6.png'/>
+</listing>
+<listing>
+<console>
+<input>
+yhat_train = np.exp(reg.predict(X_train))
+yhat_test = np.exp(reg.predict(X_test))
+y_train_mean = np.mean(y_train)
+y_test_mean = np.mean(y_test)
+EV_train = sum( (yhat_train - y_train)**2 )
+EV_test = sum( (yhat_test - y_test)**2 )
+TV_train = sum( (y_train - y_train_mean)**2 )
+TV_test = sum( (y_test - y_test_mean)**2 )
+R2_train = 1 - EV_train/TV_train
+R2_test = 1 - EV_test/TV_test
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+print('The training R2: {}'.format(R2_train))
+print('The testing R2: {}'.format(R2_test))
+</input>
+<output>
+The training R2: 0.9171692315695774
+The testing R2: 0.9251117906446126
+
+</output>
+</console>
+</listing>
+<p>Summarizing what we have learned:</p>
+<p><ul>
+<li><p>There is a linear relationship between Length and Diameter, which implies that we may be able to drop one of these variables from further analysis with little penalty.</p>
+</li>
+<li><p>There is a non-linear relationship between Length and Whole_weight, which implies that we may be able to drop one of these variables except if we use Linear Models we may need to include the quadratic term or another transformation of the variables (exponential or logarithmic).</p>
+</li>
+</ul></p>
+
+<p>The point with this last bullet is that if the relationship is non-linear it will not be captured by the Linear Regression model we are using without additional transformations.</p>
+
+</section>
+
+</chapter>

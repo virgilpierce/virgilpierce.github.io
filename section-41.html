@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-09T14:45:06-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Nonlinear Relations</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="EDA.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="EDA.html" title="Up">Up</a><span id="nextbutton" class="next-button button toolbar-item disabled">Next</span></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="EDA.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="EDA.html" title="Up">Up</a><span class="next-button button toolbar-item disabled">Next</span>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41" class="active">Nonlinear Relations</a></li></ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-41"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">8.1</span> <span class="title">Nonlinear Relations</span>
+</h2>
+<p id="p-586">Notice that a relationship between length and whole weight appears to exist, but that it is non-linear.</p>
+<figure class="figure-like" id="listing-181"><pre class="console"><b># Produce a numpy array with the Length variable and another with the Whole_Weight
+
+X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Length']])).transpose()
+# Recall that we need an array of shape (n, 1) and so there are some numpy.array manipulations needed
+
+y = np.array(ab.loc[:, 'Whole_weight'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-182"><pre class="console"><b>plt.plot(X, y, 'b.');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/8.3.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.2.</span> </figcaption></figure><p id="p-587">We could try using a quadratic relation such as \(y = a x^2 + b x + c\text{.}\) We could even do this with our existing Linear Regression tool by creating a new column with the values of \(x^2\text{.}\)</p>
+<figure class="figure-like" id="listing-183"><pre class="console"><b>X2 = np.atleast_2d(np.array([x**2 for x in X]))
+X = np.concatenate([X, X2], axis=1)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.3.</span> </figcaption></figure><figure class="figure-like" id="listing-184"><pre class="console"><b>X[:10]
+</b>array([[0.455   , 0.207025],
+       [0.35    , 0.1225  ],
+       [0.53    , 0.2809  ],
+       [0.44    , 0.1936  ],
+       [0.33    , 0.1089  ],
+       [0.425   , 0.180625],
+       [0.53    , 0.2809  ],
+       [0.545   , 0.297025],
+       [0.475   , 0.225625],
+       [0.55    , 0.3025  ]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-185"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-186"><pre class="console"><b>reg = LinearRegression().fit(X_train, y_train)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.6.</span> </figcaption></figure><figure class="figure-like" id="listing-187"><pre class="console"><b>c, b, a = reg.intercept_, *reg.coef_
+c, b, a
+</b>(0.4465389216286053, -3.2825531868932525, 7.275878178000219)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.7.</span> </figcaption></figure><figure class="figure-like" id="listing-188"><pre class="console"><b>plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = a*xx**2 + b*xx + c
+plt.plot(xx, yy, 'r-');
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.8.</span> </figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/8.4.png" style="width: 100%; height: auto;" alt=""></div>
+<figure class="figure-like" id="listing-189"><pre class="console"><b>print('The training R2: {}'.format(reg.score(X_train, y_train)))
+print('The testing R2: {}'.format(reg.score(X_test, y_test)))
+</b>The training R2: 0.9324862119840669
+The testing R2: 0.9272305124767107
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.9.</span> </figcaption></figure><p id="p-588">Worth noting that the quadratic relation we found seems to breakdown substantially for Lengths less than 2. It might be worth exploring a different type of non-linear model. For example an exponential model might describe the data: \(y = e^{m x +b}\text{.}\)</p>
+<p id="p-589">To modify our dataset so that we can apply the Linear Regression tool with this relation, we transform the equation by taking the logarithm of both sides: \(\log(y) = m x + b\text{.}\)</p>
+<figure class="figure-like" id="listing-190"><pre class="console"><b>X = np.atleast_2d(np.array([float(h) for h in ab.loc[:, 'Length']])).transpose() # Reseting X
+y = np.array(ab.loc[:, 'Whole_weight'])  # Reseting y
+logy = np.log(y)  # Simple enough to transform the y values with log.
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.10.</span> </figcaption></figure><p id="p-590">Sidenote: If you are new to a programing language, it is always worth checking what the base of the log function is. <a class="external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.log.html" target="_blank">numpy.log</a>  We see here that numpy.log refers to the natural logarithm which is what we want.</p>
+<figure class="figure-like" id="listing-191"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+logy = logy[perm]
+y = y[perm]   # Note that I am shuffling both y and logy, this will allow us to use y in plots
+# If we did not shuffle y in the same ways at X we would have a problem.
+X_test = X[:test]       # Then create the test
+logy_test = logy[:test]
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+logy_train = logy[test:]
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.11.</span> </figcaption></figure><figure class="figure-like" id="listing-192"><pre class="console"><b>reg = LinearRegression().fit(X_train, logy_train)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.12.</span> </figcaption></figure><figure class="figure-like" id="listing-193"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_
+b, m
+</b>(-3.963695520701095, 6.724647571594421)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.13.</span> </figcaption></figure><figure class="figure-like" id="listing-194"><pre class="console"><b>plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = np.exp(m*xx + b)
+plt.plot(xx, yy, 'r-');
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.14.</span> </figcaption></figure><div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/8.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figure class="figure-like" id="listing-195"><pre class="console"><b>print('The training R2: {}'.format(reg.score(X_train, logy_train))) 
+# first we can compute the R2 score from the LinearRegression method. However note that this is 
+# really working from the log error, so it is not comparable to the errors above.
+print('The testing R2: {}'.format(reg.score(X_test, logy_test)))
+</b>The training R2: 0.9322667524941314
+The testing R2: 0.9395629727215006
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.15.</span> </figcaption></figure><figure class="figure-like" id="listing-196"><pre class="console"><b>yhat_train = np.exp(reg.predict(X_train))
+yhat_test = np.exp(reg.predict(X_test))
+y_train_mean = np.mean(y_train)
+y_test_mean = np.mean(y_test)
+EV_train = sum( (yhat_train - y_train)**2 )
+EV_test = sum( (yhat_test - y_test)**2 )
+TV_train = sum( (y_train - y_train_mean)**2 )
+TV_test = sum( (y_test - y_test_mean)**2 )
+R2_train = 1 - EV_train/TV_train
+R2_test = 1 - EV_test/TV_test
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.16.</span> </figcaption></figure><figure class="figure-like" id="listing-197"><pre class="console"><b>print('The training R2: {}'.format(R2_train))
+print('The testing R2: {}'.format(R2_test))
+</b>The training R2: 0.8338421806085136
+The testing R2: 0.8617863264102406
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.17.</span> </figcaption></figure><p id="p-591">Why is it so far off from the \(R^2\) values we had for the quadratic model, even though the qualitative part of the model looks better? The problem is that the LinearRegression method is designed to maximize the \(R^2\) for the \(X\) and \(y\) values it is passed, and for this model that means it maximized the values for the \(\log(y)\) values.</p>
+<p id="p-592">The problem is that the LinearRegression is then overvaluing data points with small values of \(y\) because in the transformation to \(\log(y)\) they become large negative values.</p>
+<p id="p-593">The solution is to using a weight \(w\) passed to LinearRegression that is proportional to the value of \(y\) rather than the default equal weight.</p>
+<figure class="figure-like" id="listing-198"><pre class="console"><b>reg = LinearRegression().fit(X_train, logy_train, sample_weight=y_train)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.18.</span> </figcaption></figure><figure class="figure-like" id="listing-199"><pre class="console"><b>b, m = reg.intercept_, *reg.coef_
+b, m
+</b>(-3.293457107496078, 5.581497615436184)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.19.</span> </figcaption></figure><figure class="figure-like" id="listing-200"><pre class="console"><b>plt.plot(X_train[:, 0], y_train, 'b.')
+plt.plot(X_test[:, 0], y_test, 'b+')
+xx = np.linspace(0, 0.8, 50)
+yy = np.exp(m*xx + b)
+plt.plot(xx, yy, 'r-');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/8.6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.20.</span> </figcaption></figure><figure class="figure-like" id="listing-201"><pre class="console"><b>yhat_train = np.exp(reg.predict(X_train))
+yhat_test = np.exp(reg.predict(X_test))
+y_train_mean = np.mean(y_train)
+y_test_mean = np.mean(y_test)
+EV_train = sum( (yhat_train - y_train)**2 )
+EV_test = sum( (yhat_test - y_test)**2 )
+TV_train = sum( (y_train - y_train_mean)**2 )
+TV_test = sum( (y_test - y_test_mean)**2 )
+R2_train = 1 - EV_train/TV_train
+R2_test = 1 - EV_test/TV_test
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.21.</span> </figcaption></figure><figure class="figure-like" id="listing-202"><pre class="console"><b>print('The training R2: {}'.format(R2_train))
+print('The testing R2: {}'.format(R2_test))
+</b>The training R2: 0.9171692315695774
+The testing R2: 0.9251117906446126
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">8.1.22.</span> </figcaption></figure><p id="p-594">Summarizing what we have learned:</p>
+<ul id="p-595" class="disc">
+<li id="li-160"><p id="p-596">There is a linear relationship between Length and Diameter, which implies that we may be able to drop one of these variables from further analysis with little penalty.</p></li>
+<li id="li-161"><p id="p-597">There is a non-linear relationship between Length and Whole_weight, which implies that we may be able to drop one of these variables except if we use Linear Models we may need to include the quadratic term or another transformation of the variables (exponential or logarithmic).</p></li>
+</ul>
+<p id="p-598">The point with this last bullet is that if the relationship is non-linear it will not be captured by the Linear Regression model we are using without additional transformations.</p></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

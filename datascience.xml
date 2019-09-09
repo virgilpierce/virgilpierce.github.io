@@ -63,6 +63,12 @@
 
 <xi:include href='resampling.xml'/>
 
+<!-- Chapter Eight - Exploratory Data Analysis -->
+
+<xi:include href='EDA.xml'/>
+
+
+
         
 </book>
 </pretext>
