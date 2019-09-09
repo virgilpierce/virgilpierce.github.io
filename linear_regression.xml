@@ -1,0 +1,122 @@
+<chapter xml:id='linear_regression'>
+<title> Linear Regression
+</title>
+
+<introduction>
+<p>We have been putting off for the last few chapters the question of what Linear Regression is doing exactly and how Python is computing the parameters. There are two points of view on the problem, and interestingly they both lead to the same answer. </p>
+
+<p>Firstly what we are trying to do with Linear Regression is minimize the <em>Explained Variation</em> of the problem:</p>
+
+<p><me> \mbox{Explained Variation} = \sum_{j=1}^n (\hat{y}_j - y_j)^2</me></p>
+
+<p>using <m>\hat{y}_j = m x_j + b</m> where <m>(x_j, y_j)</m> are the samples in our training set.  Thus we should think of this sum as a function of <m>m</m> and <m>b</m>, and our goal is to find the values of <m>m</m> and <m>b</m> that minimize the result.</p>
+</introduction>
+
+<section>
+ <title> Calculus Approach to Linear Regression
+</title>
+
+<p><me> F(m, b) = \sum_{j=1}^n (b + m x_j - y_j )^2</me></p>
+
+<p>One way to locate this minimum is to use a method you might have learned in Calculus. We are looking for the location(s) where the derivatives of <m>F</m> in the direction of <m>m</m> and <m>b</m> are both zero. That is, the minimum should be at one of the points where the value of the function no longer changes if we move <m>m</m> or <m>b</m> by a little bit.</p>
+
+<p>(note I will now use some Calculus techniques, if you have not taken Calculus you can skip this and pick up with us when we get to the other approach.)</p>
+
+<p>Because <m>F(m, b)</m> is a quadratic function in both <m>m</m> and <m>b</m>, we know that the derivatives <m>\frac{\partial F}{\partial m}</m> and <m>\frac{\partial F}{\partial b}</m> are linear functions. This is nice as it implies that there is a unique solution <m>(m_0, b_0)</m> that solves for each of them to be zero. It also means that we will be able to use Linear Algebra techniques to automate solving the equations and implmenting it in a computer program. Specifically the equations we are solving are:</p>
+
+<p><me> \frac{\partial F}{\partial m} = \sum_{j=1}^n 2 x_j (b + m x_j - y_j) = 0</me></p>
+<p>and</p>
+<p><me> \frac{\partial F}{\partial b} = \sum_{j=1}^n 2 (b + m x_j - y_j) = 0</me></p>
+
+<p>Note also that the because the function is quadratic and for large values of <m>b</m> and <m>m</m> is large itself, the place where the derivatives are zero must be a minimum, and not just a local minimum but a global minimum.</p>
+
+<p>Rewriting the equations as a matrix equation it looks like:</p>
+
+<p><me> A \begin{pmatrix} m \\ b \end{pmatrix} = Y</me></p>
+<p>where </p>
+<p><me> A = \begin{pmatrix} \sum_{j=1}^n 2 x_j^2 &amp; \sum_{j=1}^n 2 x_j \\ \sum_{j=1}^n 2 x_j &amp;\sum_{j=1}^n 2 \end{pmatrix}</me></p>
+<p>and </p>
+<p><me> C = \begin{pmatrix} \sum_{j=1}^n 2 x_j y_j \\ \sum_{j=1}^n 2 y_j \end{pmatrix}</me></p>
+
+<p>Note that as complicated as the expressions seem, the entries in <m>A</m> and <m>C</m> are just numbers.</p>
+
+<p>Thus giving </p>
+<p><me> \begin{pmatrix} m \\ b \end{pmatrix} = A^{-1} C</me></p>
+
+<p>One merely needs to check that in almost all cases the matrix <m>A</m> will be invertible.</p>
+
+</section>
+<section>
+ <title> Linear Regression as Projection
+</title>
+
+<introduction>
+<p>A different way to think about what <em>Linear Regression</em> is doing is to think of it as an orthogonal projection. Let <m>\{ (x_i, y_i) \}</m> be the set of sample points, and then define</p>
+<p><me> X = \begin{pmatrix} x_0 &amp; 1 \\ x_1 &amp; 1 \\ \vdots &amp; \vdots \\ x_n &amp; 1 \end{pmatrix}</me></p>
+<p>and </p>
+<p><me> y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix</me></p>
+
+<p>We are trying to find an <m>m</m> and <m>b</m> such that </p>
+
+<p><me> X \begin{pmatrix} m \\ b \end{pmatrix} = y</me></p>
+
+<p>If <m>Y</m> is in the column-space of <m>X</m> (the linear span of the columns of <m>X</m>) then there will be a choice of <m>m</m> and <m>b</m> such that this is equality. However Note that the column span of <m>X</m> will have <m>2</m> or <m>1</m> dimensions (<alert>Why not zero? and When will it be 1?</alert>); but lives in a <m>n</m> dimensional vector space. Thus <m>y</m> would have to be very special to be in the column space of <m>X</m>.</p>
+
+<p>In most cases we expect to have an <m>X</m> of rank 2, and a <m>y</m> that is not in the column space of <m>X</m>. In that case, geometrically the closest solution we could fine would come from an <em>orthogonal projection</em> of <m>y</m> into the column space of <m>X</m>. Once we have that projection there would then be a unique <m>m</m> and <m>b</m> that <m>X</m> would map onto the projected <m>y</m>. <alert>Picture of Orthogonal Projection Needed</alert>.</p>
+
+<p>There is, of course, a trick. It turns out that multiplying an <m>n</m> vector by <m>X^T</m> (<m>X</m> <em>Transpose</em>), does the trick of projecting the problem to one that will have a unique solution. Multiplying both sides of the equation by <m>X^T</m> we get:</p>
+
+<p><me> X^T X \begin{pmatrix} m\\ b\end{pmatrix} = X^T y</me></p>
+
+<p>Then we can solve for <m>m</m> and <m>b</m> provided that <m>X^T X</m> is invertible:</p>
+
+<p><me> \begin{pmatrix} m\\ b \end{pmatrix} = (X^T X)^{-1} X^T y </me></p>
+
+<p>We can show that provided an <m>X</m> with more rows than columns has full rank (2 in this case) <m>X^T X</m> will always be invertible. </p>
+
+<p><em>Note that if the columns of $X$ are orthogonal, then this is just the projection formula you might have seen for orthogonal projection onto an orthogonal basis. We have just removed the step of having to use an orthogonal basis.</em></p>
+
+<p><em>Another Note:  My linear algebra courses are built around arriving at this result, as it is absolutely fundamental to a long list of applications of Linear Algebra in mathematics, science and engineering</em></p>
+</introduction>
+
+<subsection>
+ <title> Connection
+</title>
+
+<p>Note the connection between these two approaches. The <m>X^T X</m> gives <m>A</m>, while <m>X^T y</m> gives <m>C</m>.</p>
+
+
+</subsection>
+<subsection>
+ <title> Higher Dimensions
+</title>
+
+<p>Both approaches generalizes immediately to higher dimensions. The only issue is that the sample size needs to be larger than the number of columns of <m>X</m>. If the sample size is too small than we are not assured that <m>X^T X</m> will be invertible. So in particular note that for problems using images, techniques based on Linear Regression may be difficult to use.</p>
+
+
+</subsection>
+<subsection>
+ <title> Generalizations
+</title>
+
+<p>We saw in the example above, that in order to get a better result we needed to apply weights to the sample data. This corresponds to adjusting the inner-product on the vector space, giving a different formula for orthogonal projection that would include the weights. In the Calculus interpretation of the problem, weights correspnds to making a different definition of the function being minimized. Interestingly, if done carefully both adjustments again lead to the same solution.</p>
+
+
+</subsection>
+<subsection>
+ <title> Approximation / Exact Result
+</title>
+
+<p>Finally it is worth noting that given a training dataset, Linear Regression will always produce the same result, and in fact that there is an <em>exact</em> result that achieves the minimum. The only reason our results above fluctuate (and we spent an entire class studying how they fluctuate) is because the training dataset changed. This will be in contrast to other models we learn to use in this class whose answers may change each time we run the model, or whose answers are approximations to the exact answer.</p>
+<listing>
+<console>
+<input>
+
+</input>
+</console>
+</listing>
+
+</subsection>
+
+</section>
+</chapter>

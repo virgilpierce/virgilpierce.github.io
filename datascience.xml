@@ -67,7 +67,9 @@
 
 <xi:include href='EDA.xml'/>
 
+<!-- Chapter Nine - Linear Regression -->
 
+<xi:include href='linear_regression.xml'/>
 
         
 </book>
