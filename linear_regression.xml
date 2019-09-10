@@ -5,16 +5,18 @@
 <introduction>
 <p>We have been putting off for the last few chapters the question of what Linear Regression is doing exactly and how Python is computing the parameters. There are two points of view on the problem, and interestingly they both lead to the same answer. </p>
 
-<p>Firstly what we are trying to do with Linear Regression is minimize the <em>Explained Variation</em> of the problem:</p>
-
-<p><me> \mbox{Explained Variation} = \sum_{j=1}^n (\hat{y}_j - y_j)^2</me></p>
-
-<p>using <m>\hat{y}_j = m x_j + b</m> where <m>(x_j, y_j)</m> are the samples in our training set.  Thus we should think of this sum as a function of <m>m</m> and <m>b</m>, and our goal is to find the values of <m>m</m> and <m>b</m> that minimize the result.</p>
 </introduction>
 
 <section>
  <title> Calculus Approach to Linear Regression
 </title>
+
+<p>Firstly what we are trying to do with Linear Regression is minimize the <em>Explained Variation</em> of the problem:</p>
+
+<p><me> \mbox{Explained Variation} = \sum_{j=1}^n (\hat{y}_j - y_j)^2</me></p>
+
+<p>using <m>\hat{y}_j = m x_j + b</m> where <m>(x_j, y_j)</m> are the samples in our training set.  Thus we should think of this sum as a function of <m>m</m> and <m>b</m>, and our goal is to find the values of <m>m</m> and <m>b</m> that minimize the result.</p>
+
 
 <p><me> F(m, b) = \sum_{j=1}^n (b + m x_j - y_j )^2</me></p>
 
@@ -54,13 +56,13 @@
 <p>A different way to think about what <em>Linear Regression</em> is doing is to think of it as an orthogonal projection. Let <m>\{ (x_i, y_i) \}</m> be the set of sample points, and then define</p>
 <p><me> X = \begin{pmatrix} x_0 &amp; 1 \\ x_1 &amp; 1 \\ \vdots &amp; \vdots \\ x_n &amp; 1 \end{pmatrix}</me></p>
 <p>and </p>
-<p><me> y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix</me></p>
+<p><me> y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix}</me></p>
 
 <p>We are trying to find an <m>m</m> and <m>b</m> such that </p>
 
 <p><me> X \begin{pmatrix} m \\ b \end{pmatrix} = y</me></p>
 
-<p>If <m>Y</m> is in the column-space of <m>X</m> (the linear span of the columns of <m>X</m>) then there will be a choice of <m>m</m> and <m>b</m> such that this is equality. However Note that the column span of <m>X</m> will have <m>2</m> or <m>1</m> dimensions (<alert>Why not zero? and When will it be 1?</alert>); but lives in a <m>n</m> dimensional vector space. Thus <m>y</m> would have to be very special to be in the column space of <m>X</m>.</p>
+<p>If <m>y</m> is in the column-space of <m>X</m> (the linear span of the columns of <m>X</m>) then there will be a choice of <m>m</m> and <m>b</m> such that this is equality. However Note that the column span of <m>X</m> will have <m>2</m> or <m>1</m> dimensions (<alert>Why not zero? and When will it be 1?</alert>); but lives in a <m>n</m> dimensional vector space. Thus <m>y</m> would have to be very special to be in the column space of <m>X</m>.</p>
 
 <p>In most cases we expect to have an <m>X</m> of rank 2, and a <m>y</m> that is not in the column space of <m>X</m>. In that case, geometrically the closest solution we could fine would come from an <em>orthogonal projection</em> of <m>y</m> into the column space of <m>X</m>. Once we have that projection there would then be a unique <m>m</m> and <m>b</m> that <m>X</m> would map onto the projected <m>y</m>. <alert>Picture of Orthogonal Projection Needed</alert>.</p>
 
@@ -74,7 +76,7 @@
 
 <p>We can show that provided an <m>X</m> with more rows than columns has full rank (2 in this case) <m>X^T X</m> will always be invertible. </p>
 
-<p><em>Note that if the columns of $X$ are orthogonal, then this is just the projection formula you might have seen for orthogonal projection onto an orthogonal basis. We have just removed the step of having to use an orthogonal basis.</em></p>
+<p><em>Note that if the columns of <m>X</m> are orthogonal, then this is just the projection formula you might have seen for orthogonal projection onto an orthogonal basis. We have just removed the step of having to use an orthogonal basis.</em></p>
 
 <p><em>Another Note:  My linear algebra courses are built around arriving at this result, as it is absolutely fundamental to a long list of applications of Linear Algebra in mathematics, science and engineering</em></p>
 </introduction>

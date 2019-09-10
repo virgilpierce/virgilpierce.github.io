@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-09T16:15:51-06:00    *-->
+<!--*    on 2019-09-10T09:02:22-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -170,7 +170,7 @@ X = \begin{pmatrix} x_0 &amp; 1 \\ x_1 &amp; 1 \\ \vdots &amp; \vdots \\ x_n &am
 <p id="p-623">and</p>
 <div class="displaymath" id="p-624">
 \begin{equation*}
-y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix
+y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix}
 \end{equation*}
 </div>
 <p id="p-625">We are trying to find an \(m\) and \(b\) such that</p>
@@ -179,7 +179,7 @@ y = \begin{pmatrix} y_0 \\ y_1 \\ \vdots \\ y_n \end{pmatrix
 X \begin{pmatrix} m \\ b \end{pmatrix} = y
 \end{equation*}
 </div>
-<p id="p-627">If \(Y\) is in the column-space of \(X\) (the linear span of the columns of \(X\)) then there will be a choice of \(m\) and \(b\) such that this is equality. However Note that the column span of \(X\) will have \(2\) or \(1\) dimensions (<em class="alert">Why not zero? and When will it be 1?</em>); but lives in a \(n\) dimensional vector space. Thus \(y\) would have to be very special to be in the column space of \(X\text{.}\)</p>
+<p id="p-627">If \(y\) is in the column-space of \(X\) (the linear span of the columns of \(X\)) then there will be a choice of \(m\) and \(b\) such that this is equality. However Note that the column span of \(X\) will have \(2\) or \(1\) dimensions (<em class="alert">Why not zero? and When will it be 1?</em>); but lives in a \(n\) dimensional vector space. Thus \(y\) would have to be very special to be in the column space of \(X\text{.}\)</p>
 <p id="p-628">In most cases we expect to have an \(X\) of rank 2, and a \(y\) that is not in the column space of \(X\text{.}\) In that case, geometrically the closest solution we could fine would come from an <em class="emphasis">orthogonal projection</em> of \(y\) into the column space of \(X\text{.}\) Once we have that projection there would then be a unique \(m\) and \(b\) that \(X\) would map onto the projected \(y\text{.}\) <em class="alert">Picture of Orthogonal Projection Needed</em>.</p>
 <p id="p-629">There is, of course, a trick. It turns out that multiplying an \(n\) vector by \(X^T\) (\(X\) <em class="emphasis">Transpose</em>), does the trick of projecting the problem to one that will have a unique solution. Multiplying both sides of the equation by \(X^T\) we get:</p>
 <div class="displaymath" id="p-630">
@@ -194,7 +194,7 @@ X^T X \begin{pmatrix} m\\ b\end{pmatrix} = X^T y
 \end{equation*}
 </div>
 <p id="p-633">We can show that provided an \(X\) with more rows than columns has full rank (2 in this case) \(X^T X\) will always be invertible.</p>
-<p id="p-634"><em class="emphasis">Note that if the columns of $X$ are orthogonal, then this is just the projection formula you might have seen for orthogonal projection onto an orthogonal basis. We have just removed the step of having to use an orthogonal basis.</em></p>
+<p id="p-634"><em class="emphasis">Note that if the columns of \(X\) are orthogonal, then this is just the projection formula you might have seen for orthogonal projection onto an orthogonal basis. We have just removed the step of having to use an orthogonal basis.</em></p>
 <p id="p-635"><em class="emphasis">Another Note:  My linear algebra courses are built around arriving at this result, as it is absolutely fundamental to a long list of applications of Linear Algebra in mathematics, science and engineering</em></p></section><section class="subsection" id="subsection-60"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">9.2.1</span> <span class="title">Connection</span>
 </h3>
