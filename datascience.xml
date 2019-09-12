@@ -71,6 +71,10 @@
 
 <xi:include href='linear_regression.xml'/>
 
-        
+<!-- Chapter Ten - PCA -->
+
+<xi:include href='pca.xml'/>
+
+
 </book>
 </pretext>

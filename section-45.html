@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-12T12:43:47-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Singular Value Decomposition</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-44.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="pca.html" title="Up">Up</a><span id="nextbutton" class="next-button button toolbar-item disabled">Next</span></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-44.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="pca.html" title="Up">Up</a><span class="next-button button toolbar-item disabled">Next</span>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45" class="active">Singular Value Decomposition</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-45"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">10.2</span> <span class="title">Singular Value Decomposition</span>
+</h2>
+<section class="introduction" id="introduction-25"><p id="p-658">Note though that for us, we are dealing with matrices \(X\) that have many more rows than columns (or in the case of image problems many more columns than rows). Essentially square matrices will not happen. However, noting what we learned with <em class="emphasis">Linear Regression</em> in the last chapter, it is maybe not a surprise that what we might want to consider is</p>
+<div class="displaymath" id="p-659">
+\begin{equation*}
+X^T X \qquad \mbox{or} \qquad X X^T
+\end{equation*}
+</div>
+<p id="p-660">If \(X\) is \(n\) by \(m\) then \(X^T X\) is square \(m\) by \(m\text{;}\) while \(X X^T\) is square \(n\) by \(n\text{.}\) We could then compute their eigenvalue diagonalizations:</p>
+<div class="displaymath" id="p-661">
+\begin{equation*}
+X^T X = V D_1 V^T
+\end{equation*}
+</div>
+<p id="p-662">and</p>
+<div class="displaymath" id="p-663">
+\begin{equation*}
+X X^T = U D_2 U^T
+\end{equation*}
+</div>
+<p id="p-664">where \(V V^T = I_m \) and \(U U^T = I_n\) Note that the two identies are not equal and also that the diagonal matrices have different sizes.</p>
+<p id="p-665">The singular value decomposition of \(X\) is then:</p>
+<div class="displaymath" id="p-666">
+\begin{equation*}
+X = U \Sigma V^T
+\end{equation*}
+</div>
+<p id="p-667">The columns of \(U\) and \(V\) are left- and right-singular vectors and the \(\Sigma\) is a pseudo-diagonal matrix (it is \(n\) by \(m\) rather than square) of the singular values, which are positive real numbers:</p>
+<div class="displaymath" id="p-668">
+\begin{equation*}
+\Sigma = \begin{pmatrix} s_0 &amp; 0 &amp; \dots \\ 0 &amp; s_1 &amp; \dots \\ \vdots &amp; \vdots &amp; \ddots \\ 0 &amp; \dots &amp; 0 \end{pmatrix}
+\end{equation*}
+</div>
+<p id="p-669">\(\Sigma\) is unique, up to the order of the singular values, however the \(U\) and \(V\) are not unique. If we order \(\Sigma\) so that \(s_0 &gt; s_1 &gt; \dots &gt; s_m \) then \(V\) gives an operation that picks out of \(X\) the most important contributions in order. I.e. transforming \(X\) by the first \(k\) columns of \(V\) will give \(k\) orthonormal linear combination of the columns of \(X\) that produce column vectors that are the \(k\) most important in explaining the variation of the entries of \(X\text{.}\)</p>
+<p id="p-670">This is a little bit wishy-washy, so lets do a concrete example.</p></section><section class="subsection" id="subsection-65"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.2.1</span> <span class="title">Iris Example</span>
+</h3>
+<figure class="figure-like" id="listing-208"><pre class="console"><b>import pandas as pa
+import matplotlib.pyplot as plt
+import seaborn as sn
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.1.</span> </figcaption></figure><figure class="figure-like" id="listing-209"><pre class="console"><b>ird = pa.read_csv('Data Sets/iris.csv')
+ird.head()
+</b>   sepal length  sepal width  petal length  petal width  flower type
+0           5.1          3.5           1.4          0.2            0
+1           4.9          3.0           1.4          0.2            0
+2           4.7          3.2           1.3          0.2            0
+3           4.6          3.1           1.5          0.2            0
+4           5.0          3.6           1.4          0.2            0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.2.</span> </figcaption></figure><p id="p-671">This is a collection of data giving the dimensions of the sepals and petals of three species of irises. The task is to predict the species from these values. It is relatively small for our class with only 150 samples and 5 features (4 predictors and 1 result) however it fullfills the important part of being largely non-square with more samples than predictors.</p>
+<figure class="figure-like" id="listing-210"><pre class="console"><b>ird.shape
+</b>(150, 5)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.3.</span> </figcaption></figure><figure class="figure-like" id="listing-211"><pre class="console"><b># Build a matrix of the predictors and results
+
+X = np.array(ird.iloc[:, 0:4])
+y = np.array(ird.iloc[:, 4])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.4.</span> </figcaption></figure><figure class="figure-like" id="listing-212"><pre class="console"><b># We can check how the predictors do at classifying flower types by graphing individual pairs for example Sepal_Length and Sepal_Width
+
+plt.plot(X[y==0, 0], X[y==0, 1], 'r.')
+plt.plot(X[y==1, 0], X[y==1, 1], 'g.')
+plt.plot(X[y==2, 0], X[y==2, 1], 'b.');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.5.</span> </figcaption></figure><p id="p-672">On the one hand this is pretty good, and in fact it is clear that these two variables could easily be used to classify the flower type as 0 and not 0 with minimal error. However we have four variables and maybe by combining all 4 and taking the two best predictors we can do better.</p>
+<figure class="figure-like" id="listing-213"><pre class="console"><b>u, s, vt = la.svd(X, full_matrices=True)
+u.shape, s.shape, vt.shape
+</b>((150, 150), (4,), (4, 4))
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.6.</span> </figcaption></figure><figure class="figure-like" id="listing-214"><pre class="console"><b>print(s)
+</b>[95.95066751 17.72295328  3.46929666  1.87891236]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.7.</span> </figcaption></figure><figure class="figure-like" id="listing-215"><pre class="console"><b># We can build sigma from s
+sigma = np.append(np.diag(s), np.zeros((150-4, 4)), axis=0 )
+sigma[:10, :]
+</b>array([[95.95066751,  0.        ,  0.        ,  0.        ],
+       [ 0.        , 17.72295328,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  3.46929666,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  1.87891236],
+       [ 0.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.        ,  0.        ]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.8.</span> </figcaption></figure><figure class="figure-like" id="listing-216"><pre class="console"><b>print( (u @ sigma @ vt - X)[0:10, :] )
+# Check that u, sigma, and vt reconstruct X
+</b>[[ 1.77635684e-15  1.02140518e-14  7.77156117e-15  4.38538095e-15]
+ [ 0.00000000e+00  0.00000000e+00  6.21724894e-15  1.27675648e-15]
+ [ 0.00000000e+00  1.77635684e-15  0.00000000e+00 -8.32667268e-16]
+ [ 0.00000000e+00  1.33226763e-15  0.00000000e+00 -4.99600361e-16]
+ [ 0.00000000e+00  1.77635684e-15  2.22044605e-16 -5.55111512e-17]
+ [ 8.88178420e-16  2.66453526e-15  8.88178420e-16  2.22044605e-16]
+ [-8.88178420e-16  1.33226763e-15  8.88178420e-16  2.77555756e-16]
+ [ 8.88178420e-16  1.33226763e-15  4.44089210e-16 -5.55111512e-17]
+ [ 0.00000000e+00  1.33226763e-15  0.00000000e+00 -5.55111512e-17]
+ [ 0.00000000e+00  8.88178420e-16  0.00000000e+00 -2.77555756e-17]]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.9.</span> </figcaption></figure><figure class="figure-like" id="listing-217"><pre class="console"><b>v = vt.transpose()
+
+# The columns of v given, in descending order, the most important factors explaining the variations in X
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.10.</span> </figcaption></figure><figure class="figure-like" id="listing-218"><pre class="console"><b># Take the two most important factors and build a new X
+
+X2 = X @ v[:, 0:2]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.11.</span> </figcaption></figure><figure class="figure-like" id="listing-219"><pre class="console"><b># We can check how the predictors do at classifying flower types by graphing individual pairs for example Sepal_Length and Sepal_Width
+
+plt.plot(X2[y==0, 0], X2[y==0, 1], 'r.')
+plt.plot(X2[y==1, 0], X2[y==1, 1], 'g.')
+plt.plot(X2[y==2, 0], X2[y==2, 1], 'b.');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.12.</span> </figcaption></figure><p id="p-673">The size of the singular values actually identifies how important the new feature is. The more rapidly they decay the better the early features do at explaining the variations in the data.</p>
+<article class="paragraphs" id="paragraphs-18"><h5 class="heading"><span class="title">Principal Component Analysis.</span></h5>
+<p id="p-674">Scikitlearn contains a variation on this method called Principal Component Analysis that does the computation here, but also normalizes the results in a way that is better suited for data analysis and varies the routines and approximations to run as effeciently as possible on the data you use. It also has some attached functions that can be used to illustrate how well the method has worked.</p>
+<figure class="figure-like" id="listing-220"><pre class="console"><b>from sklearn.decomposition import PCA
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.13.</span> </figcaption></figure><figure class="figure-like" id="listing-221"><pre class="console"><b>pca = PCA(n_components=2) # Use PCA to identify the two most important components
+
+# component here means a linear combination of the features
+
+Xpca = pca.fit_transform(X);
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.14.</span> </figcaption></figure><figure class="figure-like" id="listing-222"><pre class="console"><b># We can check how the predictors do at classifying flower types by graphing individual pairs for example Sepal_Length and Sepal_Width
+
+plt.plot(Xpca[y==0, 0], Xpca[y==0, 1], 'r.')
+plt.plot(Xpca[y==1, 0], Xpca[y==1, 1], 'g.')
+plt.plot(Xpca[y==2, 0], Xpca[y==2, 1], 'b.');
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.3.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.15.</span> </figcaption></figure><figure class="figure-like" id="listing-223"><pre class="console"><b># The explained variance quantifies the propotion of the variation in the values of X that have been explained by each component
+
+print(pca.explained_variance_ratio_)
+</b>[0.92461621 0.05301557]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.16.</span> </figcaption></figure><p id="p-675">Note that PCA is our first example of an unsupervised learning method (it works independently of the result values and rather tries to organize the predictors).</p></article></section><section class="subsection" id="subsection-66"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.2.2</span> <span class="title">Use in a Model</span>
+</h3>
+<p id="p-676">So fine this looks better, but is it actually producing a better model. So first of all it is unlikely to produce a better model if we use all of the features. The power of PCA is in identifying new features that will let us build a model faster. Let's compare using the logistic model on the data above using just the first two features and then using the first two principle components.</p>
+<figure class="figure-like" id="listing-224"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.17.</span> </figcaption></figure><figure class="figure-like" id="listing-225"><pre class="console"><b>from sklearn.linear_model import LogisticRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.18.</span> </figcaption></figure><figure class="figure-like" id="listing-226"><pre class="console"><b>cat1 = LogisticRegression(solver='lbfgs', multi_class='auto').fit(X_train[:, 0:2], y_train)
+cat1.score(X_train[:, 0:2], y_train), cat1.score(X_test[:, 0:2], y_test)
+</b>(0.7916666666666666, 0.8666666666666667)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.19.</span> </figcaption></figure><figure class="figure-like" id="listing-227"><pre class="console"><b>import matplotlib.colors as pltco # A package to help with coloring plots
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.20.</span> </figcaption></figure><figure class="figure-like" id="listing-228"><pre class="console"><b># A bit of code for plotting the decision boundaries in a categorical problem with two predictors and three values for the result
+def plot_cat_model(clf, X_train, y_train, X_test, y_test):
+
+    h = .02 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
+    y_min, y_max = X_train[:, 1].min() - 1, X_train[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+        np.arange(y_min, y_max, h))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA', '#AAAAFF'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00', '#0000FF'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.21.</span> </figcaption></figure><figure class="figure-like" id="listing-229"><pre class="console"><b>plot_cat_model(cat1, X_train, y_train, X_test, y_test)
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.4.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.22.</span> </figcaption></figure><figure class="figure-like" id="listing-230"><pre class="console"><b># Compute the first two principle components
+
+pca = PCA(n_components=2)
+Xpca_train = pca.fit_transform(X_train)
+Xpca_test = pca.transform(X_test)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.23.</span> </figcaption></figure><figure class="figure-like" id="listing-231"><pre class="console"><b># Train a new logistic model
+
+cat2 = LogisticRegression(solver='lbfgs', multi_class='auto').fit(Xpca_train, y_train)
+cat2.score(Xpca_train, y_train), cat2.score(Xpca_test, y_test)
+</b>(0.9583333333333334, 0.9333333333333333)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.24.</span> </figcaption></figure><figure class="figure-like" id="listing-232"><pre class="console"><b>plot_cat_model(cat2, Xpca_train, y_train, Xpca_test, y_test)
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.25.</span> </figcaption></figure></section><section class="subsection" id="subsection-67"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">10.2.3</span> <span class="title">Warning</span>
+</h3>
+<p id="p-677">It is worth ending with a warning. PCA does not always lead us to a model with good results. You should think of it as one more tool in our toolbox. It is worth using it to try and identify the important characteristics, but</p>
+<ol id="p-678" class="decimal">
+<li id="li-162"><p id="p-679">It is not the only method for doing that; and</p></li>
+<li id="li-163"><p id="p-680">It will not always produce an improved model.</p></li>
+<li id="li-164"><p id="p-681">For Linear Regression it is not likely to improve things as that is already using linear combinations of the factors.</p></li>
+</ol></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>
