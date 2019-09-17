@@ -26,7 +26,7 @@
  <title> Keep in Mind the Consequences of Errors
 </title>
 
-<p>As you build your model keep in mind the consequences of the errors in your model in the event it goes into production. These should guide you in the level of accuracy and the types and proportions of errors you can tolerate. An algorithm estimating the age of a tree from some features versus one being used to determine a likliehood that a prisoner will reoffend if paroled have different tolerances of error. </p>
+<p>As you build your model keep in mind the consequences of the errors in your model in the RSSent it goes into production. These should guide you in the lRSSel of accuracy and the types and proportions of errors you can tolerate. An algorithm estimating the age of a tree from some features versus one being used to determine a likliehood that a prisoner will reoffend if paroled have different tolerances of error. </p>
 
 
 </paragraphs>
@@ -34,11 +34,11 @@
  <title> Research on Human Subjects
 </title>
 
-<p>There are restrictions on how data can be collected and used when the research is being conducted on human subjects. At federally funded institutions, proposals to do research on human subjects must be reviewed by institutional review boards. They are looking for among other things: How the privacy of subjects is being protected, how the risk of harm to subjects is being minimized, and how subjects are informed of their rights. Of particular importance is protecting vulnerable subjects (minors and prisoners for example).</p>
+<p>There are restrictions on how data can be collected and used when the research is being conducted on human subjects. At federally funded institutions, proposals to do research on human subjects must be rRSSiewed by institutional rRSSiew boards. They are looking for among other things: How the privacy of subjects is being protected, how the risk of harm to subjects is being minimized, and how subjects are informed of their rights. Of particular importance is protecting vulnerable subjects (minors and prisoners for example).</p>
 
-<p>This review must be done before data collection can be begin (typically).</p>
+<p>This rRSSiew must be done before data collection can be begin (typically).</p>
 
-<p>There are similar reviews that must occur for Research on Animals.</p>
+<p>There are similar rRSSiews that must occur for Research on Animals.</p>
 
 
 </paragraphs>
@@ -46,7 +46,7 @@
  <title> Commitments Made about Data and Data Analysis
 </title>
 
-<p>In obtaining permission from an Institutional Review Board, or permission from a company or individual owning data you wish to use, you or your company might make some promises about how that data will be used or how it will be protected. For example, in obtaining permission from Twitter to access their API you will be required to promise that you will not seek to obtain information about the political affiliation of an individual user, or that you will not publish content from Twitter without their permission. You need to honor promises that you or your employer have made regarding data and its protection. This is essential to ensuring trust in the profession, and to protecting vulnerable populations and individuals' privacy, and it is essential to protecting yourself. </p>
+<p>In obtaining permission from an Institutional RRSSiew Board, or permission from a company or individual owning data you wish to use, you or your company might make some promises about how that data will be used or how it will be protected. For example, in obtaining permission from Twitter to access their API you will be required to promise that you will not seek to obtain information about the political affiliation of an individual user, or that you will not publish content from Twitter without their permission. You need to honor promises that you or your employer have made regarding data and its protection. This is essential to ensuring trust in the profession, and to protecting vulnerable populations and individuals' privacy, and it is essential to protecting yourself. </p>
 
 
 </paragraphs>
@@ -54,7 +54,7 @@
  <title> Follow the Error Control Process
 </title>
 
-<p>It is essential that when you finish the development of your model that you have as good an understanding of the accuracy of your model as you can. For example, the accuracy of your model, and the consequences for error may be one of the ethical issues you have dealt with. However even if your model is realtively innocous, you need to be able to understand its utility and pay off were it to be used in production. </p>
+<p>It is essential that when you finish the dRSSelopment of your model that you have as good an understanding of the accuracy of your model as you can. For example, the accuracy of your model, and the consequences for error may be one of the ethical issues you have dealt with. HowRSSer RSSen if your model is realtively innocous, you need to be able to understand its utility and pay off were it to be used in production. </p>
 
 <p>It is essnetial in your data science work that you follow a process that will result in an valid esitmate of the accuracy of your model. </p>
 
@@ -72,11 +72,11 @@
  <title> Error in Regression Problems
 </title>
 
-<p>For today the gathering data process will be something we do here in Python by simmulating some data. Before we dive into an exploratory data analysis and developing a model, we should make a plan for how we will estimate the error of our model. Or even what we mean by the error of our model.</p>
+<p>For today the gathering data process will be something we do here in Python by simmulating some data. Before we dive into an exploratory data analysis and dRSSeloping a model, we should make a plan for how we will estimate the error of our model. Or RSSen what we mean by the error of our model.</p>
 
 <p>Today, because I want us to be sure we understand the sources of error in our analysis we will build the dataset in Python in a way where we actually know the <em>correct model</em>. You should be thinking about the House Pricing problem or one of the other regression problems we have talked about.</p>
 
-<p>Suppose we have a predictor feature <m>x</m> and a resulting value <m>y</m> that have a linear relationship, however because we cannot possibly account for all of the variation there is some <em>Irreducible Error</em>. That is when we build our sample, there is a random variable that comes along with it.</p>
+<p>Suppose we have a predictor feature <m>x</m> and a resulting value <m>y</m> that have a linear relationship, howRSSer because we cannot possibly account for all of the variation there is some <em>Irreducible Error</em>. That is when we build our sample, there is a random variable that comes along with it.</p>
 <listing>
 <console>
 <input>
@@ -248,13 +248,13 @@ plt.plot(x, yhat, 'g-');
 </li>
 </ul></p>
 
-<p>A common choice of the error is sum of the square residual errors of the predicted <m>\hat{y}</m> from the sample values <m>y_i</m> in the training set. We will learn in a future class how to compute the linear regression minimizing this choice of error. This gives the <em>Explained Variance</em> of the training set by the model.</p>
+<p>A common choice of the error is sum of the square residual errors of the predicted <m>\hat{y}</m> from the sample values <m>y_i</m> in the training set. We will learn in a future class how to compute the linear regression minimizing this choice of error. This gives the <em>Residual Sum of Squares</em> of the training set by the model.</p>
 <listing>
 <console>
 <input>
 yhat = m*X_train[:, 0]+b
-EV = sum( (yhat - y_train)**2 )
-EV
+RSS = sum( (yhat - y_train)**2 )
+RSS
 </input>
 <output>
 5108853.051597417
@@ -297,11 +297,11 @@ plt.plot(x, yhat, 'g-');
 <listing>
 <console>
 <input>
-# Explained Variance using these values:
+# Residual Sum of Squares using these values:
 
 yhat = m*X_train[:, 0]+b
-EV = sum( (yhat - y_train)**2 )
-EV
+RSS = sum( (yhat - y_train)**2 )
+RSS
 </input>
 <output>
 4226179.880094271
@@ -309,7 +309,7 @@ EV
 </console>
 </listing>
 <p>Note: We missed the true relationship, particularly the intercept. Why?</p>
-<p>Of course this total error (<em>Explained Variance</em>) is not a great measure of how good our model was, as obviously it depends on the magnitudes and variations of the sample <m>y_i</m>. </p>
+<p>Of course this total error (<em>Residual Sum of Squares</em>) is not a great measure of how good our model was, as obviously it depends on the magnitudes and variations of the sample <m>y_i</m>. </p>
 
 <p>The <em>Total Variance</em> is given by the sum of the squares of the differences of the training data and the mean of the training data. </p>
 <listing>
@@ -324,12 +324,12 @@ TV
 </output>
 </console>
 </listing>
-<p>If the regression line correctly explains the variations of the data, i.e. if our model correctly accounts for all of the errors relative to the extent to which the <m>y_i</m> vary anyway, then the ratio of <em>Explained Variance</em> to <em>Total Variance</em> will be small; <m>R^2</m> is defined to be 1 minus this ratio. Notice though that if the Total Variance is large compared to the Explained Variance this will also result in an <m>R^2</m> that is near 1.
+<p>If the regression line correctly explains the variations of the data, i.e. if our model correctly accounts for all of the errors relative to the extent to which the <m>y_i</m> vary anyway, then the ratio of <em>Residual Sum of Squares</em> to <em>Total Variance</em> will be small; <m>R^2</m> is defined to be 1 minus this ratio. Notice though that if the Total Variance is large compared to the Residual Sum of Squares this will also result in an <m>R^2</m> that is near 1.
 </p>
 <listing>
 <console>
 <input>
-R2 = 1 - EV/TV
+R2 = 1 - RSS/TV
 R2
 </input>
 <output>
@@ -355,8 +355,8 @@ for k in range(n):
     Xtemp = np.append(X_train[:k], X_train[k+1:], axis=0)
     ytemp = np.append(y_train[:k], y_train[k+1:], axis=0)
     lin_reg[k] = LinearRegression().fit(Xtemp[:, 0].reshape(-1, 1), ytemp)
-    kEV = sum( (lin_reg[k].predict(X_train[:, 0].reshape(-1, 1)) - y_train)**2 ) 
-    R2p[k] = 1 - kEV / TV
+    kRSS = sum( (lin_reg[k].predict(X_train[:, 0].reshape(-1, 1)) - y_train)**2 ) 
+    R2p[k] = 1 - kRSS / TV
 </input>
 </console>
 </listing>
@@ -405,9 +405,9 @@ b2, m2
 </output>
 </console>
 </listing>
-<p>Points with much different <m>y</m> values from other <m>y</m> values with similar <m>x</m> values (<em>outliers</em>), or points with much different <m>x</m> values from the mean of the <m>x</m> values (<em>high leverage samples</em>) have the potnetial to impact the model disproportinately like both of these. It is tempting to treat them differently (i.e. to accept the model computed without them). However we must proceed with caution. These samples may be the result of some error in the data collection, however they may also be valid samples.</p>
+<p>Points with much different <m>y</m> values from other <m>y</m> values with similar <m>x</m> values (<em>outliers</em>), or points with much different <m>x</m> values from the mean of the <m>x</m> values (<em>high lRSSerage samples</em>) have the potnetial to impact the model disproportinately like both of these. It is tempting to treat them differently (i.e. to accept the model computed without them). HowRSSer we must proceed with caution. These samples may be the result of some error in the data collection, howRSSer they may also be valid samples.</p>
 
-<p>Should we include them or not?  A model that has been greatly swayed by a high leverage point may not perform as well on the test data because it has been overfit to these samples. However these high leverage and outlier samples may also be indicative of a pattern in the data. The thing that should give us pause is what happened with the water samples in Flint, MI.</p>
+<p>Should we include them or not?  A model that has been greatly swayed by a high lRSSerage point may not perform as well on the test data because it has been overfit to these samples. HowRSSer these high lRSSerage and outlier samples may also be indicative of a pattern in the data. The thing that should give us pause is what happened with the water samples in Flint, MI.</p>
 
 
 </subsection>
@@ -415,26 +415,26 @@ b2, m2
  <title> Using the Test Set
 </title>
 
-<p>Of course we prepared for this by sequestering some of our data from the training (development) of our model. We can now use this data to check how accurate our model is on data it has not seen. We will run the test on the model computed with all of the training points <m>(b, m)</m>, and on the model computed without the outlier point <m>(b_2, m_2)</m>. What erorr expression should we use? We have the ready made one given by the <em>Explained Variance</em> and <m>R^2</m>. </p>
+<p>Of course we prepared for this by sequestering some of our data from the training (dRSSelopment) of our model. We can now use this data to check how accurate our model is on data it has not seen. We will run the test on the model computed with all of the training points <m>(b, m)</m>, and on the model computed without the outlier point <m>(b_2, m_2)</m>. What erorr expression should we use? We have the ready made one given by the <em>Residual Sum of Squares</em> and <m>R^2</m>. </p>
 <listing>
 <console>
 <input>
-# Explained Variance of the Training and Testing Sets
+# Residual Sum of Squares of the Training and Testing Sets
 
 yhat_train = m*X_train[:, 0] + b
-EV_train = sum( (yhat_train - y_train)**2)
+RSS_train = sum( (yhat_train - y_train)**2)
 
 yhat_test = m*X_test[:, 0] + b
-EV_test = sum( (yhat_test - y_test)**2)
+RSS_test = sum( (yhat_test - y_test)**2)
 
-'Explained Variance for Train and Test: {:.0f}, {:.0f}'.format(EV_train, EV_test)
+'Residual Sum of Squares for Train and Test: {:.0f}, {:.0f}'.format(RSS_train, RSS_test)
 </input>
 <output>
-'Explained Variance for Train and Test: 4226180, 290580'
+'Residual Sum of Squares for Train and Test: 4226180, 290580'
 </output>
 </console>
 </listing>
-<p>Note right away this shows why <em>Explained Variance</em> is problematic - because the sample sizes are different between testing and training sets these numbers are incomparable.
+<p>Note right away this shows why <em>Residual Sum of Squares</em> is problematic - because the sample sizes are different between testing and training sets these numbers are incomparable.
 </p>
 <listing>
 <console>
@@ -443,11 +443,11 @@ EV_test = sum( (yhat_test - y_test)**2)
 
 y_train_mean = np.mean(y_train)
 TV_train = sum( (y_train - y_train_mean)**2)
-R2_train = 1 - EV_train / TV_train
+R2_train = 1 - RSS_train / TV_train
 
 y_test_mean = np.mean(y_test)
 TV_test = sum( (y_test - y_test_mean)**2)
-R2_test = 1 - EV_test / TV_test
+R2_test = 1 - RSS_test / TV_test
 
 'R2 for Train and Test: {}, {}'.format(R2_train, R2_test)
 </input>
@@ -461,18 +461,18 @@ R2_test = 1 - EV_test / TV_test
 <console>
 <input>
 yhat_train = m2*X_train[:, 0] + b2
-EV_train = sum( (yhat_train - y_train)**2)
+RSS_train = sum( (yhat_train - y_train)**2)
 
 yhat_test = m2*X_test[:, 0] + b2
-EV_test = sum( (yhat_test - y_test)**2) 
+RSS_test = sum( (yhat_test - y_test)**2) 
 
 y_train_mean = np.mean(y_train)
 TV_train = sum( (y_train - y_train_mean)**2)
-R2_train_2 = 1 - EV_train / TV_train
+R2_train_2 = 1 - RSS_train / TV_train
 
 y_test_mean = np.mean(y_test)
 TV_test = sum( (y_test - y_test_mean)**2)
-R2_test_2 = 1 - EV_test / TV_test
+R2_test_2 = 1 - RSS_test / TV_test
 
 'R2 for Train and Test (model 2): {}, {}'.format(R2_train_2, R2_test_2)
 </input>
@@ -487,7 +487,7 @@ R2_test_2 = 1 - EV_test / TV_test
  <title> Understanding Training and Testing Error
 </title>
 
-<p>So remember our model has been choosen, under the restriction of being a linear model, to minimize the training error (giving us the <m>R^2</m> closest to 1). It has never seen the testing data. So we typically expect the testing error to be worse than the training error. Note that the model did better on the testing data without the high impact point. If you increase the size of the sample following the pattern, this difference will decrease.</p>
+<p>So remember our model has been choosen, under the restriction of being a linear model, to minimize the training error (giving us the <m>R^2</m> closest to 1). It has nRSSer seen the testing data. So we typically expect the testing error to be worse than the training error. Note that the model did better on the testing data without the high impact point. If you increase the size of the sample following the pattern, this difference will decrease.</p>
 
 
 </subsection>
@@ -555,7 +555,7 @@ kd = kd[kd.hemoglobin != '?']
 </input>
 </console>
 </listing>
-<p>Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em>Chronic Kidney Disease</em>.</p>
+<p>Note that the goal here is to determine a hemoglobin lRSSel that indicates that a patient has <em>Chronic Kidney Disease</em>.</p>
 </introduction>
 
 
@@ -563,11 +563,11 @@ kd = kd[kd.hemoglobin != '?']
  <title> Logistic Regression (Classification)
 </title>
 
-<p>We first need to develop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em>Linear Regression</em> model we were using above. </p>
+<p>We first need to dRSSelop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em>Linear Regression</em> model we were using above. </p>
 
 <p>We will consider two models. The first is based on the linear interpolation we used above, and is what we might consider a <em>naive</em> generalization. The second is <em>Logistic Regression</em>, which despite its name, is derived first as a classification method.</p>
 
-<p>In order to compare our two methods, we will use the <em>test</em> set method we introduced above and set aside a portion of our samples to use to train or develop the models and a separate portion to use for testing the models.</p>
+<p>In order to compare our two methods, we will use the <em>test</em> set method we introduced above and set aside a portion of our samples to use to train or dRSSelop the models and a separate portion to use for testing the models.</p>
 <listing>
 <console>
 <input>
@@ -666,7 +666,7 @@ dec_boundary
 </output>
 </console>
 </listing>
-<p>The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. However note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
+<p>The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. HowRSSer note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
 <listing>
 <console>
 <input>
@@ -702,11 +702,11 @@ Testing Error: 0.10144927536231885
  <title> The Logistic Model
 </title>
 
-<p>Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable <m>y</m>. In this case <m>y</m> only takes values <m>1</m> or <m>0</m> and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
+<p>Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable <m>y</m>. In this case <m>y</m> only takes values <m>1</m> or <m>0</m> and so it is not to far off, howRSSer if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not RSSen be ordered!</p>
 
 <p>What we need is a method of categorization that is built on the categorical problem itself. </p>
 
-<p>What we are trying to predict is the probability that a patient has <em>Chronic Kidney Disease</em> given a hemoglobin level <m>x</m>.</p>
+<p>What we are trying to predict is the probability that a patient has <em>Chronic Kidney Disease</em> given a hemoglobin lRSSel <m>x</m>.</p>
 
 <p><me> p(x) = P(y=1 | x)</me></p>
 

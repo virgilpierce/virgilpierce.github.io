@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-12T12:43:47-06:00    *-->
+<!--*    on 2019-09-17T10:59:20-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -212,12 +212,12 @@ kd.head()
 
 kd = kd[kd.hemoglobin != '?']
 </b></pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.2.</span> </figcaption></figure><p id="p-489">Note that the goal here is to determine a hemoglobin level that indicates that a patient has <em class="emphasis">Chronic Kidney Disease</em>.</p></section><section class="subsection" id="subsection-56"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.2.</span> </figcaption></figure><p id="p-489">Note that the goal here is to determine a hemoglobin lRSSel that indicates that a patient has <em class="emphasis">Chronic Kidney Disease</em>.</p></section><section class="subsection" id="subsection-56"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">5.3.1</span> <span class="title">Logistic Regression (Classification)</span>
 </h3>
-<p id="p-490">We first need to develop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em class="emphasis">Linear Regression</em> model we were using above.</p>
+<p id="p-490">We first need to dRSSelop a model for classification to discuss how error in categorization models is handled. Our first example of a categorization model is a generalization of the <em class="emphasis">Linear Regression</em> model we were using above.</p>
 <p id="p-491">We will consider two models. The first is based on the linear interpolation we used above, and is what we might consider a <em class="emphasis">naive</em> generalization. The second is <em class="emphasis">Logistic Regression</em>, which despite its name, is derived first as a classification method.</p>
-<p id="p-492">In order to compare our two methods, we will use the <em class="emphasis">test</em> set method we introduced above and set aside a portion of our samples to use to train or develop the models and a separate portion to use for testing the models.</p>
+<p id="p-492">In order to compare our two methods, we will use the <em class="emphasis">test</em> set method we introduced above and set aside a portion of our samples to use to train or dRSSelop the models and a separate portion to use for testing the models.</p>
 <figure class="figure-like" id="listing-112"><pre class="console"><b># First convert the data to numerical data in numpy arrays
 # Note a problem with this data is that the float values for hemoglobin (and other variables) were read as strings
 # We need to convert them
@@ -276,7 +276,7 @@ plt.plot(xhat, yhat, 'r-');
 dec_boundary
 </b>13.128533748755249
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.9.</span> </figcaption></figure><p id="p-495">The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. However note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">5.3.9.</span> </figcaption></figure><p id="p-495">The points to the left of the decision boundary can be classified as Chronic Kidney Disease, those to the right as healthy. HowRSSer note that there will be some samples that are misclassified. The proportion of the sample (training and testing separately) that is misclassified is the error.</p>
 <figure class="figure-like" id="listing-119"><pre class="console"><b>plt.figure(figsize = (8, 6))
 
 plt.plot(X_train[(X_train &lt; dec_boundary)[:, 0]], y_train[(X_train &lt; dec_boundary)[:, 0]], 'b.');
@@ -296,9 +296,9 @@ print('Testing Error: {}'.format(Error_test))
 Testing Error: 0.10144927536231885
 </pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">5.3.11.</span> </figcaption></figure><article class="paragraphs" id="paragraphs-17"><h5 class="heading"><span class="title">The Logistic Model.</span></h5>
-<p id="p-496">Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable \(y\text{.}\) In this case \(y\) only takes values \(1\) or \(0\) and so it is not to far off, however if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not even be ordered!</p>
+<p id="p-496">Note though that what we have done does not really make a lot of sense. We have used a linear best fit line to try and predict the values of the categorical variable \(y\text{.}\) In this case \(y\) only takes values \(1\) or \(0\) and so it is not to far off, howRSSer if we had a categorical variable with 3 or more values coding them as integers may not correspond to their relationship. For one thing they might not RSSen be ordered!</p>
 <p id="p-497">What we need is a method of categorization that is built on the categorical problem itself.</p>
-<p id="p-498">What we are trying to predict is the probability that a patient has <em class="emphasis">Chronic Kidney Disease</em> given a hemoglobin level \(x\text{.}\)</p>
+<p id="p-498">What we are trying to predict is the probability that a patient has <em class="emphasis">Chronic Kidney Disease</em> given a hemoglobin lRSSel \(x\text{.}\)</p>
 <div class="displaymath" id="p-499">
 \begin{equation*}
 p(x) = P(y=1 | x)

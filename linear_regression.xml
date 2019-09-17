@@ -11,9 +11,9 @@
  <title> Calculus Approach to Linear Regression
 </title>
 
-<p>Firstly what we are trying to do with Linear Regression is minimize the <em>Explained Variation</em> of the problem:</p>
+<p>Firstly what we are trying to do with Linear Regression is minimize the <em>Residual Sum of Squares</em> of the problem:</p>
 
-<p><me> \mbox{Explained Variation} = \sum_{j=1}^n (\hat{y}_j - y_j)^2</me></p>
+<p><me> \mbox{Residual Sum of Squares} = \sum_{j=1}^n (\hat{y}_j - y_j)^2</me></p>
 
 <p>using <m>\hat{y}_j = m x_j + b</m> where <m>(x_j, y_j)</m> are the samples in our training set.  Thus we should think of this sum as a function of <m>m</m> and <m>b</m>, and our goal is to find the values of <m>m</m> and <m>b</m> that minimize the result.</p>
 

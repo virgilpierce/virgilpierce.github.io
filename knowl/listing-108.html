@@ -2,7 +2,7 @@
 <html lang="en-US">
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-12T12:43:48-06:00    *-->
+<!--*    on 2019-09-17T10:59:21-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -16,11 +16,11 @@
 
 y_train_mean = np.mean(y_train)
 TV_train = sum( (y_train - y_train_mean)**2)
-R2_train = 1 - EV_train / TV_train
+R2_train = 1 - RSS_train / TV_train
 
 y_test_mean = np.mean(y_test)
 TV_test = sum( (y_test - y_test_mean)**2)
-R2_test = 1 - EV_test / TV_test
+R2_test = 1 - RSS_test / TV_test
 
 'R2 for Train and Test: {}, {}'.format(R2_train, R2_test)
 </b>'R2 for Train and Test: 0.886985745475545, 0.8937238721814674'
