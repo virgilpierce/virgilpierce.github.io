@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>test = int(0.20*n)
+maxk = 20
+
+labels = [ ['train_{}'.format(x), 'test_{}'.format(x)] for x in range(1, maxk+1)]
+labels = [x for sublist in labels for x in sublist]
+
+Error = pa.DataFrame(  np.array([0]*num*2*maxk).reshape(num, 2*maxk), columns = labels)
+
+for s in range(num):
+    X_test = Xboot[s][:test]
+    y_test = yboot[s][:test]
+    X_train = Xboot[s][test:]
+    y_train = yboot[s][test:]
+    
+    for k in range(maxk):
+        clf = KNeighborsClassifier(n_neighbors=k+1) # Define the model
+        clf.fit(X_train, y_train) # Train the model
+        Error.iloc[s, 2*k] = clf.score(X_train, y_train) 
+        Error.iloc[s, 2*k+1] = clf.score(X_test, y_test)
+      
+Error_mean = [0]*2*maxk
+Error_std = [0]*2*maxk
+for c in range(2*maxk):
+    Error_mean[c] = np.mean(Error.iloc[:num, c])
+    Error_std[c] = np.std(Error.iloc[:num, c])
+    
+Error = Error.append( pa.Series(Error_mean, index=Error.columns), ignore_index=True)
+Error = Error.append( pa.Series(Error_std, index=Error.columns), ignore_index=True)
+Error.index = list(range(num)) + ['Mean', 'Standard Deviation']
+Error.tail()
+</b>                     train_1    test_1   train_2    test_2   train_3  \
+57                  0.963100  0.925373  0.952030  0.940299  0.955720   
+58                  0.977860  0.955224  0.966790  0.955224  0.977860   
+59                  0.963100  0.910448  0.966790  0.955224  0.966790   
+Mean                0.970787  0.939055  0.964453  0.943035  0.965375   
+Standard Deviation  0.012999  0.026878  0.009739  0.028383  0.010352   
+
+                      test_3   train_4    test_4   train_5    test_5  ...  \
+57                  0.895522  0.955720  0.910448  0.952030  0.880597  ...   
+58                  0.955224  0.963100  0.955224  0.970480  0.955224  ...   
+59                  0.970149  0.948339  0.955224  0.948339  0.955224  ...   
+Mean                0.937811  0.957196  0.940299  0.957626  0.940050  ...   
+Standard Deviation  0.030850  0.010376  0.030222  0.010534  0.029411  ...   
+
+                    train_16   test_16  train_17   test_17  train_18  \
+57                  0.911439  0.925373  0.911439  0.925373  0.911439   
+58                  0.955720  0.970149  0.959410  0.970149  0.955720   
+59                  0.952030  0.940299  0.948339  0.940299  0.948339   
+Mean                0.942005  0.936567  0.941882  0.937562  0.940529   
+Standard Deviation  0.015540  0.030905  0.015224  0.030889  0.015320   
+
+                     test_18  train_19   test_19  train_20   test_20  
+57                  0.910448  0.911439  0.910448  0.911439  0.925373  
+58                  0.970149  0.952030  0.970149  0.952030  0.970149  
+59                  0.940299  0.948339  0.955224  0.948339  0.955224  
+Mean                0.936318  0.940098  0.935323  0.938438  0.934328  
+Standard Deviation  0.030693  0.015632  0.029180  0.015575  0.030733  
+
+[5 rows x 40 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.2.6.</span> </figcaption></figure><span class="incontext"><a href="section-47.html#listing-255">in-context</a></span>
+</body>
+</html>

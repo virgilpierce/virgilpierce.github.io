@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Set our numpy array from the dataframe
+
+X = np.array(kd[['hemoglobin', 'bp']])
+kd['class'] = kd['class'].map({'ckd':1, 'notckd':0, 1:1, 0:0})  # Recode the result feature to be numeric; 
+# note the second two values in the dictionary are in case we run this block again
+
+y = np.array(kd[['class']]).reshape(-1)  # had to reshape it to be a vector and not a matrix
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.6.</span> </figcaption></figure><span class="incontext"><a href="k-nn.html#listing-238">in-context</a></span>
+</body>
+</html>

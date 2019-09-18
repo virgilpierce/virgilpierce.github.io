@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Normalize the values for X; this is needed because we are computing the distance between points so we need the two axis to have the 
+# same metric
+
+for l in range(X.shape[1]):
+    X[:, l] = ( X[:, l] - min(X[:, l]))/(max(X[:, l]) - min(X[:, l]))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.4.</span> </figcaption></figure><span class="incontext"><a href="section-49.html#listing-267">in-context</a></span>
+</body>
+</html>

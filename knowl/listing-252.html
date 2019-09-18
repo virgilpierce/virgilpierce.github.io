@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+def plot_cat_model(clf, X_train, y_train, X_test, y_test):
+
+    h = 0.01 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = -0.1, 1.1
+    y_min, y_max = -0.1, 1.1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+        np.arange(y_min, y_max, h))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.2.3.</span> </figcaption></figure><span class="incontext"><a href="section-47.html#listing-252">in-context</a></span>
+</body>
+</html>

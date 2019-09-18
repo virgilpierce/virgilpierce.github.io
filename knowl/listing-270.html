@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># A bit of code for plotting the contour in a regression problem with two predictors
+# Also prints out the training and testing errors
+
+def plot_reg_model(reg, X_train, y_train, X_test, y_test):
+
+    h = 0.01 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = -0.1, 1.1
+    y_min, y_max = -0.1, 1.1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+        np.arange(y_min, y_max, h))
+    Z = reg.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    plt.contour(xx, yy, Z)
+    
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, marker='+');
+    
+    print('Training R2: {}'.format(reg.score(X_train, y_train)))
+    print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.7.</span> </figcaption></figure><span class="incontext"><a href="section-49.html#listing-270">in-context</a></span>
+</body>
+</html>

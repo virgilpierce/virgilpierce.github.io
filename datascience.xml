@@ -75,6 +75,10 @@
 
 <xi:include href='pca.xml'/>
 
+<!-- Chapter Eleven - K-NN -->
+
+<xi:include href='k-nn.xml'/>
+
 
 </book>
 </pretext>

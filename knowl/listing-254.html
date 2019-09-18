@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>num = 60 # number of bootstraps to use
+Xboot = [0]*num
+yboot = [0]*num
+
+n = X.shape[0]
+for s in range(num):
+    sample = np.random.randint(0, n, n)  # Note here starting with a random permutation is not necessary
+    Xboot[s] = X[sample, :]
+    yboot[s] = y[sample]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.2.5.</span> </figcaption></figure><span class="incontext"><a href="section-47.html#listing-254">in-context</a></span>
+</body>
+</html>

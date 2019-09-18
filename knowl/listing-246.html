@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Compared to a logistic model on the same data
+from sklearn.linear_model import LogisticRegression
+lgm = LogisticRegression(solver='lbfgs', multi_class='auto').fit(X_train, y_train)
+plot_cat_model(lgm, X_train, y_train, X_test, y_test)
+plt.savefig('11.5.png')
+</b>Training Error: 0.9520295202952029
+Testing Error: 0.9253731343283582
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.14.</span> </figcaption></figure><span class="incontext"><a href="k-nn.html#listing-246">in-context</a></span>
+</body>
+</html>

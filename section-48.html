@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:26-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>k-Nearest Neighbors with Many Factors</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-47.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="k-nn.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-49.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-47.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="k-nn.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-49.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48" class="active">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-48"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">11.3</span> <span class="title">k-Nearest Neighbors with Many Factors</span>
+</h2>
+<p id="p-697">We will skip producing graphs for these cases, but we can develop the model using more factors, and in this case at least we start getting some better predictions.</p>
+<figure class="figure-like" id="listing-257"><pre class="console"><b># There are some missing values for age
+
+kd = kd[kd.age != '?']
+kd = kd[kd.specific_gravity != '?']
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.1.</span> </figcaption></figure><figure class="figure-like" id="listing-258"><pre class="console"><b># Many of the numerical values were read as strings so we have to convert the ones we want to use
+
+for k in kd.index:
+    kd.loc[k, 'age'] = float(kd.loc[k, 'age'])
+    kd.loc[k, 'specific_gravity'] = float(kd.loc[k, 'specific_gravity'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.2.</span> </figcaption></figure><figure class="figure-like" id="listing-259"><pre class="console"><b># Set our numpy array from the dataframe
+
+X = np.array(kd[['hemoglobin', 'bp', 'age', 'specific_gravity']])
+kd['class'] = kd['class'].map({'ckd':1, 'notckd':0, 1:1, 0:0})  # Recode the result feature to be numeric; 
+# note the second two values in the dictionary are in case we run this block again
+
+y = np.array(kd[['class']]).reshape(-1)  # had to reshape it to be a vector and not a matrix
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.3.</span> </figcaption></figure><figure class="figure-like" id="listing-260"><pre class="console"><b># Normalize the values for X; this is needed because we are computing the distance between points so we need the two axis to have the 
+# same metric
+
+for l in range(X.shape[1]):
+    X[:, l] = ( X[:, l] - min(X[:, l]))/(max(X[:, l]) - min(X[:, l]))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.4.</span> </figcaption></figure><figure class="figure-like" id="listing-261"><pre class="console"><b>num = 100 # number of bootstraps to use
+Xboot = [0]*num
+yboot = [0]*num
+
+n = X.shape[0]
+for s in range(num):
+    sample = np.random.randint(0, n, n)  # Note here starting with a random permutation is not necessary
+    Xboot[s] = X[sample, :]
+    yboot[s] = y[sample]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.5.</span> </figcaption></figure><figure class="figure-like" id="listing-262"><pre class="console"><b>test = int(0.20*n)
+maxk = 20
+
+labels = [ ['train_{}'.format(x), 'test_{}'.format(x)] for x in range(1, maxk+1)]
+labels = [x for sublist in labels for x in sublist]
+
+Error = pa.DataFrame(  np.array([0]*num*2*maxk).reshape(num, 2*maxk), columns = labels)
+
+for s in range(num):
+    X_test = Xboot[s][:test]
+    y_test = yboot[s][:test]
+    X_train = Xboot[s][test:]
+    y_train = yboot[s][test:]
+    
+    for k in range(maxk):
+        clf = KNeighborsClassifier(n_neighbors=k+1) # Define the model
+        clf.fit(X_train, y_train) # Train the model
+        Error.iloc[s, 2*k] = clf.score(X_train, y_train) 
+        Error.iloc[s, 2*k+1] = clf.score(X_test, y_test)
+      
+Error_mean = [0]*2*maxk
+Error_std = [0]*2*maxk
+for c in range(2*maxk):
+    Error_mean[c] = np.mean(Error.iloc[:num, c])
+    Error_std[c] = np.std(Error.iloc[:num, c])
+    
+Error = Error.append( pa.Series(Error_mean, index=Error.columns), ignore_index=True)
+Error = Error.append( pa.Series(Error_std, index=Error.columns), ignore_index=True)
+Error.index = list(range(num)) + ['Mean', 'Standard Deviation']
+Error.tail()
+</b>                    train_1    test_1   train_2    test_2   train_3    test_3  \
+97                      1.0  0.966667  0.987500  0.933333  0.987500  0.933333   
+98                      1.0  0.983333  1.000000  0.983333  1.000000  0.983333   
+99                      1.0  1.000000  0.991667  0.983333  0.991667  0.983333   
+Mean                    1.0  0.980667  0.985958  0.965333  0.988458  0.968833   
+Standard Deviation      0.0  0.018062  0.006199  0.024345  0.005976  0.021814   
+
+                     train_4    test_4   train_5    test_5  ...  train_16  \
+97                  0.958333  0.916667  0.975000  0.933333  ...  0.950000   
+98                  0.983333  0.966667  0.987500  0.966667  ...  0.950000   
+99                  0.966667  0.950000  0.966667  0.933333  ...  0.945833   
+Mean                0.974000  0.957833  0.978167  0.962667  ...  0.948000   
+Standard Deviation  0.009950  0.025761  0.008997  0.024734  ...  0.012240   
+
+                     test_16  train_17   test_17  train_18   test_18  \
+97                  0.916667  0.954167  0.916667  0.945833  0.900000   
+98                  0.933333  0.958333  0.933333  0.945833  0.916667   
+99                  0.983333  0.945833  0.983333  0.925000  0.950000   
+Mean                0.941500  0.951958  0.945667  0.946833  0.939667   
+Standard Deviation  0.032871  0.011851  0.032713  0.012979  0.034382   
+
+                    train_19   test_19  train_20   test_20  
+97                  0.958333  0.916667  0.950000  0.916667  
+98                  0.954167  0.933333  0.954167  0.916667  
+99                  0.925000  0.950000  0.912500  0.950000  
+Mean                0.949792  0.942333  0.945125  0.938000  
+Standard Deviation  0.012875  0.032696  0.012721  0.033918  
+
+[5 rows x 40 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.6.</span> </figcaption></figure><figure class="figure-like" id="listing-263"><pre class="console"><b># Let's plot the testing error means as a function of k
+
+testing_error = Error_mean[1::2]  # Grabing every other item from the Error means
+kk = range(1, maxk+1)
+plt.plot(kk, testing_error, 'b-');
+plt.savefig('11.9.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.3.7.</span> </figcaption></figure></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

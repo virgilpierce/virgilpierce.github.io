@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-09-18T11:30:28-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Many of the numerical values were read as strings so we have to convert the ones we want to use
+
+# Which by the way produces an error in Seaborn.pairplot
+
+for k in kd.index:
+    kd.loc[k, 'hemoglobin'] = float(kd.loc[k, 'hemoglobin'])
+    kd.loc[k, 'bp'] = int(kd.loc[k, 'bp'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.4.</span> </figcaption></figure><span class="incontext"><a href="k-nn.html#listing-236">in-context</a></span>
+</body>
+</html>
