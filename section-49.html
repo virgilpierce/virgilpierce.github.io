@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-18T15:31:44-06:00    *-->
+<!--*    on 2019-09-18T15:38:00-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -175,7 +175,7 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-49"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">11.4</span> <span class="title">k-Nearest Neighbors for Regression</span>
 </h2>
-<p id="p-698">The idea can be adapted to regression problems by changing from voting for the classification to <em class="emphasis">interpolating</em> the values of the result from the \(k\)-closest training points. The following is a dataset from experiments on the <em class="emphasis">Compressive Strength</em> of concrete given parameters in its mix and its age. The problelm here is predict the <em class="emphasis">Compressive Strength</em> from the other features.</p>
+<p id="p-697">The idea can be adapted to regression problems by changing from voting for the classification to <em class="emphasis">interpolating</em> the values of the result from the \(k\)-closest training points. The following is a dataset from experiments on the <em class="emphasis">Compressive Strength</em> of concrete given parameters in its mix and its age. The problelm here is predict the <em class="emphasis">Compressive Strength</em> from the other features.</p>
 <figure class="figure-like" id="listing-264"><pre class="console"><b>cp = pa.read_csv('Data Sets/Concrete Data.csv')
 
 cp.head()
@@ -270,7 +270,7 @@ plt.savefig('11.13.png')
 Testing R2: 0.38541798392748905
 </pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.13.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.10.</span> </figcaption></figure><p id="p-699">Again we see that for small values of \(k\) the model is adapting too closely to the training data and produces results that have overfit. Note the models that result are much more complicated than the <em class="emphasis">Linear Regression</em> model.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.10.</span> </figcaption></figure><p id="p-698">Again we see that for small values of \(k\) the model is adapting too closely to the training data and produces results that have overfit. Note the models that result are much more complicated than the <em class="emphasis">Linear Regression</em> model.</p>
 <figure class="figure-like" id="listing-274"><pre class="console"><b>from sklearn.linear_model import LinearRegression
 </b></pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">11.4.11.</span> </figcaption></figure><figure class="figure-like" id="listing-275"><pre class="console"><b>reg = LinearRegression().fit(X_train, y_train)
@@ -280,7 +280,7 @@ plt.savefig('11.14.png')
 Testing R2: 0.3384500201239915
 </pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.14.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.12.</span> </figcaption></figure><p id="p-700">None of these models is giving a great prediction of the <em class="emphasis">compressive strength</em>. The k-Nearest Neighbors do seem to be able to capture some of the points in the interior of the region that have higher strengths, but the degree of nonlinearity we are getting should make us nervous about overfitting. Further analysis is needed, both cross validation of these models, and the application of additional models.</p></section></div></main>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.4.12.</span> </figcaption></figure><p id="p-699">None of these models is giving a great prediction of the <em class="emphasis">compressive strength</em>. The k-Nearest Neighbors do seem to be able to capture some of the points in the interior of the region that have higher strengths, but the degree of nonlinearity we are getting should make us nervous about overfitting. Further analysis is needed, both cross validation of these models, and the application of additional models.</p></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>
 <script src="https://pretextbook.org/js/0.12/login.js"></script>

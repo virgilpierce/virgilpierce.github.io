@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-18T15:31:44-06:00    *-->
+<!--*    on 2019-09-18T15:38:00-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -175,13 +175,13 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="chapter" id="k-nn"><h2 class="heading">
 <span class="type">Chapter</span> <span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span>
 </h2>
-<a href="k-nn.html" class="permalink">¶</a><section class="introduction" id="introduction-26"><p id="p-682">So we have spent a fair amount of time now with our first two models. Both models are fundamentally linear.</p>
-<p id="p-683"><em class="emphasis">Linear Regression</em> is looking for the linear combination of the factors that best produces the result, maximizing the coefficient of prediction \(R^2\text{.}\)</p>
-<p id="p-684"><em class="emphasis">Logistic Regression</em> (which again is classification) is looking for a linear expression in the logistic model that best produces a decision boundary explaining the data. Because the base function is linear this produces decision boundaries that are also linear.</p>
-<p id="p-685">Each of these models can be generalized to nonlinear ones by introducing new features that are transformations of the existing features.</p>
-<p id="p-686">Today we will talk about our first fundamentally non-linear model. These models will introduce additional degrees of freedom that result in models capable of adapting to the training data very closely. Which means then that overfitting becomes much more likely. What we will see is that there is a definite trade off between the complexity or freedom given to our model and the possibility of overfitting.</p>
-<p id="p-687">The k-Nearest Neighbors model will start as a classification model and then we will come back later and adapt it to a regression problem. This will also be the model that I will ask you and your team to write an algorithm for as part of class. Today we will use the existing tool in scikitlearn.</p>
-<p id="p-688">We'll start with the Kidney Disease dataset.</p>
+<a href="k-nn.html" class="permalink">¶</a><section class="introduction" id="introduction-26"><p id="p-681">So we have spent a fair amount of time now with our first two models. Both models are fundamentally linear.</p>
+<p id="p-682"><em class="emphasis">Linear Regression</em> is looking for the linear combination of the factors that best produces the result, maximizing the coefficient of prediction \(R^2\text{.}\)</p>
+<p id="p-683"><em class="emphasis">Logistic Regression</em> (which again is classification) is looking for a linear expression in the logistic model that best produces a decision boundary explaining the data. Because the base function is linear this produces decision boundaries that are also linear.</p>
+<p id="p-684">Each of these models can be generalized to nonlinear ones by introducing new features that are transformations of the existing features.</p>
+<p id="p-685">Today we will talk about our first fundamentally non-linear model. These models will introduce additional degrees of freedom that result in models capable of adapting to the training data very closely. Which means then that overfitting becomes much more likely. What we will see is that there is a definite trade off between the complexity or freedom given to our model and the possibility of overfitting.</p>
+<p id="p-686">The k-Nearest Neighbors model will start as a classification model and then we will come back later and adapt it to a regression problem. This will also be the model that I will ask you and your team to write an algorithm for as part of class. Today we will use the existing tool in scikitlearn.</p>
+<p id="p-687">We'll start with the Kidney Disease dataset.</p>
 <figure class="figure-like" id="listing-233"><pre class="console"><b>import pandas as pa
 import matplotlib.pyplot as plt
 import matplotlib.colors as pltco # A package to help with coloring plots
@@ -248,8 +248,8 @@ sn.scatterplot(x='hemoglobin', y='bp', hue='class', data=kd);
 plt.savefig('11.1.png')
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.1.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.5.</span> </figcaption></figure><p id="p-689">The idea for the model is to use the nearby training data to determine what class a point in this coordinate system should be classified as. I.e. given a (hemoglobin, age) pair, we use the \(k\)-nearest points to that pair to determine the classification at the point. How do they decide, well we let them vote and majority determines the value. Ties will happen, but only along small dimensional subsets so they do not effectively matter.</p>
-<p id="p-690">The smaller \(k\) is the more our model will adapt to the training data. When \(k=1\) the model uses the classification of the closest point from the training data.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.5.</span> </figcaption></figure><p id="p-688">The idea for the model is to use the nearby training data to determine what class a point in this coordinate system should be classified as. I.e. given a (hemoglobin, age) pair, we use the \(k\)-nearest points to that pair to determine the classification at the point. How do they decide, well we let them vote and majority determines the value. Ties will happen, but only along small dimensional subsets so they do not effectively matter.</p>
+<p id="p-689">The smaller \(k\) is the more our model will adapt to the training data. When \(k=1\) the model uses the classification of the closest point from the training data.</p>
 <figure class="figure-like" id="listing-238"><pre class="console"><b># Set our numpy array from the dataframe
 
 X = np.array(kd[['hemoglobin', 'bp']])
@@ -311,7 +311,7 @@ plt.savefig('11.2.png')
 Testing Error: 0.9402985074626866
 </pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.2.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.11.</span> </figcaption></figure><p id="p-691">Note the evidence of overfitting: rapid changes in the boundary and islands. As we increase \(k\) the model becomes more rigid and therefore less prone to overfitting.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.11.</span> </figcaption></figure><p id="p-690">Note the evidence of overfitting: rapid changes in the boundary and islands. As we increase \(k\) the model becomes more rigid and therefore less prone to overfitting.</p>
 <figure class="figure-like" id="listing-244"><pre class="console"><b>clf2 = KNeighborsClassifier(n_neighbors=2) # Define the model
 clf2.fit(X_train, y_train)
 plot_cat_model(clf2, X_train, y_train, X_test, y_test)
@@ -328,7 +328,7 @@ plt.savefig('11.4.png')
 Testing Error: 0.9402985074626866
 </pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/11.4.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.13.</span> </figcaption></figure><p id="p-692">Note that it does give a model that seems to have some features missed by the Logistic Regression model.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">11.0.13.</span> </figcaption></figure><p id="p-691">Note that it does give a model that seems to have some features missed by the Logistic Regression model.</p>
 <figure class="figure-like" id="listing-246"><pre class="console"><b># Compared to a logistic model on the same data
 from sklearn.linear_model import LogisticRegression
 lgm = LogisticRegression(solver='lbfgs', multi_class='auto').fit(X_train, y_train)

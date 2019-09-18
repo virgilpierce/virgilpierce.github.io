@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-18T15:31:44-06:00    *-->
+<!--*    on 2019-09-18T15:38:00-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -175,39 +175,39 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-45"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">10.2</span> <span class="title">Singular Value Decomposition</span>
 </h2>
-<section class="introduction" id="introduction-25"><p id="p-658">Note though that for us, we are dealing with matrices \(X\) that have many more rows than columns (or in the case of image problems many more columns than rows). Essentially square matrices will not happen. However, noting what we learned with <em class="emphasis">Linear Regression</em> in the last chapter, it is maybe not a surprise that what we might want to consider is</p>
-<div class="displaymath" id="p-659">
+<section class="introduction" id="introduction-25"><p id="p-657">Note though that for us, we are dealing with matrices \(X\) that have many more rows than columns (or in the case of image problems many more columns than rows). Essentially square matrices will not happen. However, noting what we learned with <em class="emphasis">Linear Regression</em> in the last chapter, it is maybe not a surprise that what we might want to consider is</p>
+<div class="displaymath" id="p-658">
 \begin{equation*}
 X^T X \qquad \mbox{or} \qquad X X^T
 \end{equation*}
 </div>
-<p id="p-660">If \(X\) is \(n\) by \(m\) then \(X^T X\) is square \(m\) by \(m\text{;}\) while \(X X^T\) is square \(n\) by \(n\text{.}\) We could then compute their eigenvalue diagonalizations:</p>
-<div class="displaymath" id="p-661">
+<p id="p-659">If \(X\) is \(n\) by \(m\) then \(X^T X\) is square \(m\) by \(m\text{;}\) while \(X X^T\) is square \(n\) by \(n\text{.}\) We could then compute their eigenvalue diagonalizations:</p>
+<div class="displaymath" id="p-660">
 \begin{equation*}
 X^T X = V D_1 V^T
 \end{equation*}
 </div>
-<p id="p-662">and</p>
-<div class="displaymath" id="p-663">
+<p id="p-661">and</p>
+<div class="displaymath" id="p-662">
 \begin{equation*}
 X X^T = U D_2 U^T
 \end{equation*}
 </div>
-<p id="p-664">where \(V V^T = I_m \) and \(U U^T = I_n\) Note that the two identies are not equal and also that the diagonal matrices have different sizes.</p>
-<p id="p-665">The singular value decomposition of \(X\) is then:</p>
-<div class="displaymath" id="p-666">
+<p id="p-663">where \(V V^T = I_m \) and \(U U^T = I_n\) Note that the two identies are not equal and also that the diagonal matrices have different sizes.</p>
+<p id="p-664">The singular value decomposition of \(X\) is then:</p>
+<div class="displaymath" id="p-665">
 \begin{equation*}
 X = U \Sigma V^T
 \end{equation*}
 </div>
-<p id="p-667">The columns of \(U\) and \(V\) are left- and right-singular vectors and the \(\Sigma\) is a pseudo-diagonal matrix (it is \(n\) by \(m\) rather than square) of the singular values, which are positive real numbers:</p>
-<div class="displaymath" id="p-668">
+<p id="p-666">The columns of \(U\) and \(V\) are left- and right-singular vectors and the \(\Sigma\) is a pseudo-diagonal matrix (it is \(n\) by \(m\) rather than square) of the singular values, which are positive real numbers:</p>
+<div class="displaymath" id="p-667">
 \begin{equation*}
 \Sigma = \begin{pmatrix} s_0 &amp; 0 &amp; \dots \\ 0 &amp; s_1 &amp; \dots \\ \vdots &amp; \vdots &amp; \ddots \\ 0 &amp; \dots &amp; 0 \end{pmatrix}
 \end{equation*}
 </div>
-<p id="p-669">\(\Sigma\) is unique, up to the order of the singular values, however the \(U\) and \(V\) are not unique. If we order \(\Sigma\) so that \(s_0 &gt; s_1 &gt; \dots &gt; s_m \) then \(V\) gives an operation that picks out of \(X\) the most important contributions in order. I.e. transforming \(X\) by the first \(k\) columns of \(V\) will give \(k\) orthonormal linear combination of the columns of \(X\) that produce column vectors that are the \(k\) most important in explaining the variation of the entries of \(X\text{.}\)</p>
-<p id="p-670">This is a little bit wishy-washy, so lets do a concrete example.</p></section><section class="subsection" id="subsection-65"><h3 class="heading hide-type">
+<p id="p-668">\(\Sigma\) is unique, up to the order of the singular values, however the \(U\) and \(V\) are not unique. If we order \(\Sigma\) so that \(s_0 &gt; s_1 &gt; \dots &gt; s_m \) then \(V\) gives an operation that picks out of \(X\) the most important contributions in order. I.e. transforming \(X\) by the first \(k\) columns of \(V\) will give \(k\) orthonormal linear combination of the columns of \(X\) that produce column vectors that are the \(k\) most important in explaining the variation of the entries of \(X\text{.}\)</p>
+<p id="p-669">This is a little bit wishy-washy, so lets do a concrete example.</p></section><section class="subsection" id="subsection-65"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">10.2.1</span> <span class="title">Iris Example</span>
 </h3>
 <figure class="figure-like" id="listing-208"><pre class="console"><b>import pandas as pa
@@ -223,7 +223,7 @@ ird.head()
 3           4.6          3.1           1.5          0.2            0
 4           5.0          3.6           1.4          0.2            0
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.2.</span> </figcaption></figure><p id="p-671">This is a collection of data giving the dimensions of the sepals and petals of three species of irises. The task is to predict the species from these values. It is relatively small for our class with only 150 samples and 5 features (4 predictors and 1 result) however it fullfills the important part of being largely non-square with more samples than predictors.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.2.</span> </figcaption></figure><p id="p-670">This is a collection of data giving the dimensions of the sepals and petals of three species of irises. The task is to predict the species from these values. It is relatively small for our class with only 150 samples and 5 features (4 predictors and 1 result) however it fullfills the important part of being largely non-square with more samples than predictors.</p>
 <figure class="figure-like" id="listing-210"><pre class="console"><b>ird.shape
 </b>(150, 5)
 </pre>
@@ -239,7 +239,7 @@ plt.plot(X[y==1, 0], X[y==1, 1], 'g.')
 plt.plot(X[y==2, 0], X[y==2, 1], 'b.');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.1.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.5.</span> </figcaption></figure><p id="p-672">On the one hand this is pretty good, and in fact it is clear that these two variables could easily be used to classify the flower type as 0 and not 0 with minimal error. However we have four variables and maybe by combining all 4 and taking the two best predictors we can do better.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.5.</span> </figcaption></figure><p id="p-671">On the one hand this is pretty good, and in fact it is clear that these two variables could easily be used to classify the flower type as 0 and not 0 with minimal error. However we have four variables and maybe by combining all 4 and taking the two best predictors we can do better.</p>
 <figure class="figure-like" id="listing-213"><pre class="console"><b>u, s, vt = la.svd(X, full_matrices=True)
 u.shape, s.shape, vt.shape
 </b>((150, 150), (4,), (4, 4))
@@ -289,9 +289,9 @@ plt.plot(X2[y==1, 0], X2[y==1, 1], 'g.')
 plt.plot(X2[y==2, 0], X2[y==2, 1], 'b.');
 </b></pre>
 <div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/10.2.png" style="width: 100%; height: auto;" alt=""></div>
-<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.12.</span> </figcaption></figure><p id="p-673">The size of the singular values actually identifies how important the new feature is. The more rapidly they decay the better the early features do at explaining the variations in the data.</p>
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.12.</span> </figcaption></figure><p id="p-672">The size of the singular values actually identifies how important the new feature is. The more rapidly they decay the better the early features do at explaining the variations in the data.</p>
 <article class="paragraphs" id="paragraphs-18"><h5 class="heading"><span class="title">Principal Component Analysis.</span></h5>
-<p id="p-674">Scikitlearn contains a variation on this method called Principal Component Analysis that does the computation here, but also normalizes the results in a way that is better suited for data analysis and varies the routines and approximations to run as effeciently as possible on the data you use. It also has some attached functions that can be used to illustrate how well the method has worked.</p>
+<p id="p-673">Scikitlearn contains a variation on this method called Principal Component Analysis that does the computation here, but also normalizes the results in a way that is better suited for data analysis and varies the routines and approximations to run as effeciently as possible on the data you use. It also has some attached functions that can be used to illustrate how well the method has worked.</p>
 <figure class="figure-like" id="listing-220"><pre class="console"><b>from sklearn.decomposition import PCA
 </b></pre>
 <figcaption><span class="type">Listing</span> <span class="codenumber">10.2.13.</span> </figcaption></figure><figure class="figure-like" id="listing-221"><pre class="console"><b>pca = PCA(n_components=2) # Use PCA to identify the two most important components
@@ -312,10 +312,10 @@ plt.plot(Xpca[y==2, 0], Xpca[y==2, 1], 'b.');
 print(pca.explained_variance_ratio_)
 </b>[0.92461621 0.05301557]
 </pre>
-<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.16.</span> </figcaption></figure><p id="p-675">Note that PCA is our first example of an unsupervised learning method (it works independently of the result values and rather tries to organize the predictors).</p></article></section><section class="subsection" id="subsection-66"><h3 class="heading hide-type">
+<figcaption><span class="type">Listing</span> <span class="codenumber">10.2.16.</span> </figcaption></figure><p id="p-674">Note that PCA is our first example of an unsupervised learning method (it works independently of the result values and rather tries to organize the predictors).</p></article></section><section class="subsection" id="subsection-66"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">10.2.2</span> <span class="title">Use in a Model</span>
 </h3>
-<p id="p-676">So fine this looks better, but is it actually producing a better model. So first of all it is unlikely to produce a better model if we use all of the features. The power of PCA is in identifying new features that will let us build a model faster. Let's compare using the logistic model on the data above using just the first two features and then using the first two principle components.</p>
+<p id="p-675">So fine this looks better, but is it actually producing a better model. So first of all it is unlikely to produce a better model if we use all of the features. The power of PCA is in identifying new features that will let us build a model faster. Let's compare using the logistic model on the data above using just the first two features and then using the first two principle components.</p>
 <figure class="figure-like" id="listing-224"><pre class="console"><b># We shuffle the data using a random permutation
 
 n = X.shape[0]
@@ -380,11 +380,11 @@ cat2.score(Xpca_train, y_train), cat2.score(Xpca_test, y_test)
 <figcaption><span class="type">Listing</span> <span class="codenumber">10.2.25.</span> </figcaption></figure></section><section class="subsection" id="subsection-67"><h3 class="heading hide-type">
 <span class="type">Subsection</span> <span class="codenumber">10.2.3</span> <span class="title">Warning</span>
 </h3>
-<p id="p-677">It is worth ending with a warning. PCA does not always lead us to a model with good results. You should think of it as one more tool in our toolbox. It is worth using it to try and identify the important characteristics, but</p>
-<ol id="p-678" class="decimal">
-<li id="li-162"><p id="p-679">It is not the only method for doing that; and</p></li>
-<li id="li-163"><p id="p-680">It will not always produce an improved model.</p></li>
-<li id="li-164"><p id="p-681">For Linear Regression it is not likely to improve things as that is already using linear combinations of the factors.</p></li>
+<p id="p-676">It is worth ending with a warning. PCA does not always lead us to a model with good results. You should think of it as one more tool in our toolbox. It is worth using it to try and identify the important characteristics, but</p>
+<ol id="p-677" class="decimal">
+<li id="li-162"><p id="p-678">It is not the only method for doing that; and</p></li>
+<li id="li-163"><p id="p-679">It will not always produce an improved model.</p></li>
+<li id="li-164"><p id="p-680">For Linear Regression it is not likely to improve things as that is already using linear combinations of the factors.</p></li>
 </ol></section></section></div></main>
 </div>
 <div class="login-link"><span id="loginlogout" class="login">login</span></div>

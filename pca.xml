@@ -19,7 +19,7 @@
 </title>
 
 <introduction>
-<p>We begin our story by going back to what was probably one of the last things you learned about in your Linear Algebra class. Given a square matrix we can define eigenvalue and eigenvector pairs <m>(\lambda, v)</m> as solutions to the equation:</p>
+<p>We begin our story by going back to what was probably one of the last things you learned about in your Linear Algebra class. Given a square matrix we can define eigenvalue and eigenvector pairs <m>(\lambda, v)</m> of scalars <m> \lambea </m> and vectors <m> v </m> as solutions to the equation:</p>
 
 <p><me> A v = \lambda v</me></p>
 
@@ -31,7 +31,7 @@
 
 <p><me> D = \begin{pmatrix} \lambda_0 &amp; 0 &amp; \dots \\ 0 &amp; \lambda_1 &amp; 0 &amp; \dots \\ &amp; &amp; \ddots  \\ &amp; &amp; &amp; \lambda_n \end{pmatrix}</me></p>
 
-<p>In the non-generic cases (i.e. special and rare cases) this decomposition is not possible, but generalizations of it, where <m>D</m> is not diagonal, are. In the case that <m>A</m> is symmetric (<m>A = A^T</m>) then this is further specialized to:</p>
+<p>In the non-generic cases (i.e. special and rare cases) this decomposition is not possible, but generalizations of it, where <m>D</m> is not diagonal, are. In the case that <m>A</m> is symmetric (<m>A = A^T</m>), then this decomposition is always possible and is further specialized to:</p>
 
 <p><me> A = Q D Q^T</me></p>
 
@@ -46,8 +46,7 @@
 
 <p><me> \mbox{det}( A - \lambda I) = 0</me></p>
 
-<p>It turns out that this is generally not a great way compute them as it amounts to solving a polynomial of degree <m>n</m>. There are other </p>
-<p>techniques that are much more effecient especially if what we want are approximate eigenvalues. These are what are implemented in Python's numpy module.</p>
+<p>It turns out that this is generally not a great way compute them as it amounts to, when <m> A </m> is <m> n \times n </m> solving a polynomial of degree <m>n</m>. There are other techniques that are much more effecient especially if what we want are approximate eigenvalues. These are what are implemented in Python's numpy module.</p>
 <listing>
 <console>
 <input>

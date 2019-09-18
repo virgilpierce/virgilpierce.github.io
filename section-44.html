@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--**************************************-->
 <!--*    Generated from PreTeXt source   *-->
-<!--*    on 2019-09-18T15:31:44-06:00    *-->
+<!--*    on 2019-09-18T15:38:00-06:00    *-->
 <!--*                                    *-->
 <!--*      https://pretextbook.org       *-->
 <!--*                                    *-->
@@ -175,7 +175,7 @@ var js_version = 0.12;
 <main class="main"><div id="content" class="pretext-content"><section class="section" id="section-44"><h2 class="heading hide-type">
 <span class="type">Section</span> <span class="codenumber">10.1</span> <span class="title">Eigenvalue Decomposition of Square Matrix</span>
 </h2>
-<section class="introduction" id="introduction-24"><p id="p-645">We begin our story by going back to what was probably one of the last things you learned about in your Linear Algebra class. Given a square matrix we can define eigenvalue and eigenvector pairs \((\lambda, v)\) as solutions to the equation:</p>
+<section class="introduction" id="introduction-24"><p id="p-645">We begin our story by going back to what was probably one of the last things you learned about in your Linear Algebra class. Given a square matrix we can define eigenvalue and eigenvector pairs \((\lambda, v)\) of scalars \(\lambea \) and vectors \(v \) as solutions to the equation:</p>
 <div class="displaymath" id="p-646">
 \begin{equation*}
 A v = \lambda v
@@ -193,7 +193,7 @@ A = Q D Q^{-1}
 D = \begin{pmatrix} \lambda_0 &amp; 0 &amp; \dots \\ 0 &amp; \lambda_1 &amp; 0 &amp; \dots \\ &amp; &amp; \ddots  \\ &amp; &amp; &amp; \lambda_n \end{pmatrix}
 \end{equation*}
 </div>
-<p id="p-651">In the non-generic cases (i.e. special and rare cases) this decomposition is not possible, but generalizations of it, where \(D\) is not diagonal, are. In the case that \(A\) is symmetric (\(A = A^T\)) then this is further specialized to:</p>
+<p id="p-651">In the non-generic cases (i.e. special and rare cases) this decomposition is not possible, but generalizations of it, where \(D\) is not diagonal, are. In the case that \(A\) is symmetric (\(A = A^T\)), then this decomposition is always possible and is further specialized to:</p>
 <div class="displaymath" id="p-652">
 \begin{equation*}
 A = Q D Q^T
@@ -208,8 +208,7 @@ A = Q D Q^T
 \mbox{det}( A - \lambda I) = 0
 \end{equation*}
 </div>
-<p id="p-656">It turns out that this is generally not a great way compute them as it amounts to solving a polynomial of degree \(n\text{.}\) There are other</p>
-<p id="p-657">techniques that are much more effecient especially if what we want are approximate eigenvalues. These are what are implemented in Python's numpy module.</p>
+<p id="p-656">It turns out that this is generally not a great way compute them as it amounts to, when \(A \) is \(n \times n \) solving a polynomial of degree \(n\text{.}\) There are other techniques that are much more effecient especially if what we want are approximate eigenvalues. These are what are implemented in Python's numpy module.</p>
 <figure class="figure-like" id="listing-204"><pre class="console"><b>import numpy as np
 import numpy.linalg as la
 </b></pre>
