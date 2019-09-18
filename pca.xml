@@ -282,7 +282,7 @@ X2 = X @ v[:, 0:2]
 <listing>
 <console>
 <input>
-# We can check how the predictors do at classifying flower types by graphing individual pairs for example Sepal_Length and Sepal_Width
+# We can check how the predictors computed by SVD would do for classifying the flower type
 
 plt.plot(X2[y==0, 0], X2[y==0, 1], 'r.')
 plt.plot(X2[y==1, 0], X2[y==1, 1], 'g.')
