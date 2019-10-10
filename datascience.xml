@@ -79,6 +79,9 @@
 
 <xi:include href='k-nn.xml'/>
 
+<!-- Chapter Twelve - Ridge and Lasso Regression -->
+
+<xi:include href='ridge_and_lasso.xml'/>
 
 </book>
 </pretext>

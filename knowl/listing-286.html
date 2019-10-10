@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-10T16:55:35-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Probably enough, lets make a list of all of the features that are not 'object'
+# (i.e. that are numerical)
+
+keep = hd6.columns[hd6.dtypes!='object'][1:]
+keep
+</b>Index(['MSSubClass', 'LotFrontage', 'LotArea', 'Street', 'Utilities',
+       'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd', 'MasVnrArea',
+       ...
+       'RoofStyle_Shed', 'RoofStyle_Mansard', 'RoofMatl_CompShg',
+       'RoofMatl_Membran', 'RoofMatl_Roll', 'RoofMatl_ClyTile',
+       'RoofMatl_Tar&amp;Grv', 'RoofMatl_Metal', 'RoofMatl_WdShake',
+       'RoofMatl_WdShngl'],
+      dtype='object', length=128)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.11.</span> </figcaption></figure><span class="incontext"><a href="section-50.html#listing-286">in-context</a></span>
+</body>
+</html>

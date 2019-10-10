@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-10T16:55:33-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ridge and Lasso Regression</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-49.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="datascience.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-50.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-49.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="datascience.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-50.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link active">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="chapter" id="ridge_and_lasso"><h2 class="heading">
+<span class="type">Chapter</span> <span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span>
+</h2>
+<a href="ridge_and_lasso.html" class="permalink">¶</a><section class="introduction" id="introduction-27"><p id="p-700">Today we are going to explore two more Linear Regression methods. Next class we will explore additional classification methods: <em class="emphasis">Linear Discriminant Analysis</em>, <em class="emphasis">Support Vector Machines</em></p>
+<p id="p-701">It is worth pausing though and pointing out that we will not have time in this class to go over every method. It is worth reading through the documentation on the scikitlearn help page to see the complete lists of methods for which we have algorithms. The documentation includes a discussion of the mathematical underpinnings of the methods as well as some advice on what problems or types of issues they are meant to work best on.</p>
+<p id="p-702"><a class="external" href="https://scikit-learn.org/stable/" target="_blank">scikitlearn documentation</a></p>
+<p id="p-703">To review:</p>
+<p id="p-704"><em class="alert">Advantages of Linear Regression</em>:</p>
+<ul id="p-705" class="disc">
+<li id="li-165"><p id="p-706">Fast model to train,</p></li>
+<li id="li-166"><p id="p-707">founded on mathematical principles from basic courses (<em class="emphasis">Linear Algebra and Calculus</em>),</p></li>
+<li id="li-167"><p id="p-708">easy model to interpret (the coeffecients tell us the precise effect of the features)</p></li>
+<li id="li-168"><p id="p-709">Rigid model (less chance of overfitting)</p></li>
+<li id="li-169"><p id="p-710">Adding additional features improves the \(R^2\) for the training data</p></li>
+</ul>
+<p id="p-711"><em class="alert">Disadvantages of Linear Regression</em>:</p>
+<ul id="p-712" class="disc">
+<li id="li-170"><p id="p-713">Assumes linear relationships (can be mitigated in some cases by transforming features to new features)</p></li>
+<li id="li-171"><p id="p-714">Requires lots of features if they are categorical</p></li>
+<li id="li-172"><p id="p-715">Rigid model (will not respond to nonlinearity)</p></li>
+<li id="li-173"><p id="p-716">Adding additional features may not improve the \(R^2\) for the testing data</p></li>
+</ul>
+<p id="p-717"><em class="alert">A new disadvantage</em>:</p>
+<ul id="p-718" class="disc">
+<li id="li-174"><p id="p-719">Interpretation becomes hard if the number of features used is very large.</p></li>
+<li id="li-175"><p id="p-720">Adding additional features makes the model found more complicated</p></li>
+</ul>
+<p id="p-721">Meaning the algorithm finds the best linear model for the result from the predictors which will mean that it has a tendency to use all of the features and assign a non-zero coefficient to them. This is problematic because:</p>
+<ol id="p-722" class="decimal">
+<li id="li-176"><p id="p-723">It makes interpretation difficult because the model developed incorporates every feature;</p></li>
+<li id="li-177"><p id="p-724">It also makes the model dependent on less important features and might therefore introduce overfitting depending on the training data.</p></li>
+</ol>
+<p id="p-725">Overall the principal is that given two linear models for our data with comparable errors on the testing data, we would prefer the one that has more coefficients that are zero or near zero. There is nothing in our Linear Regression method that encourages coefficients to not get too large.</p>
+<p id="p-726">We will develop two new models below, based on the principle of linear regression, but with an adjustment that will result in encouraging them to find models with small or zero coefficients. We will see that both models outperform <em class="emphasis">Linear Regression</em> at least in the test case and provided we choose the parameters carefully.</p>
+<p id="p-727">And that last sentence is the real description of what we are doing, we are introducing a parameter to the model that will give us some tuning or adjustment we can make to encourage the model to perform better, similar to the \(k\) in \(k\)-<em class="emphasis">Nearest Neighbors</em>. Note that <em class="emphasis">Linear Regression</em> had no such thing.</p></section><nav class="summary-links"><ul>
+<li><a href="section-50.html"><span class="codenumber">12.1</span> <span class="title">House Pricing Data: Linear Regression</span></a></li>
+<li><a href="section-51.html"><span class="codenumber">12.2</span> <span class="title">Ridge Regression</span></a></li>
+<li><a href="section-52.html"><span class="codenumber">12.3</span> <span class="title">Lasso Regression</span></a></li>
+</ul></nav></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

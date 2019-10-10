@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-10T16:55:33-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>House Pricing Data: Linear Regression</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="ridge_and_lasso.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="ridge_and_lasso.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-51.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="ridge_and_lasso.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="ridge_and_lasso.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-51.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50" class="active">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-50"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">12.1</span> <span class="title">House Pricing Data: Linear Regression</span>
+</h2>
+<section class="introduction" id="introduction-28"><p id="p-728">The difference between <em class="emphasis">Linear Regression</em> and <em class="emphasis">Ridge or LASSO Regression</em> becomes apparent when the number of features is large. Hence we will work with the House Pricing Data we have seen before, and we need to do some preliminary work to convert a number of categorical features into numerical ones. I stopped before I was completely done but you can get the idea.</p>
+<figure class="figure-like" id="listing-276"><pre class="console"><b>import pandas as pa
+import numpy as np
+import matplotlib.pyplot as plt
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-277"><pre class="console"><b># Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.2.</span> </figcaption></figure><figure class="figure-like" id="listing-278"><pre class="console"><b>def onehot(df, feature):
+    '''A function to do one-hot-encoding of a feature from a dataframe. df = dataframe'''
+
+    v = list(set(df[feature])) # Make an iterable of the unique values for the feature
+    
+    for c in df.index: # cycle through the samples
+        t = df.loc[c, feature]
+        
+        for test in v:
+            if pa.isna(test):  # nan values are sort of a problem and have to be handled separately
+                if pa.isna(t):
+                    df.loc[c, '{}_nan'.format(feature)] = 1
+                else:
+                    df.loc[c, '{}_nan'.format(feature)] = 0
+            else:
+                if t == test:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 1  # Makes a new feature with name feature_value
+                                                              # and codes it as a 1 if that was the value
+                else:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 0  # and 0 otherwise
+            
+    return df.drop(feature, axis=1) # returns a dataframe with the encoded feature removed
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.3.</span> </figcaption></figure><figure class="figure-like" id="listing-279"><pre class="console"><b># We can recode it using a dictionary and .map()
+Street_dict = {'Grvl':0, 'Pave':1, 0:0, 1:1}  
+# Note we include the trivial coding of the new values as otherwise if we run this twice
+# it produces NaN values for the Street feature.
+hd.Street = hd.Street.map(Street_dict)
+set(hd.Street)
+</b>{0, 1}
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-280"><pre class="console"><b>hd2 = onehot(hd, 'Alley')
+hd3 = onehot(onehot(onehot(hd2, 'ExterQual'), 'LotShape'), 'LandContour')
+hd3.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea  Street Utilities LotConfig  \
+0   1          60       RL         65.0     8450       1    AllPub    Inside   
+1   2          20       RL         80.0     9600       1    AllPub       FR2   
+2   3          60       RL         68.0    11250       1    AllPub    Inside   
+3   4          70       RL         60.0     9550       1    AllPub    Corner   
+4   5          60       RL         84.0    14260       1    AllPub       FR2   
+
+  LandSlope Neighborhood  ... ExterQual_TA ExterQual_Fa LotShape_IR3  \
+0       Gtl      CollgCr  ...          0.0          0.0          0.0   
+1       Gtl      Veenker  ...          1.0          0.0          0.0   
+2       Gtl      CollgCr  ...          0.0          0.0          0.0   
+3       Gtl      Crawfor  ...          1.0          0.0          0.0   
+4       Gtl      NoRidge  ...          0.0          0.0          0.0   
+
+  LotShape_IR1  LotShape_Reg  LotShape_IR2  LandContour_Lvl  LandContour_Low  \
+0          0.0           1.0           0.0              1.0              0.0   
+1          0.0           1.0           0.0              1.0              0.0   
+2          1.0           0.0           0.0              1.0              0.0   
+3          1.0           0.0           0.0              1.0              0.0   
+4          1.0           0.0           0.0              1.0              0.0   
+
+  LandContour_Bnk LandContour_HLS  
+0             0.0             0.0  
+1             0.0             0.0  
+2             0.0             0.0  
+3             0.0             0.0  
+4             0.0             0.0  
+
+[5 rows x 92 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-281"><pre class="console"><b>Utilities_dict = {'AllPub':1, 'NoSeWa':0, 1:1, 0:0}
+hd3.Utilities = hd3.Utilities.map(Utilities_dict)
+hd3.head()
+</b>   Id  MSSubClass MSZoning  LotFrontage  LotArea  Street  Utilities LotConfig  \
+0   1          60       RL         65.0     8450       1          1    Inside   
+1   2          20       RL         80.0     9600       1          1       FR2   
+2   3          60       RL         68.0    11250       1          1    Inside   
+3   4          70       RL         60.0     9550       1          1    Corner   
+4   5          60       RL         84.0    14260       1          1       FR2   
+
+  LandSlope Neighborhood  ... ExterQual_TA ExterQual_Fa LotShape_IR3  \
+0       Gtl      CollgCr  ...          0.0          0.0          0.0   
+1       Gtl      Veenker  ...          1.0          0.0          0.0   
+2       Gtl      CollgCr  ...          0.0          0.0          0.0   
+3       Gtl      Crawfor  ...          1.0          0.0          0.0   
+4       Gtl      NoRidge  ...          0.0          0.0          0.0   
+
+  LotShape_IR1  LotShape_Reg  LotShape_IR2  LandContour_Lvl  LandContour_Low  \
+0          0.0           1.0           0.0              1.0              0.0   
+1          0.0           1.0           0.0              1.0              0.0   
+2          1.0           0.0           0.0              1.0              0.0   
+3          1.0           0.0           0.0              1.0              0.0   
+4          1.0           0.0           0.0              1.0              0.0   
+
+  LandContour_Bnk LandContour_HLS  
+0             0.0             0.0  
+1             0.0             0.0  
+2             0.0             0.0  
+3             0.0             0.0  
+4             0.0             0.0  
+
+[5 rows x 92 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.6.</span> </figcaption></figure><figure class="figure-like" id="listing-282"><pre class="console"><b>hd4 = onehot(onehot(onehot(onehot(hd3, 'LotConfig'), 'LandSlope'), 'Neighborhood'), 'MSZoning')
+hd4.head()
+</b>   Id  MSSubClass  LotFrontage  LotArea  Street  Utilities Condition1  \
+0   1          60         65.0     8450       1          1       Norm   
+1   2          20         80.0     9600       1          1      Feedr   
+2   3          60         68.0    11250       1          1       Norm   
+3   4          70         60.0     9550       1          1       Norm   
+4   5          60         84.0    14260       1          1       Norm   
+
+  Condition2 BldgType HouseStyle  ...  Neighborhood_Mitchel  \
+0       Norm     1Fam     2Story  ...                   0.0   
+1       Norm     1Fam     1Story  ...                   0.0   
+2       Norm     1Fam     2Story  ...                   0.0   
+3       Norm     1Fam     2Story  ...                   0.0   
+4       Norm     1Fam     2Story  ...                   0.0   
+
+   Neighborhood_StoneBr  Neighborhood_SawyerW  Neighborhood_MeadowV  \
+0                   0.0                   0.0                   0.0   
+1                   0.0                   0.0                   0.0   
+2                   0.0                   0.0                   0.0   
+3                   0.0                   0.0                   0.0   
+4                   0.0                   0.0                   0.0   
+
+  Neighborhood_CollgCr MSZoning_C (all) MSZoning_RH MSZoning_RL MSZoning_FV  \
+0                  1.0              0.0         0.0         1.0         0.0   
+1                  0.0              0.0         0.0         1.0         0.0   
+2                  1.0              0.0         0.0         1.0         0.0   
+3                  0.0              0.0         0.0         1.0         0.0   
+4                  0.0              0.0         0.0         1.0         0.0   
+
+   MSZoning_RM  
+0          0.0  
+1          0.0  
+2          0.0  
+3          0.0  
+4          0.0  
+
+[5 rows x 126 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.7.</span> </figcaption></figure><figure class="figure-like" id="listing-283"><pre class="console"><b>def condition(df, feature1, feature2):
+    
+    #This is onehot encoding but for features that represent the same things 
+    # - i.e. where a sample could have two values identified.
+    
+    v = set(list(set(df[feature1])) + list(set(df[feature2])))  # Build a list of the possible outputs
+    
+    for c in df.index: # cycle through the samples
+        t1 = df.loc[c, feature1]
+        t2 = df.loc[c, feature2]
+        
+        for test in v:
+            if (t1==test) or (t2==test):
+                df.loc[c, '{}_{}'.format(feature1, test)] = 1  # Makes a new feature with name feature_value
+                                                            # and codes it as a 1 if that was the value
+            else:
+                df.loc[c, '{}_{}'.format(feature1, test)] = 0  # and 0 otherwise
+            
+    return df.drop([feature1, feature2], axis=1) # returns a dataframe with the encoded feature removed
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.8.</span> </figcaption></figure><figure class="figure-like" id="listing-284"><pre class="console"><b>hd5 = condition(hd4, 'Condition1', 'Condition2')
+hd5.head()
+</b>   Id  MSSubClass  LotFrontage  LotArea  Street  Utilities BldgType  \
+0   1          60         65.0     8450       1          1     1Fam   
+1   2          20         80.0     9600       1          1     1Fam   
+2   3          60         68.0    11250       1          1     1Fam   
+3   4          70         60.0     9550       1          1     1Fam   
+4   5          60         84.0    14260       1          1     1Fam   
+
+  HouseStyle  OverallQual  OverallCond  ...  MSZoning_RM  Condition1_RRNe  \
+0     2Story            7            5  ...          0.0              0.0   
+1     1Story            6            8  ...          0.0              0.0   
+2     2Story            7            5  ...          0.0              0.0   
+3     2Story            7            5  ...          0.0              0.0   
+4     2Story            8            5  ...          0.0              0.0   
+
+  Condition1_RRAe Condition1_PosN Condition1_Feedr Condition1_Artery  \
+0             0.0             0.0              0.0               0.0   
+1             0.0             0.0              1.0               0.0   
+2             0.0             0.0              0.0               0.0   
+3             0.0             0.0              0.0               0.0   
+4             0.0             0.0              0.0               0.0   
+
+  Condition1_PosA  Condition1_RRAn Condition1_RRNn Condition1_Norm  
+0             0.0              0.0             0.0             1.0  
+1             0.0              0.0             0.0             1.0  
+2             0.0              0.0             0.0             1.0  
+3             0.0              0.0             0.0             1.0  
+4             0.0              0.0             0.0             1.0  
+
+[5 rows x 133 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.9.</span> </figcaption></figure><figure class="figure-like" id="listing-285"><pre class="console"><b>hd6 = onehot(onehot(onehot(onehot(hd5, 'BldgType'), 'HouseStyle'), 'RoofStyle'), 'RoofMatl')
+hd6.iloc[:5, 9:]
+</b>   YearRemodAdd Exterior1st Exterior2nd MasVnrType  MasVnrArea ExterCond  \
+0          2003     VinylSd     VinylSd    BrkFace       196.0        TA   
+1          1976     MetalSd     MetalSd       None         0.0        TA   
+2          2002     VinylSd     VinylSd    BrkFace       162.0        TA   
+3          1970     Wd Sdng     Wd Shng       None         0.0        TA   
+4          2000     VinylSd     VinylSd    BrkFace       350.0        TA   
+
+  Foundation BsmtQual BsmtCond BsmtExposure  ... RoofStyle_Shed  \
+0      PConc       Gd       TA           No  ...            0.0   
+1     CBlock       Gd       TA           Gd  ...            0.0   
+2      PConc       Gd       TA           Mn  ...            0.0   
+3     BrkTil       TA       Gd           No  ...            0.0   
+4      PConc       Gd       TA           Av  ...            0.0   
+
+   RoofStyle_Mansard RoofMatl_CompShg  RoofMatl_Membran  RoofMatl_Roll  \
+0                0.0              1.0               0.0            0.0   
+1                0.0              1.0               0.0            0.0   
+2                0.0              1.0               0.0            0.0   
+3                0.0              1.0               0.0            0.0   
+4                0.0              1.0               0.0            0.0   
+
+   RoofMatl_ClyTile RoofMatl_Tar&amp;Grv RoofMatl_Metal RoofMatl_WdShake  \
+0               0.0              0.0            0.0              0.0   
+1               0.0              0.0            0.0              0.0   
+2               0.0              0.0            0.0              0.0   
+3               0.0              0.0            0.0              0.0   
+4               0.0              0.0            0.0              0.0   
+
+  RoofMatl_WdShngl  
+0              0.0  
+1              0.0  
+2              0.0  
+3              0.0  
+4              0.0  
+
+[5 rows x 147 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.10.</span> </figcaption></figure><figure class="figure-like" id="listing-286"><pre class="console"><b># Probably enough, lets make a list of all of the features that are not 'object'
+# (i.e. that are numerical)
+
+keep = hd6.columns[hd6.dtypes!='object'][1:]
+keep
+</b>Index(['MSSubClass', 'LotFrontage', 'LotArea', 'Street', 'Utilities',
+       'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd', 'MasVnrArea',
+       ...
+       'RoofStyle_Shed', 'RoofStyle_Mansard', 'RoofMatl_CompShg',
+       'RoofMatl_Membran', 'RoofMatl_Roll', 'RoofMatl_ClyTile',
+       'RoofMatl_Tar&amp;Grv', 'RoofMatl_Metal', 'RoofMatl_WdShake',
+       'RoofMatl_WdShngl'],
+      dtype='object', length=128)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.11.</span> </figcaption></figure><p id="p-729">So we have 128 features. That is a lot, and should be enough to illustrate the difference between <em class="emphasis">Linear Regression</em> and the new methods.</p>
+<figure class="figure-like" id="listing-287"><pre class="console"><b># Check for NaN
+
+for v in keep:
+    if sum(np.isnan(hd6[v]))!=0:
+        print(v)
+</b>LotFrontage
+MasVnrArea
+GarageYrBlt
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.12.</span> </figcaption></figure><figure class="figure-like" id="listing-288"><pre class="console"><b># MasVnrArea and GarageYrBlt that are NaN probably mean 0 (i.e. no Garage and no Masonry)
+
+for k in hd6.index:
+    if np.isnan(hd6.loc[k, 'MasVnrArea']):
+        hd6.loc[k, 'MasVnrArea']=0
+    if np.isnan(hd6.loc[k, 'GarageYrBlt']):
+        hd6.loc[k, 'GarageYrBlt']=0
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.13.</span> </figcaption></figure></section><section class="subsection" id="subsection-68"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">12.1.1</span> <span class="title">Linear Regression</span>
+</h3>
+<figure class="figure-like" id="listing-289"><pre class="console"><b>keep = list(hd6.columns[hd6.dtypes!='object'][1:])
+keep.remove('LotFrontage')   # There are some NaNs in LotFrontage. We could try to fill them in with a regression.
+                             # Or we might check with a content expert and see if they should be 0
+hd7 = hd6.loc[:, keep]
+hd7.head()
+</b>   MSSubClass  LotArea  Street  Utilities  OverallQual  OverallCond  \
+0          60     8450       1          1            7            5   
+1          20     9600       1          1            6            8   
+2          60    11250       1          1            7            5   
+3          70     9550       1          1            7            5   
+4          60    14260       1          1            8            5   
+
+   YearBuilt  YearRemodAdd  MasVnrArea  BsmtFinSF1  ...  RoofStyle_Shed  \
+0       2003          2003       196.0         706  ...             0.0   
+1       1976          1976         0.0         978  ...             0.0   
+2       2001          2002       162.0         486  ...             0.0   
+3       1915          1970         0.0         216  ...             0.0   
+4       2000          2000       350.0         655  ...             0.0   
+
+   RoofStyle_Mansard  RoofMatl_CompShg  RoofMatl_Membran  RoofMatl_Roll  \
+0                0.0               1.0               0.0            0.0   
+1                0.0               1.0               0.0            0.0   
+2                0.0               1.0               0.0            0.0   
+3                0.0               1.0               0.0            0.0   
+4                0.0               1.0               0.0            0.0   
+
+   RoofMatl_ClyTile  RoofMatl_Tar&amp;Grv  RoofMatl_Metal  RoofMatl_WdShake  \
+0               0.0               0.0             0.0               0.0   
+1               0.0               0.0             0.0               0.0   
+2               0.0               0.0             0.0               0.0   
+3               0.0               0.0             0.0               0.0   
+4               0.0               0.0             0.0               0.0   
+
+   RoofMatl_WdShngl  
+0               0.0  
+1               0.0  
+2               0.0  
+3               0.0  
+4               0.0  
+
+[5 rows x 127 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.14.</span> </figcaption></figure><p id="p-730">Okay so there is our data frame. We start by seeing how <em class="emphasis">Linear Regression</em> does.</p>
+<figure class="figure-like" id="listing-290"><pre class="console"><b># Convert them to Numpy Arrays X for predictors and y for result
+
+keep.remove('SalePrice')
+X = np.array(hd7.loc[:, keep])
+y = np.array(hd7.loc[:, 'SalePrice'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.15.</span> </figcaption></figure><figure class="figure-like" id="listing-291"><pre class="console"><b>import numpy.random as rn
+from sklearn.linear_model import LinearRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.16.</span> </figcaption></figure><figure class="figure-like" id="listing-292"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.17.</span> </figcaption></figure><figure class="figure-like" id="listing-293"><pre class="console"><b>reg = LinearRegression().fit(X_train, y_train)
+print('Training R2: {}'.format(reg.score(X_train, y_train)))
+print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+</b>Training R2: 0.9054345997225262
+Testing R2: 0.827383244663398
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.18.</span> </figcaption></figure><p id="p-731">Reasonably good on the training data, not so good on the testing data (again we really should do some cross validation or bootstrapping to fully explore it).  However, lets check a few things to see how the model is making its prediction, i.e. what our interpretation is.</p>
+<figure class="figure-like" id="listing-294"><pre class="console"><b>plt.plot(reg.coef_);
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/12.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.19.</span> </figcaption></figure><p id="p-732">One feature stands out as particularly important.</p>
+<figure class="figure-like" id="listing-295"><pre class="console"><b># numpy.argmin() returns the index of the minimum value
+keep[reg.coef_.argmin()] 
+# It's position in keep is then the name of that feature
+</b>'RoofMatl_ClyTile'
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.20.</span> </figcaption></figure><figure class="figure-like" id="listing-296"><pre class="console"><b>keep[reg.coef_.argmax()]
+</b>'RoofMatl_WdShngl'
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.21.</span> </figcaption></figure><p id="p-733"><em class="emphasis">side remark</em>: I would not have predicted that Wood Shingle was the most important positive feature.</p>
+<p id="p-734">We also can check the size of the smallest absolute coefficient and the largest absolute coefficient:</p>
+<figure class="figure-like" id="listing-297"><pre class="console"><b>min(abs(reg.coef_)), max(abs(reg.coef_))
+</b>(0.0, 529309.0018963504)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.22.</span> </figcaption></figure><p id="p-735">Some coefficients were zero, we can ask for how many they were actually zero:</p>
+<figure class="figure-like" id="listing-298"><pre class="console"><b>sum( abs(reg.coef_)==0.0 )
+</b>2
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.23.</span> </figcaption></figure><p id="p-736">Not many. And how many were small, say within 1 of zero (which compared to the largest coefficient is small):</p>
+<figure class="figure-like" id="listing-299"><pre class="console"><b>sum( abs(reg.coef_)&lt;1)
+</b>6
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">12.1.24.</span> </figcaption></figure></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>
