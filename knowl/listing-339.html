@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-16T09:07:15-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>s = abs(q1 - q0)
+A, B = np.partition(s, 1)[:2]  
+# numpy.partition is a convenient way to get the smallest values (or largest values) from an array
+d1, d2 = np.where(s==A), np.where(s==B)
+# nump.where(s==A) tells us for which index s gives A.
+# we should automate the process of checking that they are far apart from each other, 
+# however given the shape of the graph, I am confident they will be.
+
+xx[d1], xx[d2]
+</b>(array([12.06030151]), array([50.25125628]))
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.24.</span> </figcaption></figure><span class="incontext"><a href="section-53.html#listing-339">in-context</a></span>
+</body>
+</html>

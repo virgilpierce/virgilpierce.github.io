@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-16T09:07:15-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>y1 = sum(y)/y.shape[0]
+y0 = 1 - y1
+
+q0 = p0*y0 / (p0*y0 + p1*y1)
+q1 = p1*y1 / (p0*y0 + p1*y1)
+
+plt.figure(figsize=(10,8))
+plt.plot(xx, q0, 'r-')
+plt.plot(xx, q1, 'g-');
+plt.savefig('13.6.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.20.</span> </figcaption></figure><span class="incontext"><a href="section-53.html#listing-335">in-context</a></span>
+</body>
+</html>

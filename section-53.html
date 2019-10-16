@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-16T09:07:13-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Linear Discriminant Analysis</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="lda_svm.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="lda_svm.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-54.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="lda_svm.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="lda_svm.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-54.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="lda_svm.html" data-scroll="lda_svm"><span class="codenumber">13</span> <span class="title">Linear Discrimant Analysis and Support Vector Machines</span></a><ul>
+<li><a href="section-53.html" data-scroll="section-53" class="active">Linear Discriminant Analysis</a></li>
+<li><a href="section-54.html" data-scroll="section-54">Support Vector Machines</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-53"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">13.1</span> <span class="title">Linear Discriminant Analysis</span>
+</h2>
+<section class="introduction" id="introduction-30"><p id="p-766">We actually saw this method in the first example from our first class, but did not give it a name there. The idea is, as with <em class="emphasis">Logistic Regression</em> to use the training data to estimate the probability that a given point is in a class, and then choose the class with the greater probability. The difference is that rather than fitting the logistic function to that probability, we will instead estimate the distribution of each class and then classify the points by which one is more likely via Bayes Theorem.</p>
+<p id="p-767">Recall the problem of classifying whether a baseball player is a pitcher or not-a-pitcher based on their height or height-and-weight.</p>
+<figure class="figure-like" id="listing-316"><pre class="console"><b>import numpy as np
+import pandas as pa
+import matplotlib.pyplot as plt
+import matplotlib.colors as pltco
+import numpy.random as rn
+import seaborn as sn
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-317"><pre class="console"><b># Read in the major league players data set
+
+major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+major = major.drop(640, axis=0) 
+
+# Each row of a data frame is a data point - in this case a player.
+# Each column is a feature about the data point (its coordinates if you will)
+
+major.head()   # displays the first few rows
+</b>              Name Team       Position  Height  Weight    Age
+0    Adam_Donachie  BAL        Catcher      74   180.0  22.99
+1        Paul_Bako  BAL        Catcher      74   215.0  34.69
+2  Ramon_Hernandez  BAL        Catcher      72   210.0  30.78
+3     Kevin_Millar  BAL  First_Baseman      72   210.0  35.43
+4      Chris_Gomez  BAL  First_Baseman      73   188.0  35.71
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.2.</span> </figcaption></figure><figure class="figure-like" id="listing-318"><pre class="console"><b># We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:1 for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:0 for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2
+</b>                 Name Team  Position  Height  Weight    Age
+0       Adam_Donachie  BAL         0      74   180.0  22.99
+1           Paul_Bako  BAL         0      74   215.0  34.69
+2     Ramon_Hernandez  BAL         0      72   210.0  30.78
+3        Kevin_Millar  BAL         0      72   210.0  35.43
+4         Chris_Gomez  BAL         0      73   188.0  35.71
+...               ...  ...       ...     ...     ...    ...
+1029    Brad_Thompson  STL         1      73   190.0  25.08
+1030    Tyler_Johnson  STL         1      74   180.0  25.73
+1031   Chris_Narveson  STL         1      75   205.0  25.19
+1032    Randy_Keisler  STL         1      75   190.0  31.01
+1033      Josh_Kinney  STL         1      73   195.0  27.92
+
+[1033 rows x 6 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.3.</span> </figcaption></figure><p id="p-768">Explicitly what we are trying to do is to compute the conditional probability from Bayes' rule:</p>
+<div class="displaymath" id="p-769">
+\begin{equation*}
+P(y=k | X) = \frac{P(X | y=k) P(y=k)}{P(X)} = \frac{P(X |y=k) P(y=k) }{ \sum P(X|y=l) P(y=l) }
+\end{equation*}
+</div>
+<p id="p-770">Note that in the left hand side the quantities \(P(y=k)\) can be estimated from the proportions from the training data; and the quantities \(P(X |y = k) \) are what we need to do some work to get estimates of.</p>
+<p id="p-771"><em class="emphasis">Linear Discriminant Analysis</em> is based on the assumption that these probabilities are given by a Gaussian Distribution:</p>
+<div class="displaymath" id="p-772">
+\begin{equation*}
+p_k(X) = P(X | y=k) = \frac{1}{N} \exp\left( -\frac{1}{2} (X - \mu_k)^t \Sigma_k (X - mu_k) \right)
+\end{equation*}
+</div>
+<p id="p-773">where \(\mu_k\) is the vector of means for the \(y=k\) class, and \(\Sigma_k\) is the covariance matrix.</p>
+<p id="p-774">Of course the problem is an estimate, and so the algorithm determines, given the training data for class \(y=k\) the values of \(\mu_k\) and \(\Sigma_k\) that give the best result.</p>
+<p id="p-775">One simplificiation is that we will assume that the covariance matrices are the same for all classes. This means that the boundaries between classes will be given by linear expressions, hence <em class="emphasis">Linear Discriminant Analysis</em></p>
+<p id="p-776"><em class="emphasis">Quadratic Deiscriminant Analysis</em> allows each \(\Sigma_k\) to be independent and gives boundaries between classes given by quadratic expressions.</p></section><section class="subsection" id="subsection-69"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">13.1.1</span> <span class="title">One Dimensional Example</span>
+</h3>
+<p id="p-777">In one dimension (i.e. one predictor) the problem is straightforward. From the training data,  the mean of the predictor for each class and an estimate the variance from the full set of training data is computed.</p>
+<figure class="figure-like" id="listing-319"><pre class="console"><b>X = np.atleast_2d(np.array(major_2['Height'])).transpose()
+y = np.array(major_2['Position'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-320"><pre class="console"><b>mu_1 = X[y==1].mean()
+mu_0 = X[y==0].mean()
+mu_1, mu_0
+</b>(74.5214953271028, 72.81526104417671)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-321"><pre class="console"><b>mu = X.mean()
+sigma2 = ((X - mu)**2).mean()
+sigma2
+</b>5.3140066105076516
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.6.</span> </figcaption></figure><figure class="figure-like" id="listing-322"><pre class="console"><b>xx = np.linspace(60, 90, 100)
+p0 = 1/np.sqrt(2*np.pi*sigma2)*np.exp(-(xx-mu_0)**2/(2*sigma2))
+p1 = 1/np.sqrt(2*np.pi*sigma2)*np.exp(-(xx-mu_1)**2/(2*sigma2))
+
+plt.figure(figsize=(10, 8))
+plt.plot(xx, p0, 'r-')
+plt.plot(xx, p1, 'b-');
+plt.savefig('13.1.png')
+</b>
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.7.</span> </figcaption></figure><p id="p-778">This picture is not exactly what we want, it is the \(P(X | y=k)\) for \(y=0\) and \(y=1\text{.}\) We now need to use the values of this function to compute the Bayes probability: \(P(y=k | X)\) at each point, note that this then takes into account the relative frequencies of each of the classes via the \(P(y=k)\text{.}\)</p>
+<figure class="figure-like" id="listing-323"><pre class="console"><b>y1 = sum(y) / len(y)
+y0 = 1 - y1
+q0 = p0*y0 / (p0*y0 + p1*y1)
+q1 = p1*y0 / (p0*y0 + p1*y1)
+
+plt.figure(figsize=(10, 8))
+plt.plot(xx, q0, 'r-')
+plt.plot(xx, q1, 'b-');
+plt.savefig('13.2.png')
+</b>
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.8.</span> </figcaption></figure><p id="p-779">The decision boundary is then at the location where these two probabilities cross. It is slightly to the right of where the distributions cross because of the correction due to the frequency of pitchers versus non-pitchers.</p>
+<p id="p-780">Note that the choice of decision boundary could be tuned if a particular problem (like one in medicine) required us to eliminate a particular type of error (false positives for example).</p>
+<article class="paragraphs" id="paragraphs-20"><h5 class="heading"><span class="title">Using the Scikitlearn package.</span></h5>
+<figure class="figure-like" id="listing-324"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.9.</span> </figcaption></figure><figure class="figure-like" id="listing-325"><pre class="console"><b># A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+# Fixed for 1d
+
+def plot_cat_model_1d(clf, X_train, y_train, X_test, y_test):
+
+    h = 0.1 # Mesh size  
+
+    x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
+    xx = np.arange(x_min, x_max, h)
+    
+    Z = clf.predict(np.c_[xx])
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.scatter(xx, Z, c=Z, cmap=cmap_light, marker='.');
+
+    plt.scatter(X_train[:, 0], y_train, c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], y_test, c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.10.</span> </figcaption></figure><figure class="figure-like" id="listing-326"><pre class="console"><b>from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.11.</span> </figcaption></figure><figure class="figure-like" id="listing-327"><pre class="console"><b>clf = LinearDiscriminantAnalysis()
+clf.fit(X_train, y_train);
+plot_cat_model_1d(clf, X_train, y_train, X_test, y_test)
+plt.savefig('13.3.png')
+</b>Training Error: 0.6432889963724304
+Testing Error: 0.6893203883495146
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.3.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.12.</span> </figcaption></figure></article></section><section class="subsection" id="subsection-70"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">13.1.2</span> <span class="title">Quadratic Discriminant Analysis in One Dimension</span>
+</h3>
+<p id="p-781">Using quadratic discriminant analysis the decision boundary can be given by a quadratic function, which in one-dimension means we could have a decision boundary given by two points. This would accurately capture a problem where the data from one class was occupied an interval of the predictor feature surrounded by the data from the another class.</p>
+<p id="p-782">Here is an example of such a situation from the Kidney Disease dataset.</p>
+<figure class="figure-like" id="listing-328"><pre class="console"><b>kd = pa.read_csv('Data Sets/Kidney/chronic_kidney_disease.csv', 
+                 names=['age', 'bp', 'specific_gravity', 'albumin', 'sugar', 'red_blood_cells', 'pus_cell',
+                        'pus_cell_clumps', 'bacteria', 'blood_glucose', 'blood_urea', 'serum_creatinine', 
+                        'sodium', 'potassium', 'hemoglobin', 'packed_cell_volume', 'white_blood_cell_count',
+                        'red_blood_cell_count', 'hypertension', 'diabetes_mellitus', 'coronary_artery_disease',
+                        'appetite', 'pedal_edema', 'anemia', 'class'])
+
+kd.loc[kd.loc[:, 'class'] == 'ckd\t', 'class'] = 'ckd'  # There is an extra tab character on some of the ckd values
+
+kd.head()
+</b>  age  bp specific_gravity albumin sugar red_blood_cells  pus_cell  \
+0  48  80            1.020       1     0               ?    normal   
+1   7  50            1.020       4     0               ?    normal   
+2  62  80            1.010       2     3          normal    normal   
+3  48  70            1.005       4     0          normal  abnormal   
+4  51  80            1.010       2     0          normal    normal   
+
+  pus_cell_clumps    bacteria blood_glucose  ... packed_cell_volume  \
+0      notpresent  notpresent           121  ...                 44   
+1      notpresent  notpresent             ?  ...                 38   
+2      notpresent  notpresent           423  ...                 31   
+3         present  notpresent           117  ...                 32   
+4      notpresent  notpresent           106  ...                 35   
+
+  white_blood_cell_count red_blood_cell_count hypertension diabetes_mellitus  \
+0                   7800                  5.2          yes               yes   
+1                   6000                    ?           no                no   
+2                   7500                    ?           no               yes   
+3                   6700                  3.9          yes                no   
+4                   7300                  4.6           no                no   
+
+  coronary_artery_disease appetite pedal_edema anemia class  
+0                      no     good          no     no   ckd  
+1                      no     good          no     no   ckd  
+2                      no     poor          no    yes   ckd  
+3                      no     poor         yes    yes   ckd  
+4                      no     good          no     no   ckd  
+
+[5 rows x 25 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.13.</span> </figcaption></figure><figure class="figure-like" id="listing-329"><pre class="console"><b># Note I have found a slightly better way to convert all of the values in a column to a new type
+
+check = 'blood_urea'
+
+kd = kd[kd.loc[:, check] != '?']
+kd.loc[:, check] = kd.loc[:, check].astype('float')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.14.</span> </figcaption></figure><figure class="figure-like" id="listing-330"><pre class="console"><b>X = np.array(kd[check])
+y = np.array(kd.loc[:, 'class'].map({'ckd':1, 'notckd':0}))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.15.</span> </figcaption></figure><figure class="figure-like" id="listing-331"><pre class="console"><b>plt.figure(figsize=(10, 8))
+plt.plot(X, y, '.');
+plt.savefig('13.4.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.4.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.16.</span> </figcaption></figure><p id="p-783">As with the LDA case we compute estimates of the means from each class.</p>
+<figure class="figure-like" id="listing-332"><pre class="console"><b>mu_0 = X[y==0].mean()
+mu_1 = X[y==1].mean()
+mu_0, mu_1
+</b>(32.798611111111114, 72.38902953586498)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.17.</span> </figcaption></figure><p id="p-784">For the sake of comparison with LDA, the estimate of the variance for the whole population is computed, along with the conditional probability estimates. Culminating in showing you that from LDA we again get a single decision point.</p>
+<figure class="figure-like" id="listing-333"><pre class="console"><b>mu = X.mean()
+sigma2 = np.mean((X-mu)**2)
+sigma2
+</b>2543.8592334029113
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.18.</span> </figcaption></figure><figure class="figure-like" id="listing-334"><pre class="console"><b>xx = np.linspace(0, 400, 100)
+
+p0 = 1/np.sqrt(2*np.pi*sigma2)*np.exp(-(xx-mu_0)**2/(2*sigma2))
+p1 = 1/np.sqrt(2*np.pi*sigma2)*np.exp(-(xx-mu_1)**2/(2*sigma2))
+
+plt.figure(figsize=(10,8))
+plt.plot(xx, p0, 'r-')
+plt.plot(xx, p1, 'g-');
+plt.savefig('13.5.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.19.</span> </figcaption></figure><figure class="figure-like" id="listing-335"><pre class="console"><b>y1 = sum(y)/y.shape[0]
+y0 = 1 - y1
+
+q0 = p0*y0 / (p0*y0 + p1*y1)
+q1 = p1*y1 / (p0*y0 + p1*y1)
+
+plt.figure(figsize=(10,8))
+plt.plot(xx, q0, 'r-')
+plt.plot(xx, q1, 'g-');
+plt.savefig('13.6.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.20.</span> </figcaption></figure><p id="p-785">For <em class="emphasis">Quadratic Discriminant Analysis</em> we drop the assumption that the variance can be estimated from the whole population and instead compute separate variances for each class.</p>
+<figure class="figure-like" id="listing-336"><pre class="console"><b>sigma2_0 = np.mean((X[y==0]-mu_0)**2)
+sigma2_1 = np.mean((X[y==1]-mu_1)**2)
+sigma2_0, sigma2_1
+</b>(130.20249807098767, 3417.981229859887)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.21.</span> </figcaption></figure><p id="p-786">The result are two variances of strikingly different sizes (which is clear from the original scatter plot. This leads to normal probablity distributions that are of different widths, and hence can cross each other more often.</p>
+<figure class="figure-like" id="listing-337"><pre class="console"><b>xx = np.linspace(0, 400, 200)
+
+p0 = 1/np.sqrt(2*np.pi*sigma2_0)*np.exp(-(xx-mu_0)**2/(2*sigma2_0))
+p1 = 1/np.sqrt(2*np.pi*sigma2_1)*np.exp(-(xx-mu_1)**2/(2*sigma2_1))
+
+plt.figure(figsize=(10,8))
+plt.plot(xx, p0, 'r-')
+plt.plot(xx, p1, 'g-');
+plt.savefig('13.7.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.7.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.22.</span> </figcaption></figure><p id="p-787">In turn, once inserted into Bayes' Theorem, this gives a decision boundary that consists of two points.</p>
+<figure class="figure-like" id="listing-338"><pre class="console"><b>y1 = sum(y)/y.shape[0]
+y0 = 1 - y1
+
+q0 = p0*y0 / (p0*y0 + p1*y1)
+q1 = p1*y1 / (p0*y0 + p1*y1)
+
+plt.figure(figsize=(10,8))
+plt.plot(xx, q0, 'r-')
+plt.plot(xx, q1, 'g-');
+plt.savefig('13.8.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.8.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.23.</span> </figcaption></figure><p id="p-788">The actual values can be computed.</p>
+<figure class="figure-like" id="listing-339"><pre class="console"><b>s = abs(q1 - q0)
+A, B = np.partition(s, 1)[:2]  
+# numpy.partition is a convenient way to get the smallest values (or largest values) from an array
+d1, d2 = np.where(s==A), np.where(s==B)
+# nump.where(s==A) tells us for which index s gives A.
+# we should automate the process of checking that they are far apart from each other, 
+# however given the shape of the graph, I am confident they will be.
+
+xx[d1], xx[d2]
+</b>(array([12.06030151]), array([50.25125628]))
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.24.</span> </figcaption></figure><p id="p-789">So for <em class="emphasis">blood urea</em> values less than 12 or more than 50.3 we would be classifying the patient as having <em class="emphasis">chronic kidney disease</em>.</p></section><section class="subsection" id="subsection-71"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">13.1.3</span> <span class="title">Higher Dimensional Versions</span>
+</h3>
+<p id="p-790">In higher dimensions we get linear boundaries, and with a generalization quadratic boundaries.</p>
+<figure class="figure-like" id="listing-340"><pre class="console"><b># A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+def plot_cat_model(clf, X_train, y_train, X_test, y_test):
+
+    h = 0.1 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
+    y_min, y_max = X_train[:, 1].min() - 2, X_train[:, 1].max() + 2
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+        np.arange(y_min, y_max, h))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.25.</span> </figcaption></figure><figure class="figure-like" id="listing-341"><pre class="console"><b>X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.26.</span> </figcaption></figure><figure class="figure-like" id="listing-342"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.27.</span> </figcaption></figure><figure class="figure-like" id="listing-343"><pre class="console"><b>clf = LinearDiscriminantAnalysis()
+clf.fit(X_train, y_train);
+plot_cat_model(clf, X_train, y_train, X_test, y_test)
+plt.savefig('13.9.png')
+</b>Training Error: 0.6577992744860943
+Testing Error: 0.616504854368932
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.28.</span> </figcaption></figure><figure class="figure-like" id="listing-344"><pre class="console"><b>from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.29.</span> </figcaption></figure><figure class="figure-like" id="listing-345"><pre class="console"><b>clf2 = QuadraticDiscriminantAnalysis()
+clf2.fit(X_train, y_train)
+plot_cat_model(clf2, X_train, y_train, X_test, y_test)
+plt.savefig('13.10.png')
+</b>Training Error: 0.6638452237001209
+Testing Error: 0.6504854368932039
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.10.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.30.</span> </figcaption></figure><p id="p-791">Comparing these methods to <em class="emphasis">Logistic Regression</em> and <em class="emphasis">k-Nearest Neighbors</em></p>
+<figure class="figure-like" id="listing-346"><pre class="console"><b>from sklearn.linear_model import LogisticRegression
+lg = LogisticRegression(solver='lbfgs')
+lg.fit(X_train, y_train)
+plot_cat_model(lg, X_train, y_train, X_test, y_test)
+plt.savefig('13.11.png')
+</b>Training Error: 0.6577992744860943
+Testing Error: 0.6213592233009708
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.11.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.31.</span> </figcaption></figure><figure class="figure-like" id="listing-347"><pre class="console"><b>from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=10)
+knn.fit(X_train, y_train)
+plot_cat_model(knn, X_train, y_train, X_test, y_test)
+plt.savefig('13.12.png')
+</b>Training Error: 0.6916565900846433
+Testing Error: 0.6359223300970874
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/13.12.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.32.</span> </figcaption></figure></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

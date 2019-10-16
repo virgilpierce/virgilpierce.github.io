@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-16T09:07:15-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Note I have found a slightly better way to convert all of the values in a column to a new type
+
+check = 'blood_urea'
+
+kd = kd[kd.loc[:, check] != '?']
+kd.loc[:, check] = kd.loc[:, check].astype('float')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.14.</span> </figcaption></figure><span class="incontext"><a href="section-53.html#listing-329">in-context</a></span>
+</body>
+</html>

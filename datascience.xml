@@ -83,5 +83,9 @@
 
 <xi:include href='ridge_and_lasso.xml'/>
 
+<!-- Chapter Thirteen - LDA and SVM -->
+
+<xi:include href='lda_svm.xml'/>
+
 </book>
 </pretext>

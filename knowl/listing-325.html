@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-16T09:07:15-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+# Fixed for 1d
+
+def plot_cat_model_1d(clf, X_train, y_train, X_test, y_test):
+
+    h = 0.1 # Mesh size  
+
+    x_min, x_max = X_train[:, 0].min() - 1, X_train[:, 0].max() + 1
+    xx = np.arange(x_min, x_max, h)
+    
+    Z = clf.predict(np.c_[xx])
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.scatter(xx, Z, c=Z, cmap=cmap_light, marker='.');
+
+    plt.scatter(X_train[:, 0], y_train, c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], y_test, c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">13.1.10.</span> </figcaption></figure><span class="incontext"><a href="section-53.html#listing-325">in-context</a></span>
+</body>
+</html>
