@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:15-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Discussion of Decision Tree Algorithms</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<!-- 2019-10-12: Temporary - CSS file for experiments with styling --><link href="developer.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-57.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="decision_trees.html" title="Up">Up</a><span id="nextbutton" class="next-button button toolbar-item disabled">Next</span></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-57.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="decision_trees.html" title="Up">Up</a><span class="next-button button toolbar-item disabled">Next</span>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="lda_svm.html" data-scroll="lda_svm"><span class="codenumber">13</span> <span class="title">Linear Discrimant Analysis and Support Vector Machines</span></a><ul>
+<li><a href="section-53.html" data-scroll="section-53">Linear Discriminant Analysis</a></li>
+<li><a href="section-54.html" data-scroll="section-54">Support Vector Machines</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="decision_trees.html" data-scroll="decision_trees"><span class="codenumber">14</span> <span class="title">Decsion Trees</span></a><ul>
+<li><a href="section-55.html" data-scroll="section-55">Regression Trees</a></li>
+<li><a href="section-56.html" data-scroll="section-56">Classification Tree</a></li>
+<li><a href="section-57.html" data-scroll="section-57">High Dimensional Data and Decision Trees</a></li>
+<li><a href="section-58.html" data-scroll="section-58" class="active">Discussion of Decision Tree Algorithms</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-58"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">14.4</span> <span class="title">Discussion of Decision Tree Algorithms</span>
+</h2>
+<section class="introduction" id="introduction-32"><p id="p-838">Those of you taking the <em class="emphasis">Graph Theory Course</em> or the <em class="emphasis">Algorithms Course</em> have seen trees before. Note that the decision trees here are a subset of the trees you could build by dividing the samples by splitting until you reach leaves with less than 10 nodes. The subset is much smaller because the splitting has to preserve samples that are close in the feature coordinates being used, however for even a moderatley big dataset it will still be to large to effectively search all possible decision trees for the one that performs the best.</p>
+<p id="p-839">So how does the algorithm find the tree from the training data?  It does two tricks to improve the speed over the naive pure search. First we will use a <em class="emphasis">Greedy</em> algorithm to grow the tree from one node to several. The second trick is needed if the number of features is large, as this also affects the number of choices the algorithm will have. So instead of considering the best split from all possible features, the algorithm at each step will take a random subset of the features and determine the best split from them.</p>
+<p id="p-840">A <em class="emphasis">Greedy</em> algorithm is one that makes the best choice for the next step. It is Greedy in the sense that it might overlook choices for the split at the current step that would lead to a better tree later in the process.  In the <em class="emphasis">Algorithms Course</em> you saw a number of <em class="emphasis">Greedy</em> algorithms in the context of problems that required us to search trees and graphs, the classic one being the Traveling Salesmen problem. The <em class="emphasis">Greedy</em> solution to the traveling salesmen problem chooses for its next trip the cheapest (or shortest) edge from its current node.</p>
+<p id="p-841">We can get a sense of how a Decision Tree grows by restricting the number of levels (height) with the <em class="emphasis">max_depth</em> parameter and setting the random seed with <em class="emphasis">random_state</em>. We need to set the random seed because otherwise the randomness in the algorithm will generate a different tree each time.</p>
+<figure class="figure-like" id="listing-406"><pre class="console"><b>tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=1, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</b>(0.4477798236024506, 0.46379763502464244)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.1.</span> </figcaption></figure><figure class="figure-like" id="listing-407"><pre class="console"><b>export_graphviz(tree, out_file='tree-4.dot', feature_names=keep)
+
+with open('tree-4.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/tree-4.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.2.</span> </figcaption></figure><figure class="figure-like" id="listing-408"><pre class="console"><b>tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=2, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</b>(0.6257521423529686, 0.6490050640951155)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.3.</span> </figcaption></figure><figure class="figure-like" id="listing-409"><pre class="console"><b>export_graphviz(tree, out_file='tree-5.dot', feature_names=keep)
+
+with open('tree-5.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/tree-5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.4.</span> </figcaption></figure><figure class="figure-like" id="listing-410"><pre class="console"><b>tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=3, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</b>(0.730264169405626, 0.7059616743966577)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.5.</span> </figcaption></figure><figure class="figure-like" id="listing-411"><pre class="console"><b>export_graphviz(tree, out_file='tree-6.dot', feature_names=keep)
+
+with open('tree-6.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/tree-6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.6.</span> </figcaption></figure><p id="p-842">Or in the case of classification.</p>
+<figure class="figure-like" id="listing-412"><pre class="console"><b>X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.7.</span> </figcaption></figure><figure class="figure-like" id="listing-413"><pre class="console"><b>tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=1, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.8.png')
+</b>Training Error: 0.6650544135429263
+Testing Error: 0.6019417475728155
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.8.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.8.</span> </figcaption></figure><figure class="figure-like" id="listing-414"><pre class="console"><b>tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=2, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.9.png')
+</b>Training Error: 0.6457073760580411
+Testing Error: 0.6796116504854369
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.9.</span> </figcaption></figure><figure class="figure-like" id="listing-415"><pre class="console"><b>export_graphviz(tree, out_file='tree-7.dot', class_names = ['Not Pitcher', 'Pitcher'], feature_names=['Height', 'weight'], 
+               impurity=False, proportion=True, filled=True)
+
+with open('tree-7.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/tree-7.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.10.</span> </figcaption></figure><p id="p-843">This turns out to be a nice example, because notice at this level the splits it has selected did not actually change the prediction, but what they did do was improve the quality of some of the classes. There are different objective functions one could use for this splitting, they are listed as defaults in the function help page.</p>
+<figure class="figure-like" id="listing-416"><pre class="console"><b>tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=3, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.10.png')
+</b>Training Error: 0.6590084643288996
+Testing Error: 0.6504854368932039
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.10.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.11.</span> </figcaption></figure><figure class="figure-like" id="listing-417"><pre class="console"><b>export_graphviz(tree, out_file='tree-8.dot', class_names = ['Not Pitcher', 'Pitcher'], feature_names=['Height', 'weight'], 
+               impurity=False, proportion=True, filled=True)
+
+with open('tree-8.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/tree-8.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.12.</span> </figcaption></figure><p id="p-844">Notice at this level only one subclass has appeared (and hence one new rectangle in the region plot.</p></section><section class="subsection" id="subsection-76"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">14.4.1</span> <span class="title">Extensions of Trees</span>
+</h3>
+<section class="introduction" id="introduction-33"><p id="p-845">While decision trees are nice in terms of explaining a result, they do not typically perform all that well on testing data. However a couple of generalizations will do a good job of helping decision trees relax on the training data and avoid overfitting which will improve performance on testing data. The result will be a loss of the interpretative power of the algorithm.</p></section><section class="subsubsection" id="subsubsection-1"><h4 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">14.4.1.1</span> <span class="title">Boosting</span>
+</h4>
+<p id="p-846">The first extension is called <em class="emphasis">Boosting</em>. Boosting applies successive trees to the errors between the current model and a subset of the training data. This is our first example of an <em class="emphasis">Ensemble</em> model that uses combinations (in the case of Boosting, linear combinations) of models. This results in models that have:</p>
+<ul id="p-847" class="disc">
+<li id="li-178"><p id="p-848">a number of tuning parameters: giving us the ability to identify the best model for a dataset</p></li>
+<li id="li-179"><p id="p-849">applying randomness to smooth out variations</p></li>
+<li id="li-180"><p id="p-850">overall a model that retains some flexibility of the component models, but has also been smoothed.</p></li>
+</ul>
+<figure class="figure-like" id="listing-418"><pre class="console"><b>from sklearn.ensemble import GradientBoostingRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.13.</span> </figcaption></figure><figure class="figure-like" id="listing-419"><pre class="console"><b># Convert them to Numpy Arrays X for predictors and y for result
+
+X = np.array(hd7.loc[:, keep])
+y = np.array(hd7.loc[:, 'SalePrice'])
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.14.</span> </figcaption></figure><figure class="figure-like" id="listing-420"><pre class="console"><b>reg = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1)
+reg.fit(X_train, y_train)
+reg.score(X_train, y_train), reg.score(X_test, y_test)
+</b>(0.9669936852996642, 0.820635365251239)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.15.</span> </figcaption></figure><p id="p-851">Of course a big question becomes, what is the right choice of the various parameters. Let's use cross validation to choose the right value of <em class="emphasis">learning_rate</em>; note that the Ensemble method itself uses a form of bootstrapping/cross validation in that it trains the boosted trees at each step on a random sample of the training data.</p>
+<figure class="figure-like" id="listing-421"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+
+tests = 25
+a = np.linspace(0.01, 0.5, tests)
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+R2 = pa.DataFrame( np.array([ [0]*5 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+
+    for c in range(tests):
+        reg = GradientBoostingRegressor(n_estimators=100, learning_rate=a[c]).fit(X_train, y_train)
+        R2.iloc[k, 2*c] = reg.score(X_train, y_train)
+        R2.iloc[k, 2*c+1] = reg.score(X_test, y_test)
+
+R2mean = [0]*2*tests
+R2std = [0]*2*tests
+for c in range(2*tests):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+R2
+</b>                     train_0    test_0   train_1    test_1   train_2  \
+0                   0.707382  0.676637  0.922481  0.871304  0.950779   
+1                   0.707704  0.630357  0.921225  0.815680  0.951237   
+2                   0.697350  0.678079  0.915217  0.870622  0.947065   
+3                   0.704397  0.654268  0.918301  0.860254  0.948063   
+4                   0.707690  0.666489  0.920472  0.860037  0.949732   
+Mean                0.704905  0.661166  0.919539  0.855579  0.949375   
+Standard Deviation  0.003976  0.017610  0.002553  0.020529  0.001589   
+
+                      test_2   train_3    test_3   train_4    test_4  ...  \
+0                   0.889662  0.960931  0.897842  0.965577  0.897137  ...   
+1                   0.837151  0.960074  0.839635  0.966350  0.853936  ...   
+2                   0.894926  0.957823  0.904107  0.963999  0.904733  ...   
+3                   0.889828  0.957807  0.891822  0.963012  0.901399  ...   
+4                   0.879365  0.957564  0.896262  0.963938  0.886416  ...   
+Mean                0.878186  0.958840  0.885934  0.964575  0.888724  ...   
+Standard Deviation  0.021131  0.001387  0.023482  0.001211  0.018457  ...   
+
+                    train_20   test_20  train_21   test_21  train_22  \
+0                   0.991123  0.872184  0.991212  0.879069  0.993060   
+1                   0.991466  0.854575  0.991156  0.824914  0.991297   
+2                   0.990421  0.900892  0.990379  0.895271  0.990609   
+3                   0.990842  0.898286  0.991230  0.871729  0.991355   
+4                   0.990247  0.880887  0.991117  0.848389  0.991931   
+Mean                0.990820  0.881365  0.991019  0.863874  0.991650   
+Standard Deviation  0.000446  0.017145  0.000322  0.024642  0.000820   
+
+                     test_22  train_23   test_23  train_24   test_24  
+0                   0.863578  0.992931  0.875422  0.992713  0.878765  
+1                   0.827704  0.991610  0.820427  0.992225  0.840474  
+2                   0.881612  0.991684  0.884510  0.991380  0.888234  
+3                   0.880042  0.992422  0.870430  0.992372  0.881311  
+4                   0.818972  0.992651  0.880965  0.992985  0.858681  
+Mean                0.854381  0.992260  0.866351  0.992335  0.869493  
+Standard Deviation  0.026268  0.000526  0.023457  0.000546  0.017526  
+
+[7 rows x 50 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.16.</span> </figcaption></figure><figure class="figure-like" id="listing-422"><pre class="console"><b>plt.plot(a, R2mean[::2], 'b-')
+plt.plot(a, R2mean[1::2], 'r-')
+plt.savefig('14.11.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.11.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.17.</span> </figcaption></figure><p id="p-852">Using this we make the best decsion we can from the experiments and then use the entire dataset to fit the model. We can then ask what were the important features used in the model.</p>
+<figure class="figure-like" id="listing-423"><pre class="console"><b>reg = GradientBoostingRegressor(n_estimators=100, learning_rate= 0.2).fit(X, y)
+plot_feature_importances(reg, keep)
+plt.savefig('14.12.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.12.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.18.</span> </figcaption></figure></section><section class="subsubsection" id="subsubsection-2"><h4 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">14.4.1.2</span> <span class="title">Random Forests</span>
+</h4>
+<p id="p-853">In contrast to <em class="emphasis">Boosting</em> where the model is built sequentially, <em class="emphasis">Random Forests</em> are a type of Ensemble model where individual models are trained on samples of the training data, and are then allowed to vote to give a prediction. The weights of the votes are trained on the full set of training data. This again improves the predictive capability of <em class="emphasis">Decision Trees</em> by introducing randomness and some additional tuning parameters into the problem.</p>
+<figure class="figure-like" id="listing-424"><pre class="console"><b>from sklearn.ensemble import RandomForestClassifier
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.19.</span> </figcaption></figure><figure class="figure-like" id="listing-425"><pre class="console"><b>X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.20.</span> </figcaption></figure><figure class="figure-like" id="listing-426"><pre class="console"><b>clf = RandomForestClassifier(n_estimators=10, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.13.png')
+</b>Training Error: 0.7678355501813785
+Testing Error: 0.6019417475728155
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.13.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.21.</span> </figcaption></figure><p id="p-854">Note that because the trees in the forest are built on random samples of the training data, they can be built simmultaneously. Thus the algorithm is parallizable, the <em class="emphasis">n_jobs</em> parameter specifics the number of cores to use and -1 means uses all available. The <em class="emphasis">Boosting</em> algorithms on the other hand build the next tree based on the results of the previous one and so are not parallizable.</p>
+<p id="p-855">Here we see some evidence of overfitting. To address this we need to adjust the parameters in the model. There is the <em class="emphasis">n_estimators</em> controlling the number of trees, and then there are the same parameters as for trees that control the size and behavior of the individual decision trees.</p>
+<figure class="figure-like" id="listing-427"><pre class="console"><b>clf = RandomForestClassifier(n_estimators=20, min_samples_split=10, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.14.png')
+</b>Training Error: 0.750906892382104
+Testing Error: 0.6262135922330098
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.14.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.22.</span> </figcaption></figure><figure class="figure-like" id="listing-428"><pre class="console"><b>clf = RandomForestClassifier(n_estimators=50, max_depth=3, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.15.png')
+</b>Training Error: 0.6553808948004837
+Testing Error: 0.6650485436893204
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.15.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.23.</span> </figcaption></figure></section><section class="subsubsection" id="subsubsection-3"><h4 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">14.4.1.3</span> <span class="title">Another Classification Example with more Features</span>
+</h4>
+<figure class="figure-like" id="listing-429"><pre class="console"><b>ab = pa.read_csv('Data Sets/Abalone/abalone.csv', names=['Sex', 'Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight',
+                                                        'Viscera_Weight', 'Shell_Weight', 'Rings'])
+ab.head()
+</b>  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.24.</span> </figcaption></figure><figure class="figure-like" id="listing-430"><pre class="console"><b># One hot encoding for the 'Sex' feature
+
+for k in ab.index:
+    if ab.loc[k, 'Sex']=='M':
+        ab.loc[k, 'Male']=1
+    else: ab.loc[k, 'Male']=0
+    if ab.loc[k, 'Sex']=='F':
+        ab.loc[k, 'Female']=1
+    else: ab.loc[k, 'Female']=0
+    if ab.loc[k, 'Sex']=='I':
+        ab.loc[k, 'Infant']=1
+    else: ab.loc[k, 'Infant']=0
+        
+ab.head()
+</b>  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  Male  Female  Infant  
+0         0.150     15   1.0     0.0     0.0  
+1         0.070      7   1.0     0.0     0.0  
+2         0.210      9   0.0     1.0     0.0  
+3         0.155     10   1.0     0.0     0.0  
+4         0.055      7   0.0     0.0     1.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.25.</span> </figcaption></figure><p id="p-856">The classification problem into all ring values is hard. We can make it easier by classifying whether the number of rings is bigger than or less than the mean.</p>
+<figure class="figure-like" id="listing-431"><pre class="console"><b>t = ab.Rings.mean()
+for k in ab.index:
+    if ab.loc[k, 'Rings'] &lt; t:
+        ab.loc[k, 'Age'] = 0
+    else: ab.loc[k, 'Age'] = 1
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.26.</span> </figcaption></figure><figure class="figure-like" id="listing-432"><pre class="console"><b>keep = ['Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight', 
+         'Viscera_Weight', 'Shell_Weight', 'Male', 'Female', 'Infant']
+X = np.array( ab[ keep] )
+y = np.array( ab['Age'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.27.</span> </figcaption></figure><figure class="figure-like" id="listing-433"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+
+tests = 25
+step = 5
+a = np.arange(step, step*(tests+1), step)
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Score = pa.DataFrame( np.array([ [0]*5 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+
+    for c in range(tests):
+        clf = RandomForestClassifier(n_estimators = a[k], max_depth=5, n_jobs=-1).fit(X_train, y_train)
+        Score.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Score.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Score_mean = [0]*2*tests
+Score_std = [0]*2*tests
+for c in range(2*tests):
+    Score_mean[c] = np.mean(Score.iloc[0:5, c])
+    Score_std[c] = np.std(Score.iloc[0:5, c])
+    
+Score = Score.append( pa.Series(Score_mean, index=Score.columns), ignore_index=True )
+Score = Score.append( pa.Series(Score_std, index=Score.columns), ignore_index=True)
+Score.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+Score
+</b>                     train_0    test_0   train_1    test_1   train_2  \
+0                   0.803112  0.797605  0.806104  0.783234  0.799521   
+1                   0.810592  0.777246  0.812089  0.779641  0.815081   
+2                   0.812388  0.800000  0.810293  0.785629  0.808797   
+3                   0.811490  0.805988  0.811490  0.802395  0.807002   
+4                   0.808797  0.782036  0.810293  0.767665  0.807899   
+Mean                0.809276  0.792575  0.810054  0.783713  0.807660   
+Standard Deviation  0.003303  0.011013  0.002094  0.011199  0.004962   
+
+                      test_2   train_3    test_3   train_4    test_4  ...  \
+0                   0.800000  0.803112  0.801198  0.805506  0.795210  ...   
+1                   0.774850  0.811490  0.768862  0.809096  0.768862  ...   
+2                   0.797605  0.807600  0.786826  0.805506  0.784431  ...   
+3                   0.797605  0.812986  0.805988  0.810892  0.797605  ...   
+4                   0.773653  0.815380  0.772455  0.811490  0.774850  ...   
+Mean                0.788743  0.810114  0.787066  0.808498  0.784192  ...   
+Standard Deviation  0.011870  0.004318  0.014850  0.002567  0.011168  ...   
+
+                    train_20   test_20  train_21   test_21  train_22  \
+0                   0.803411  0.792814  0.809695  0.791617  0.807002   
+1                   0.815380  0.759281  0.817774  0.773653  0.815380   
+2                   0.810293  0.797605  0.812687  0.792814  0.810892   
+3                   0.815380  0.810778  0.807301  0.803593  0.817175   
+4                   0.807899  0.780838  0.808199  0.782036  0.807002   
+Mean                0.810473  0.788263  0.811131  0.788743  0.811490   
+Standard Deviation  0.004576  0.017378  0.003792  0.010179  0.004198   
+
+                     test_22  train_23   test_23  train_24   test_24  
+0                   0.779641  0.795931  0.792814  0.802513  0.789222  
+1                   0.761677  0.803112  0.759281  0.811789  0.768862  
+2                   0.782036  0.807899  0.789222  0.809695  0.788024  
+3                   0.807186  0.807002  0.802395  0.807600  0.801198  
+4                   0.774850  0.811789  0.779641  0.810592  0.778443  
+Mean                0.781078  0.805147  0.784671  0.808438  0.785150  
+Standard Deviation  0.014831  0.005371  0.014636  0.003264  0.010887  
+
+[7 rows x 50 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.28.</span> </figcaption></figure><figure class="figure-like" id="listing-434"><pre class="console"><b>plt.plot(a, Score_mean[::2], 'b-')
+plt.plot(a, Score_mean[1::2], 'r-');
+plt.savefig('14.16.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.16.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.29.</span> </figcaption></figure><figure class="figure-like" id="listing-435"><pre class="console"><b>clf = RandomForestClassifier(n_estimators = 55, max_depth=5, n_jobs=-1).fit(X, y)
+plot_feature_importances(clf, keep)
+plt.savefig('14.17.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/14.17.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.30.</span> </figcaption></figure></section></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

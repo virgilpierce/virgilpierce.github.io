@@ -87,5 +87,9 @@
 
 <xi:include href='lda_svm.xml'/>
 
+<!-- Chapter Fourteen - Decision Trees, Boosted Trees, and Ensembles -->
+
+<xi:include href='decision_trees.xml'/>
+
 </book>
 </pretext>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:19-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># One hot encoding for the 'Sex' feature
+
+for k in ab.index:
+    if ab.loc[k, 'Sex']=='M':
+        ab.loc[k, 'Male']=1
+    else: ab.loc[k, 'Male']=0
+    if ab.loc[k, 'Sex']=='F':
+        ab.loc[k, 'Female']=1
+    else: ab.loc[k, 'Female']=0
+    if ab.loc[k, 'Sex']=='I':
+        ab.loc[k, 'Infant']=1
+    else: ab.loc[k, 'Infant']=0
+        
+ab.head()
+</b>  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  Male  Female  Infant  
+0         0.150     15   1.0     0.0     0.0  
+1         0.070      7   1.0     0.0     0.0  
+2         0.210      9   0.0     1.0     0.0  
+3         0.155     10   1.0     0.0     0.0  
+4         0.055      7   0.0     0.0     1.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.25.</span> </figcaption></figure><span class="incontext"><a href="section-58.html#listing-430">in-context</a></span>
+</body>
+</html>

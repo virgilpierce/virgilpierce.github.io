@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:18-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># MasVnrArea and GarageYrBlt that are NaN probably mean 0 (i.e. no Garage and no Masonry)
+
+for k in hd6.index:
+    if np.isnan(hd6.loc[k, 'MasVnrArea']):
+        hd6.loc[k, 'MasVnrArea']=0
+    if np.isnan(hd6.loc[k, 'GarageYrBlt']):
+        hd6.loc[k, 'GarageYrBlt']=0
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.3.12.</span> </figcaption></figure><span class="incontext"><a href="section-57.html#listing-398">in-context</a></span>
+</body>
+</html>

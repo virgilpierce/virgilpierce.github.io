@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:18-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>C, B, A = np.sort(tree.feature_importances_)[-3:] 
+# numpy.sort is a convenient way to get the smallest values (or largest values) from an array
+d1, d2, d3 = (np.where(tree.feature_importances_==A)[0][0], np.where(tree.feature_importances_==B)[0][0], 
+              np.where(tree.feature_importances_==C)[0][0])
+# nump.where(s==A) tells us for which index s gives A.
+# we should automate the process of checking that they are far apart from each other, 
+# however given the shape of the graph, I am confident they will be.
+
+keep[d1], keep[d2], keep[d3]
+</b>('OverallQual', 'GrLivArea', 'TotalBsmtSF')
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.3.19.</span> </figcaption></figure><span class="incontext"><a href="section-57.html#listing-405">in-context</a></span>
+</body>
+</html>

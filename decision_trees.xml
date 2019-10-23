@@ -1,0 +1,1546 @@
+<chapter xml:id='decision_trees'>
+ <title> Decsion Trees 
+</title>
+
+<introduction>
+<p>Today we will learn a new type of model, called <em>Decision Trees</em> and then explore a number of models using these algorithms. Decision trees represent a significant departure from previous models. Their primary advantage is that they produce models that are easy to explain to <em>non-experts</em> and they are also capable of distilling the most important features in a model.</p>
+
+<p>However Decision Trees do not typically perform well on data as a model (again we see this sort of dichotomy between types of models), so we will also explore some techniques for using multiple decision trees as a model. These will have improved performance as models but will not be as easy to interpret.</p>
+
+<p>Decsision Trees are especially important models in my work on Student Success as they represent the actual placement process we use at universities to determine what mathematics course students should take and what supports they need. <url href="https://www.unco.edu/nhs/mathematical-sciences/placement/results.aspx"> Here is an example of our placement chart at UNC. </url>  You will see very quickly that this is a basic example of a decision tree. With that in mind you can see that they appear in many other places, though perhaps as models that have not been developed algorithmicly, trained on data, or tested.</p>
+
+<p>Perhaps the best place to start is with an example:</p>
+<listing>
+<console>
+<input>
+import pandas as pa
+import matplotlib.pyplot as plt
+import matplotlib.colors as pltcolor
+import numpy as np
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+mpg = pa.read_csv('Data Sets/auto-mpg.csv', names=['mpg', 'cylinders', 'displacement', 'horsepower', 
+                                                   'weight', 'acceleration', 'model year', 'origin', 'car name'])
+mpg.head(10)
+</input>
+<output>
+    mpg  cylinders  displacement horsepower  weight  acceleration  model year  \
+0  18.0          8         307.0        130    3504          12.0          70   
+1  15.0          8         350.0        165    3693          11.5          70   
+2  18.0          8         318.0        150    3436          11.0          70   
+3  16.0          8         304.0        150    3433          12.0          70   
+4  17.0          8         302.0        140    3449          10.5          70   
+5  15.0          8         429.0        198    4341          10.0          70   
+6  14.0          8         454.0        220    4354           9.0          70   
+7  14.0          8         440.0        215    4312           8.5          70   
+8  14.0          8         455.0        225    4425          10.0          70   
+9  15.0          8         390.0        190    3850           8.5          70   
+
+   origin                       car name  
+0       1  \t"chevrolet chevelle malibu"  
+1       1          \t"buick skylark 320"  
+2       1         \t"plymouth satellite"  
+3       1              \t"amc rebel sst"  
+4       1                \t"ford torino"  
+5       1           \t"ford galaxie 500"  
+6       1           \t"chevrolet impala"  
+7       1          \t"plymouth fury iii"  
+8       1           \t"pontiac catalina"  
+9       1         \t"amc ambassador dpl"  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+mpg = mpg[mpg.horsepower!='?']
+mpg.horsepower = mpg.horsepower.astype('int')
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X = np.array(mpg[['horsepower', 'weight']])
+y = np.array(mpg['mpg'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+import numpy.random as rn
+</input>
+</console>
+</listing>
+<p>One note here:  I've realized that we probably should be using a different permutation for each run even across multiple models so for this class I have moved the training/testing set division inside of the plot command. This also means that the fit for the model is in there as well. The function now returns the fitted model. </p>
+<listing>
+<console>
+<input>
+# A bit of code for plotting the contour in a regression problem with two predictors
+# Also prints out the training and testing errors
+
+def plot_reg_model(reg, X, y):
+
+    # We shuffle the data using a random permutation
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    reg.fit(X_train, y_train) # Fit the model
+     
+    nn = 200
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min()-0.1, X[:, 0].max()+0.1
+    y_min, y_max = X[:, 1].min()-0.1, X[:, 1].max()+0.1
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),   # Changed the function to use linspace rather than arrange
+        np.linspace(y_min, y_max, nn))                    # This keeps us from having to adjust h.
+    Z = reg.predict(np.c_[xx.ravel(), yy.ravel()]) # predict
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    plt.contour(xx, yy, Z)
+    
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, marker='+');
+    
+    print('Training R2: {}'.format(reg.score(X_train, y_train)))
+    print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+    
+    return reg
+</input>
+</console>
+</listing>
+<p>Check how the existing regression algorithms from our toolbox do on this data:</p>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression()
+plot_reg_model(reg, X, y)
+plt.savefig('14.1.png')
+</input>
+<output>
+Training R2: 0.7129395751477017
+Testing R2: 0.6747799693458862
+
+</output>
+</console>
+<image source='Images/14.1.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import Ridge
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = Ridge(alpha=2)
+plot_reg_model(reg, X, y);
+plt.savefig('14.2.png')
+</input>
+<output>
+Training R2: 0.6991902274911
+Testing R2: 0.7214973525403486
+
+</output>
+</console>
+<image source='Images/14.2.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import Lasso
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg=Lasso(alpha=1)
+plot_reg_model(reg, X, y);
+plt.savefig('14.3.png')
+</input>
+<output>
+Training R2: 0.7167854279907314
+Testing R2: 0.6300921805228554
+
+</output>
+</console>
+<image source='Images/14.3.png'/>
+</listing>
+<p>Interestingly we get slightly better performance from Lasso depsite only using two features.</p>
+<listing>
+<console>
+<input>
+from sklearn.neighbors import KNeighborsRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+knn = KNeighborsRegressor(n_neighbors=6)
+plot_reg_model(knn, X, y);
+plt.savefig('14.4.png')
+</input>
+<output>
+Training R2: 0.7923221210245921
+Testing R2: 0.7347342158771607
+
+</output>
+</console>
+<image source='Images/14.4.png'/>
+</listing>
+</introduction>
+
+<section>
+ <title> Regression Trees</title>
+<listing>
+<console>
+<input>
+from sklearn.tree import DecisionTreeRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(min_samples_leaf=5)
+plot_reg_model(tree, X, y);
+plt.savefig('14.5.png')
+</input>
+<output>
+Training R2: 0.8380517838864936
+Testing R2: 0.5756283705229308
+
+</output>
+</console>
+<image source='Images/14.5.png'/>
+</listing>
+<p>Below are two tricks for thinking about and visualizing Decision Trees. This first is representing it as the actual tree or decision process. The idea is that starting at the top you follow the rules for a particular datapoint until you reach a leaf. The value you assign from the model in each leaf is the mean of the results that are there.</p>
+
+<p>The Tree has been built by choosing a split at each point that decreases the Mean Squared Error on the training data in that node (though the objective function can be modified). This tree picture then explains what we are seeing in the contour plot. The region is being divided into rectangular regions and then the value of the result is being estimated by the mean in each region of the training data.</p>
+
+<p>The <em>min_samples_leaf</em> parameter sets the model to reject any split of a node that would result in fewer than five samples in one of the leaves. This helps smooth the result (and gives a contour plot that is a little cleaerer for this example. Particularly with regression this parameter will help avoid overfitting the tree. </p>
+
+<p>Note that the model, while it performed well on the training data did not perform well on the testing data compared with the other models we have for regression.</p>
+<listing>
+<console>
+<input>
+from sklearn.tree import export_graphviz
+import graphviz
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-1.dot', feature_names=['horsepower', 'weight'])
+
+with open('tree-1.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-1.png'/>
+</listing>
+
+</section>
+<section>
+ <title> Classification Tree
+</title>
+
+<p>We can use the same idea for classification. We will choose the value or class of a leaf to the be the majority of its members in the training data. We split nodes that will improve the percentage of the training data that is being correctly classified.</p>
+<listing>
+<console>
+<input>
+# Read in the major league players data set
+
+major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+major = major.drop(640, axis=0) 
+
+# We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:1 for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:0 for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2.head()
+</input>
+<output>
+              Name Team  Position  Height  Weight    Age
+0    Adam_Donachie  BAL         0      74   180.0  22.99
+1        Paul_Bako  BAL         0      74   215.0  34.69
+2  Ramon_Hernandez  BAL         0      72   210.0  30.78
+3     Kevin_Millar  BAL         0      72   210.0  35.43
+4      Chris_Gomez  BAL         0      73   188.0  35.71
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+def plot_cat_model(clf, X, y):
+ 
+    # We shuffle the data using a random permutation
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    clf.fit(X_train, y_train) # Fit the model
+
+    nn = 200
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    y_min, y_max = X[:, 1].min() - 2, X[:, 1].max() + 2
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),
+        np.linspace(y_min, y_max, nn))
+    
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+import matplotlib.colors as pltco
+from sklearn.tree import DecisionTreeClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeClassifier(min_samples_leaf=5)
+plot_cat_model(tree, X, y)
+plt.savefig('14.6.png')
+</input>
+<output>
+Training Error: 0.7291414752116082
+Testing Error: 0.616504854368932
+
+</output>
+</console>
+<image source='Images/14.6.png'/>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-2.dot', class_names = ['Not Pitcher', 'Pitcher'], feature_names=['Height', 'weight'], 
+               impurity=False, proportion=True, filled=True)
+
+with open('tree-2.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-2.png'/>
+</listing>
+
+</section>
+<section>
+ <title> High Dimensional Data and Decision Trees
+</title>
+
+<p>Decision trees are especially useful when using many features as they allow us to visualize the algorithm without having to graph it. Here is the house pricing data with a decision tree applied.</p>
+<listing>
+<console>
+<input>
+# Consider the following dataset about homes that sold in a city in Iowa
+
+hd = pa.read_csv('Data Sets/house-prices/train.csv')
+
+hd.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea Street Alley LotShape  \
+0   1          60       RL         65.0     8450   Pave   NaN      Reg   
+1   2          20       RL         80.0     9600   Pave   NaN      Reg   
+2   3          60       RL         68.0    11250   Pave   NaN      IR1   
+3   4          70       RL         60.0     9550   Pave   NaN      IR1   
+4   5          60       RL         84.0    14260   Pave   NaN      IR1   
+
+  LandContour Utilities  ... PoolArea PoolQC Fence MiscFeature MiscVal MoSold  \
+0         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+1         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      5   
+2         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      9   
+3         Lvl    AllPub  ...        0    NaN   NaN         NaN       0      2   
+4         Lvl    AllPub  ...        0    NaN   NaN         NaN       0     12   
+
+  YrSold  SaleType  SaleCondition  SalePrice  
+0   2008        WD         Normal     208500  
+1   2007        WD         Normal     181500  
+2   2008        WD         Normal     223500  
+3   2006        WD        Abnorml     140000  
+4   2008        WD         Normal     250000  
+
+[5 rows x 81 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+def onehot(df, feature):
+    '''A function to do one-hot-encoding of a feature from a dataframe. df = dataframe'''
+
+    v = list(set(df[feature])) # Make an iterable of the unique values for the feature
+    
+    for c in df.index: # cycle through the samples
+        t = df.loc[c, feature]
+        
+        for test in v:
+            if pa.isna(test):  # nan values are sort of a problem and have to be handled separately
+                if pa.isna(t):
+                    df.loc[c, '{}_nan'.format(feature)] = 1
+                else:
+                    df.loc[c, '{}_nan'.format(feature)] = 0
+            else:
+                if t == test:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 1  # Makes a new feature with name feature_value
+                                                              # and codes it as a 1 if that was the value
+                else:
+                    df.loc[c, '{}_{}'.format(feature, test)] = 0  # and 0 otherwise
+            
+    return df.drop(feature, axis=1) # returns a dataframe with the encoded feature removed
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We can recode it using a dictionary and .map()
+Street_dict = {'Grvl':0, 'Pave':1, 0:0, 1:1}  
+# Note we include the trivial coding of the new values as otherwise if we run this twice
+# it produces NaN values for the Street feature.
+hd.Street = hd.Street.map(Street_dict)
+set(hd.Street)
+</input>
+<output>
+{0, 1}
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd2 = onehot(hd, 'Alley')
+hd3 = onehot(onehot(onehot(hd2, 'ExterQual'), 'LotShape'), 'LandContour')
+hd3.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea  Street Utilities LotConfig  \
+0   1          60       RL         65.0     8450       1    AllPub    Inside   
+1   2          20       RL         80.0     9600       1    AllPub       FR2   
+2   3          60       RL         68.0    11250       1    AllPub    Inside   
+3   4          70       RL         60.0     9550       1    AllPub    Corner   
+4   5          60       RL         84.0    14260       1    AllPub       FR2   
+
+  LandSlope Neighborhood  ... ExterQual_TA ExterQual_Ex LotShape_IR2  \
+0       Gtl      CollgCr  ...          0.0          0.0          0.0   
+1       Gtl      Veenker  ...          1.0          0.0          0.0   
+2       Gtl      CollgCr  ...          0.0          0.0          0.0   
+3       Gtl      Crawfor  ...          1.0          0.0          0.0   
+4       Gtl      NoRidge  ...          0.0          0.0          0.0   
+
+  LotShape_IR1  LotShape_IR3  LotShape_Reg  LandContour_Bnk  LandContour_Lvl  \
+0          0.0           0.0           1.0              0.0              1.0   
+1          0.0           0.0           1.0              0.0              1.0   
+2          1.0           0.0           0.0              0.0              1.0   
+3          1.0           0.0           0.0              0.0              1.0   
+4          1.0           0.0           0.0              0.0              1.0   
+
+  LandContour_HLS LandContour_Low  
+0             0.0             0.0  
+1             0.0             0.0  
+2             0.0             0.0  
+3             0.0             0.0  
+4             0.0             0.0  
+
+[5 rows x 92 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+Utilities_dict = {'AllPub':1, 'NoSeWa':0, 1:1, 0:0}
+hd3.Utilities = hd3.Utilities.map(Utilities_dict)
+hd3.head()
+</input>
+<output>
+   Id  MSSubClass MSZoning  LotFrontage  LotArea  Street  Utilities LotConfig  \
+0   1          60       RL         65.0     8450       1          1    Inside   
+1   2          20       RL         80.0     9600       1          1       FR2   
+2   3          60       RL         68.0    11250       1          1    Inside   
+3   4          70       RL         60.0     9550       1          1    Corner   
+4   5          60       RL         84.0    14260       1          1       FR2   
+
+  LandSlope Neighborhood  ... ExterQual_TA ExterQual_Ex LotShape_IR2  \
+0       Gtl      CollgCr  ...          0.0          0.0          0.0   
+1       Gtl      Veenker  ...          1.0          0.0          0.0   
+2       Gtl      CollgCr  ...          0.0          0.0          0.0   
+3       Gtl      Crawfor  ...          1.0          0.0          0.0   
+4       Gtl      NoRidge  ...          0.0          0.0          0.0   
+
+  LotShape_IR1  LotShape_IR3  LotShape_Reg  LandContour_Bnk  LandContour_Lvl  \
+0          0.0           0.0           1.0              0.0              1.0   
+1          0.0           0.0           1.0              0.0              1.0   
+2          1.0           0.0           0.0              0.0              1.0   
+3          1.0           0.0           0.0              0.0              1.0   
+4          1.0           0.0           0.0              0.0              1.0   
+
+  LandContour_HLS LandContour_Low  
+0             0.0             0.0  
+1             0.0             0.0  
+2             0.0             0.0  
+3             0.0             0.0  
+4             0.0             0.0  
+
+[5 rows x 92 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd4 = onehot(onehot(onehot(onehot(hd3, 'LotConfig'), 'LandSlope'), 'Neighborhood'), 'MSZoning')
+hd4.head()
+</input>
+<output>
+   Id  MSSubClass  LotFrontage  LotArea  Street  Utilities Condition1  \
+0   1          60         65.0     8450       1          1       Norm   
+1   2          20         80.0     9600       1          1      Feedr   
+2   3          60         68.0    11250       1          1       Norm   
+3   4          70         60.0     9550       1          1       Norm   
+4   5          60         84.0    14260       1          1       Norm   
+
+  Condition2 BldgType HouseStyle  ...  Neighborhood_Blmngtn  \
+0       Norm     1Fam     2Story  ...                   0.0   
+1       Norm     1Fam     1Story  ...                   0.0   
+2       Norm     1Fam     2Story  ...                   0.0   
+3       Norm     1Fam     2Story  ...                   0.0   
+4       Norm     1Fam     2Story  ...                   0.0   
+
+   Neighborhood_OldTown  Neighborhood_Blueste  Neighborhood_Gilbert  \
+0                   0.0                   0.0                   0.0   
+1                   0.0                   0.0                   0.0   
+2                   0.0                   0.0                   0.0   
+3                   0.0                   0.0                   0.0   
+4                   0.0                   0.0                   0.0   
+
+  Neighborhood_ClearCr MSZoning_RH MSZoning_C (all) MSZoning_FV MSZoning_RM  \
+0                  0.0         0.0              0.0         0.0         0.0   
+1                  0.0         0.0              0.0         0.0         0.0   
+2                  0.0         0.0              0.0         0.0         0.0   
+3                  0.0         0.0              0.0         0.0         0.0   
+4                  0.0         0.0              0.0         0.0         0.0   
+
+   MSZoning_RL  
+0          1.0  
+1          1.0  
+2          1.0  
+3          1.0  
+4          1.0  
+
+[5 rows x 126 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+def condition(df, feature1, feature2):
+    
+    #This is onehot encoding but for features that represent the same things 
+    # - i.e. where a sample could have two values identified.
+    
+    v = set(list(set(df[feature1])) + list(set(df[feature2])))  # Build a list of the possible outputs
+    
+    for c in df.index: # cycle through the samples
+        t1 = df.loc[c, feature1]
+        t2 = df.loc[c, feature2]
+        
+        for test in v:
+            if (t1==test) or (t2==test):
+                df.loc[c, '{}_{}'.format(feature1, test)] = 1  # Makes a new feature with name feature_value
+                                                            # and codes it as a 1 if that was the value
+            else:
+                df.loc[c, '{}_{}'.format(feature1, test)] = 0  # and 0 otherwise
+            
+    return df.drop([feature1, feature2], axis=1) # returns a dataframe with the encoded feature removed
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd5 = condition(hd4, 'Condition1', 'Condition2')
+hd5.head()
+</input>
+<output>
+   Id  MSSubClass  LotFrontage  LotArea  Street  Utilities BldgType  \
+0   1          60         65.0     8450       1          1     1Fam   
+1   2          20         80.0     9600       1          1     1Fam   
+2   3          60         68.0    11250       1          1     1Fam   
+3   4          70         60.0     9550       1          1     1Fam   
+4   5          60         84.0    14260       1          1     1Fam   
+
+  HouseStyle  OverallQual  OverallCond  ...  MSZoning_RL  Condition1_Norm  \
+0     2Story            7            5  ...          1.0              1.0   
+1     1Story            6            8  ...          1.0              1.0   
+2     2Story            7            5  ...          1.0              1.0   
+3     2Story            7            5  ...          1.0              1.0   
+4     2Story            8            5  ...          1.0              1.0   
+
+  Condition1_RRAe Condition1_Artery Condition1_RRAn Condition1_RRNe  \
+0             0.0               0.0             0.0             0.0   
+1             0.0               0.0             0.0             0.0   
+2             0.0               0.0             0.0             0.0   
+3             0.0               0.0             0.0             0.0   
+4             0.0               0.0             0.0             0.0   
+
+  Condition1_RRNn  Condition1_Feedr Condition1_PosA Condition1_PosN  
+0             0.0               0.0             0.0             0.0  
+1             0.0               1.0             0.0             0.0  
+2             0.0               0.0             0.0             0.0  
+3             0.0               0.0             0.0             0.0  
+4             0.0               0.0             0.0             0.0  
+
+[5 rows x 133 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+hd6 = onehot(onehot(onehot(onehot(hd5, 'BldgType'), 'HouseStyle'), 'RoofStyle'), 'RoofMatl')
+hd6.iloc[:5, 9:]
+</input>
+<output>
+   YearRemodAdd Exterior1st Exterior2nd MasVnrType  MasVnrArea ExterCond  \
+0          2003     VinylSd     VinylSd    BrkFace       196.0        TA   
+1          1976     MetalSd     MetalSd       None         0.0        TA   
+2          2002     VinylSd     VinylSd    BrkFace       162.0        TA   
+3          1970     Wd Sdng     Wd Shng       None         0.0        TA   
+4          2000     VinylSd     VinylSd    BrkFace       350.0        TA   
+
+  Foundation BsmtQual BsmtCond BsmtExposure  ... RoofStyle_Gable  \
+0      PConc       Gd       TA           No  ...             1.0   
+1     CBlock       Gd       TA           Gd  ...             1.0   
+2      PConc       Gd       TA           Mn  ...             1.0   
+3     BrkTil       TA       Gd           No  ...             1.0   
+4      PConc       Gd       TA           Av  ...             1.0   
+
+   RoofStyle_Gambrel RoofMatl_Membran  RoofMatl_CompShg  RoofMatl_ClyTile  \
+0                0.0              0.0               1.0               0.0   
+1                0.0              0.0               1.0               0.0   
+2                0.0              0.0               1.0               0.0   
+3                0.0              0.0               1.0               0.0   
+4                0.0              0.0               1.0               0.0   
+
+   RoofMatl_WdShngl RoofMatl_Roll RoofMatl_Tar&amp;Grv RoofMatl_WdShake  \
+0               0.0           0.0              0.0              0.0   
+1               0.0           0.0              0.0              0.0   
+2               0.0           0.0              0.0              0.0   
+3               0.0           0.0              0.0              0.0   
+4               0.0           0.0              0.0              0.0   
+
+  RoofMatl_Metal  
+0            0.0  
+1            0.0  
+2            0.0  
+3            0.0  
+4            0.0  
+
+[5 rows x 147 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Probably enough, lets make a list of all of the features that are not 'object'
+# (i.e. that are numerical)
+
+keep = hd6.columns[hd6.dtypes!='object'][1:]
+keep
+</input>
+<output>
+Index(['MSSubClass', 'LotFrontage', 'LotArea', 'Street', 'Utilities',
+       'OverallQual', 'OverallCond', 'YearBuilt', 'YearRemodAdd', 'MasVnrArea',
+       ...
+       'RoofStyle_Gable', 'RoofStyle_Gambrel', 'RoofMatl_Membran',
+       'RoofMatl_CompShg', 'RoofMatl_ClyTile', 'RoofMatl_WdShngl',
+       'RoofMatl_Roll', 'RoofMatl_Tar&amp;Grv', 'RoofMatl_WdShake',
+       'RoofMatl_Metal'],
+      dtype='object', length=128)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Check for NaN
+
+for v in keep:
+    if sum(np.isnan(hd6[v]))!=0:
+        print(v)
+</input>
+<output>
+LotFrontage
+MasVnrArea
+GarageYrBlt
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# MasVnrArea and GarageYrBlt that are NaN probably mean 0 (i.e. no Garage and no Masonry)
+
+for k in hd6.index:
+    if np.isnan(hd6.loc[k, 'MasVnrArea']):
+        hd6.loc[k, 'MasVnrArea']=0
+    if np.isnan(hd6.loc[k, 'GarageYrBlt']):
+        hd6.loc[k, 'GarageYrBlt']=0
+
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+keep = list(hd6.columns[hd6.dtypes!='object'][1:])
+keep.remove('LotFrontage')   # There are some NaNs in LotFrontage. We could try to fill them in with a regression.
+                             # Or we might check with a content expert and see if they should be 0
+hd7 = hd6.loc[:, keep]
+hd7.head()
+</input>
+<output>
+   MSSubClass  LotArea  Street  Utilities  OverallQual  OverallCond  \
+0          60     8450       1          1            7            5   
+1          20     9600       1          1            6            8   
+2          60    11250       1          1            7            5   
+3          70     9550       1          1            7            5   
+4          60    14260       1          1            8            5   
+
+   YearBuilt  YearRemodAdd  MasVnrArea  BsmtFinSF1  ...  RoofStyle_Gable  \
+0       2003          2003       196.0         706  ...              1.0   
+1       1976          1976         0.0         978  ...              1.0   
+2       2001          2002       162.0         486  ...              1.0   
+3       1915          1970         0.0         216  ...              1.0   
+4       2000          2000       350.0         655  ...              1.0   
+
+   RoofStyle_Gambrel  RoofMatl_Membran  RoofMatl_CompShg  RoofMatl_ClyTile  \
+0                0.0               0.0               1.0               0.0   
+1                0.0               0.0               1.0               0.0   
+2                0.0               0.0               1.0               0.0   
+3                0.0               0.0               1.0               0.0   
+4                0.0               0.0               1.0               0.0   
+
+   RoofMatl_WdShngl  RoofMatl_Roll  RoofMatl_Tar&amp;Grv  RoofMatl_WdShake  \
+0               0.0            0.0               0.0               0.0   
+1               0.0            0.0               0.0               0.0   
+2               0.0            0.0               0.0               0.0   
+3               0.0            0.0               0.0               0.0   
+4               0.0            0.0               0.0               0.0   
+
+   RoofMatl_Metal  
+0             0.0  
+1             0.0  
+2             0.0  
+3             0.0  
+4             0.0  
+
+[5 rows x 127 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Convert them to Numpy Arrays X for predictors and y for result
+
+keep.remove('SalePrice')
+X = np.array(hd7.loc[:, keep])
+y = np.array(hd7.loc[:, 'SalePrice'])
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(min_samples_leaf=5)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</input>
+<output>
+(0.939885191516805, 0.7211346713580502)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-3.dot', feature_names=keep)
+
+with open('tree-3.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-3.png'/>
+</listing>
+<p>One of the big uses I have found for decsion trees and related algorithms is in helping to identify features that are important in the regression or classification. Here is a short code snippet for producing a graph of the features by importance.</p>
+<listing>
+<console>
+<input>
+def plot_feature_importances(model, names, tol=10**-3):
+    n_features = len(names)
+    plot_names = []
+    plot_importances = []
+    
+    for k in range(n_features):
+        if model.feature_importances_[k] > tol:
+            plot_names += [ names[k] ]
+            plot_importances += [ model.feature_importances_[k] ]
+    
+    n_plot = len(plot_names)
+    
+    plt.figure(figsize = (10, 6))
+    plt.barh(range(n_plot), plot_importances, align = 'center')
+    plt.yticks(np.arange(n_plot), plot_names)
+    plt.xlabel('Feature importance')
+    plt.ylabel('Feature')
+    plt.ylim(-1, n_plot)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plot_feature_importances(tree, keep)
+plt.savefig('14.7.png')
+</input>
+</console>
+<image source='Images/14.7.png'/>
+</listing>
+<p>For this model, we see that most features ended up being unimportant. It suggests it would be worth retaining the model using only the ones that were captured as important.</p>
+<listing>
+<console>
+<input>
+
+C, B, A = np.sort(tree.feature_importances_)[-3:] 
+# numpy.sort is a convenient way to get the smallest values (or largest values) from an array
+d1, d2, d3 = (np.where(tree.feature_importances_==A)[0][0], np.where(tree.feature_importances_==B)[0][0], 
+              np.where(tree.feature_importances_==C)[0][0])
+# nump.where(s==A) tells us for which index s gives A.
+# we should automate the process of checking that they are far apart from each other, 
+# however given the shape of the graph, I am confident they will be.
+
+keep[d1], keep[d2], keep[d3]
+</input>
+<output>
+('OverallQual', 'GrLivArea', 'TotalBsmtSF')
+</output>
+</console>
+</listing>
+</section>
+
+<section>
+ <title> Discussion of Decision Tree Algorithms
+</title>
+
+<introduction>
+<p>Those of you taking the <em>Graph Theory Course</em> or the <em>Algorithms Course</em> have seen trees before. Note that the decision trees here are a subset of the trees you could build by dividing the samples by splitting until you reach leaves with less than 10 nodes. The subset is much smaller because the splitting has to preserve samples that are close in the feature coordinates being used, however for even a moderatley big dataset it will still be to large to effectively search all possible decision trees for the one that performs the best.</p>
+
+<p>So how does the algorithm find the tree from the training data?  It does two tricks to improve the speed over the naive pure search. First we will use a <em>Greedy</em> algorithm to grow the tree from one node to several. The second trick is needed if the number of features is large, as this also affects the number of choices the algorithm will have. So instead of considering the best split from all possible features, the algorithm at each step will take a random subset of the features and determine the best split from them.</p>
+
+<p>A <em>Greedy</em> algorithm is one that makes the best choice for the next step. It is Greedy in the sense that it might overlook choices for the split at the current step that would lead to a better tree later in the process.  In the <em>Algorithms Course</em> you saw a number of <em>Greedy</em> algorithms in the context of problems that required us to search trees and graphs, the classic one being the Traveling Salesmen problem. The <em>Greedy</em> solution to the traveling salesmen problem chooses for its next trip the cheapest (or shortest) edge from its current node.</p>
+
+<p>We can get a sense of how a Decision Tree grows by restricting the number of levels (height) with the <em>max_depth</em> parameter and setting the random seed with <em>random_state</em>. We need to set the random seed because otherwise the randomness in the algorithm will generate a different tree each time.</p>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=1, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</input>
+<output>
+(0.4477798236024506, 0.46379763502464244)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-4.dot', feature_names=keep)
+
+with open('tree-4.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-4.png'/>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=2, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</input>
+<output>
+(0.6257521423529686, 0.6490050640951155)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-5.dot', feature_names=keep)
+
+with open('tree-5.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-5.png'/>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(min_samples_leaf=5, max_depth=3, random_state=123)
+tree.fit(X_train, y_train)
+tree.score(X_train, y_train), tree.score(X_test, y_test)
+</input>
+<output>
+(0.730264169405626, 0.7059616743966577)
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-6.dot', feature_names=keep)
+
+with open('tree-6.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-6.png'/>
+</listing>
+<p>Or in the case of classification.</p>
+<listing>
+<console>
+<input>
+X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=1, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.8.png')
+</input>
+<output>
+Training Error: 0.6650544135429263
+Testing Error: 0.6019417475728155
+
+</output>
+</console>
+<image source='Images/14.8.png'/>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=2, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.9.png')
+</input>
+<output>
+Training Error: 0.6457073760580411
+Testing Error: 0.6796116504854369
+
+</output>
+</console>
+<image source='Images/14.9.png'/>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-7.dot', class_names = ['Not Pitcher', 'Pitcher'], feature_names=['Height', 'weight'], 
+               impurity=False, proportion=True, filled=True)
+
+with open('tree-7.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-7.png'/>
+</listing>
+<p>This turns out to be a nice example, because notice at this level the splits it has selected did not actually change the prediction, but what they did do was improve the quality of some of the classes. There are different objective functions one could use for this splitting, they are listed as defaults in the function help page.</p>
+<listing>
+<console>
+<input>
+tree = DecisionTreeClassifier(min_samples_leaf=5, max_depth=3, random_state=123)
+plot_cat_model(tree, X, y)
+plt.savefig('14.10.png')
+</input>
+<output>
+Training Error: 0.6590084643288996
+Testing Error: 0.6504854368932039
+
+</output>
+</console>
+<image source='Images/14.10.png'/>
+</listing>
+<listing>
+<console>
+<input>
+export_graphviz(tree, out_file='tree-8.dot', class_names = ['Not Pitcher', 'Pitcher'], feature_names=['Height', 'weight'], 
+               impurity=False, proportion=True, filled=True)
+
+with open('tree-8.dot') as f:
+    dot_graph = f.read()
+
+display( graphviz.Source(dot_graph) )
+</input>
+</console>
+<image source='Images/tree-8.png'/>
+</listing>
+<p>Notice at this level only one subclass has appeared (and hence one new rectangle in the region plot.</p>
+
+</introduction>
+
+
+<subsection>
+ <title> Extensions of Trees
+</title>
+
+<introduction>
+<p>While decision trees are nice in terms of explaining a result, they do not typically perform all that well on testing data. However a couple of generalizations will do a good job of helping decision trees relax on the training data and avoid overfitting which will improve performance on testing data. The result will be a loss of the interpretative power of the algorithm.</p>
+</introduction>
+
+<subsubsection>
+ <title> Boosting
+</title>
+
+<p>The first extension is called <em>Boosting</em>. Boosting applies successive trees to the errors between the current model and a subset of the training data. This is our first example of an <em>Ensemble</em> model that uses combinations (in the case of Boosting, linear combinations) of models. This results in models that have:</p>
+
+<p><ul>
+<li><p>a number of tuning parameters: giving us the ability to identify the best model for a dataset</p>
+</li>
+<li><p>applying randomness to smooth out variations</p>
+</li>
+<li><p>overall a model that retains some flexibility of the component models, but has also been smoothed.</p>
+</li>
+</ul>
+</p>
+<listing>
+<console>
+<input>
+from sklearn.ensemble import GradientBoostingRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# Convert them to Numpy Arrays X for predictors and y for result
+
+X = np.array(hd7.loc[:, keep])
+y = np.array(hd7.loc[:, 'SalePrice'])
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+X_test = X[:test]       # Then create the test
+y_test = y[:test]
+X_train = X[test:]     # and train sets
+y_train = y[test:]
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1)
+reg.fit(X_train, y_train)
+reg.score(X_train, y_train), reg.score(X_test, y_test)
+</input>
+<output>
+(0.9669936852996642, 0.820635365251239)
+</output>
+</console>
+</listing>
+<p>Of course a big question becomes, what is the right choice of the various parameters. Let's use cross validation to choose the right value of <em>learning_rate</em>; note that the Ensemble method itself uses a form of bootstrapping/cross validation in that it trains the boosted trees at each step on a random sample of the training data.</p>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+
+tests = 25
+a = np.linspace(0.01, 0.5, tests)
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+R2 = pa.DataFrame( np.array([ [0]*5 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+
+    for c in range(tests):
+        reg = GradientBoostingRegressor(n_estimators=100, learning_rate=a[c]).fit(X_train, y_train)
+        R2.iloc[k, 2*c] = reg.score(X_train, y_train)
+        R2.iloc[k, 2*c+1] = reg.score(X_test, y_test)
+
+R2mean = [0]*2*tests
+R2std = [0]*2*tests
+for c in range(2*tests):
+    R2mean[c] = np.mean(R2.iloc[0:5, c])
+    R2std[c] = np.std(R2.iloc[0:5, c])
+    
+R2 = R2.append( pa.Series(R2mean, index=R2.columns), ignore_index=True )
+R2 = R2.append( pa.Series(R2std, index=R2.columns), ignore_index=True)
+R2.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+R2
+</input>
+<output>
+                     train_0    test_0   train_1    test_1   train_2  \
+0                   0.707382  0.676637  0.922481  0.871304  0.950779   
+1                   0.707704  0.630357  0.921225  0.815680  0.951237   
+2                   0.697350  0.678079  0.915217  0.870622  0.947065   
+3                   0.704397  0.654268  0.918301  0.860254  0.948063   
+4                   0.707690  0.666489  0.920472  0.860037  0.949732   
+Mean                0.704905  0.661166  0.919539  0.855579  0.949375   
+Standard Deviation  0.003976  0.017610  0.002553  0.020529  0.001589   
+
+                      test_2   train_3    test_3   train_4    test_4  ...  \
+0                   0.889662  0.960931  0.897842  0.965577  0.897137  ...   
+1                   0.837151  0.960074  0.839635  0.966350  0.853936  ...   
+2                   0.894926  0.957823  0.904107  0.963999  0.904733  ...   
+3                   0.889828  0.957807  0.891822  0.963012  0.901399  ...   
+4                   0.879365  0.957564  0.896262  0.963938  0.886416  ...   
+Mean                0.878186  0.958840  0.885934  0.964575  0.888724  ...   
+Standard Deviation  0.021131  0.001387  0.023482  0.001211  0.018457  ...   
+
+                    train_20   test_20  train_21   test_21  train_22  \
+0                   0.991123  0.872184  0.991212  0.879069  0.993060   
+1                   0.991466  0.854575  0.991156  0.824914  0.991297   
+2                   0.990421  0.900892  0.990379  0.895271  0.990609   
+3                   0.990842  0.898286  0.991230  0.871729  0.991355   
+4                   0.990247  0.880887  0.991117  0.848389  0.991931   
+Mean                0.990820  0.881365  0.991019  0.863874  0.991650   
+Standard Deviation  0.000446  0.017145  0.000322  0.024642  0.000820   
+
+                     test_22  train_23   test_23  train_24   test_24  
+0                   0.863578  0.992931  0.875422  0.992713  0.878765  
+1                   0.827704  0.991610  0.820427  0.992225  0.840474  
+2                   0.881612  0.991684  0.884510  0.991380  0.888234  
+3                   0.880042  0.992422  0.870430  0.992372  0.881311  
+4                   0.818972  0.992651  0.880965  0.992985  0.858681  
+Mean                0.854381  0.992260  0.866351  0.992335  0.869493  
+Standard Deviation  0.026268  0.000526  0.023457  0.000546  0.017526  
+
+[7 rows x 50 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(a, R2mean[::2], 'b-')
+plt.plot(a, R2mean[1::2], 'r-')
+plt.savefig('14.11.png')
+</input>
+</console>
+<image source='Images/14.11.png'/>
+</listing>
+<p>Using this we make the best decsion we can from the experiments and then use the entire dataset to fit the model. We can then ask what were the important features used in the model.</p>
+<listing>
+<console>
+<input>
+reg = GradientBoostingRegressor(n_estimators=100, learning_rate= 0.2).fit(X, y)
+plot_feature_importances(reg, keep)
+plt.savefig('14.12.png')
+</input>
+</console>
+<image source='Images/14.12.png'/>
+</listing>
+
+</subsubsection>
+
+<subsubsection>
+ <title> Random Forests
+</title>
+
+<p>In contrast to <em>Boosting</em> where the model is built sequentially, <em>Random Forests</em> are a type of Ensemble model where individual models are trained on samples of the training data, and are then allowed to vote to give a prediction. The weights of the votes are trained on the full set of training data. This again improves the predictive capability of <em>Decision Trees</em> by introducing randomness and some additional tuning parameters into the problem. </p>
+<listing>
+<console>
+<input>
+from sklearn.ensemble import RandomForestClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = RandomForestClassifier(n_estimators=10, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.13.png')
+</input>
+<output>
+Training Error: 0.7678355501813785
+Testing Error: 0.6019417475728155
+
+</output>
+</console>
+<image source='Images/14.13.png'/>
+</listing>
+<p>Note that because the trees in the forest are built on random samples of the training data, they can be built simmultaneously. Thus the algorithm is parallizable, the <em>n_jobs</em> parameter specifics the number of cores to use and -1 means uses all available. The <em>Boosting</em> algorithms on the other hand build the next tree based on the results of the previous one and so are not parallizable.</p>
+
+<p>Here we see some evidence of overfitting. To address this we need to adjust the parameters in the model. There is the <em>n_estimators</em> controlling the number of trees, and then there are the same parameters as for trees that control the size and behavior of the individual decision trees.</p>
+<listing>
+<console>
+<input>
+clf = RandomForestClassifier(n_estimators=20, min_samples_split=10, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.14.png')
+</input>
+<output>
+Training Error: 0.750906892382104
+Testing Error: 0.6262135922330098
+
+</output>
+</console>
+<image source='Images/14.14.png'/>
+</listing>
+<listing>
+<console>
+<input>
+clf = RandomForestClassifier(n_estimators=50, max_depth=3, n_jobs=-1) 
+plot_cat_model(clf, X, y)
+plt.savefig('14.15.png')
+</input>
+<output>
+Training Error: 0.6553808948004837
+Testing Error: 0.6650485436893204
+
+</output>
+</console>
+<image source='Images/14.15.png'/>
+</listing>
+
+</subsubsection>
+<subsubsection>
+ <title> Another Classification Example with more Features</title>
+<listing>
+<console>
+<input>
+ab = pa.read_csv('Data Sets/Abalone/abalone.csv', names=['Sex', 'Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight',
+                                                        'Viscera_Weight', 'Shell_Weight', 'Rings'])
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# One hot encoding for the 'Sex' feature
+
+for k in ab.index:
+    if ab.loc[k, 'Sex']=='M':
+        ab.loc[k, 'Male']=1
+    else: ab.loc[k, 'Male']=0
+    if ab.loc[k, 'Sex']=='F':
+        ab.loc[k, 'Female']=1
+    else: ab.loc[k, 'Female']=0
+    if ab.loc[k, 'Sex']=='I':
+        ab.loc[k, 'Infant']=1
+    else: ab.loc[k, 'Infant']=0
+        
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  Male  Female  Infant  
+0         0.150     15   1.0     0.0     0.0  
+1         0.070      7   1.0     0.0     0.0  
+2         0.210      9   0.0     1.0     0.0  
+3         0.155     10   1.0     0.0     0.0  
+4         0.055      7   0.0     0.0     1.0  
+</output>
+</console>
+</listing>
+<p>The classification problem into all ring values is hard. We can make it easier by classifying whether the number of rings is bigger than or less than the mean.</p>
+<listing>
+<console>
+<input>
+t = ab.Rings.mean()
+for k in ab.index:
+    if ab.loc[k, 'Rings'] &lt; t:
+        ab.loc[k, 'Age'] = 0
+    else: ab.loc[k, 'Age'] = 1
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+keep = ['Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight', 
+         'Viscera_Weight', 'Shell_Weight', 'Male', 'Female', 'Infant']
+X = np.array( ab[ keep] )
+y = np.array( ab['Age'])
+
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+
+tests = 25
+step = 5
+a = np.arange(step, step*(tests+1), step)
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Score = pa.DataFrame( np.array([ [0]*5 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+
+    for c in range(tests):
+        clf = RandomForestClassifier(n_estimators = a[k], max_depth=5, n_jobs=-1).fit(X_train, y_train)
+        Score.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Score.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Score_mean = [0]*2*tests
+Score_std = [0]*2*tests
+for c in range(2*tests):
+    Score_mean[c] = np.mean(Score.iloc[0:5, c])
+    Score_std[c] = np.std(Score.iloc[0:5, c])
+    
+Score = Score.append( pa.Series(Score_mean, index=Score.columns), ignore_index=True )
+Score = Score.append( pa.Series(Score_std, index=Score.columns), ignore_index=True)
+Score.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+Score
+</input>
+<output>
+                     train_0    test_0   train_1    test_1   train_2  \
+0                   0.803112  0.797605  0.806104  0.783234  0.799521   
+1                   0.810592  0.777246  0.812089  0.779641  0.815081   
+2                   0.812388  0.800000  0.810293  0.785629  0.808797   
+3                   0.811490  0.805988  0.811490  0.802395  0.807002   
+4                   0.808797  0.782036  0.810293  0.767665  0.807899   
+Mean                0.809276  0.792575  0.810054  0.783713  0.807660   
+Standard Deviation  0.003303  0.011013  0.002094  0.011199  0.004962   
+
+                      test_2   train_3    test_3   train_4    test_4  ...  \
+0                   0.800000  0.803112  0.801198  0.805506  0.795210  ...   
+1                   0.774850  0.811490  0.768862  0.809096  0.768862  ...   
+2                   0.797605  0.807600  0.786826  0.805506  0.784431  ...   
+3                   0.797605  0.812986  0.805988  0.810892  0.797605  ...   
+4                   0.773653  0.815380  0.772455  0.811490  0.774850  ...   
+Mean                0.788743  0.810114  0.787066  0.808498  0.784192  ...   
+Standard Deviation  0.011870  0.004318  0.014850  0.002567  0.011168  ...   
+
+                    train_20   test_20  train_21   test_21  train_22  \
+0                   0.803411  0.792814  0.809695  0.791617  0.807002   
+1                   0.815380  0.759281  0.817774  0.773653  0.815380   
+2                   0.810293  0.797605  0.812687  0.792814  0.810892   
+3                   0.815380  0.810778  0.807301  0.803593  0.817175   
+4                   0.807899  0.780838  0.808199  0.782036  0.807002   
+Mean                0.810473  0.788263  0.811131  0.788743  0.811490   
+Standard Deviation  0.004576  0.017378  0.003792  0.010179  0.004198   
+
+                     test_22  train_23   test_23  train_24   test_24  
+0                   0.779641  0.795931  0.792814  0.802513  0.789222  
+1                   0.761677  0.803112  0.759281  0.811789  0.768862  
+2                   0.782036  0.807899  0.789222  0.809695  0.788024  
+3                   0.807186  0.807002  0.802395  0.807600  0.801198  
+4                   0.774850  0.811789  0.779641  0.810592  0.778443  
+Mean                0.781078  0.805147  0.784671  0.808438  0.785150  
+Standard Deviation  0.014831  0.005371  0.014636  0.003264  0.010887  
+
+[7 rows x 50 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(a, Score_mean[::2], 'b-')
+plt.plot(a, Score_mean[1::2], 'r-');
+plt.savefig('14.16.png')
+</input>
+</console>
+<image source='Images/14.16.png'/>
+</listing>
+<listing>
+<console>
+<input>
+clf = RandomForestClassifier(n_estimators = 55, max_depth=5, n_jobs=-1).fit(X, y)
+plot_feature_importances(clf, keep)
+plt.savefig('14.17.png')
+</input>
+</console>
+<image source='Images/14.17.png'/>
+</listing>
+</subsubsection>
+</subsection>
+</section>
+</chapter>

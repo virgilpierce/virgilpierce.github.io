@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:19-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = X.shape[0]
+test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+X = X[perm]
+y = y[perm]
+
+tests = 25
+step = 5
+a = np.arange(step, step*(tests+1), step)
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Score = pa.DataFrame( np.array([ [0]*5 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(5):
+    X_test = X[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (X[:k*test], X[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+
+    for c in range(tests):
+        clf = RandomForestClassifier(n_estimators = a[k], max_depth=5, n_jobs=-1).fit(X_train, y_train)
+        Score.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Score.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Score_mean = [0]*2*tests
+Score_std = [0]*2*tests
+for c in range(2*tests):
+    Score_mean[c] = np.mean(Score.iloc[0:5, c])
+    Score_std[c] = np.std(Score.iloc[0:5, c])
+    
+Score = Score.append( pa.Series(Score_mean, index=Score.columns), ignore_index=True )
+Score = Score.append( pa.Series(Score_std, index=Score.columns), ignore_index=True)
+Score.index = [0, 1, 2, 3, 4, 'Mean', 'Standard Deviation']
+Score
+</b>                     train_0    test_0   train_1    test_1   train_2  \
+0                   0.803112  0.797605  0.806104  0.783234  0.799521   
+1                   0.810592  0.777246  0.812089  0.779641  0.815081   
+2                   0.812388  0.800000  0.810293  0.785629  0.808797   
+3                   0.811490  0.805988  0.811490  0.802395  0.807002   
+4                   0.808797  0.782036  0.810293  0.767665  0.807899   
+Mean                0.809276  0.792575  0.810054  0.783713  0.807660   
+Standard Deviation  0.003303  0.011013  0.002094  0.011199  0.004962   
+
+                      test_2   train_3    test_3   train_4    test_4  ...  \
+0                   0.800000  0.803112  0.801198  0.805506  0.795210  ...   
+1                   0.774850  0.811490  0.768862  0.809096  0.768862  ...   
+2                   0.797605  0.807600  0.786826  0.805506  0.784431  ...   
+3                   0.797605  0.812986  0.805988  0.810892  0.797605  ...   
+4                   0.773653  0.815380  0.772455  0.811490  0.774850  ...   
+Mean                0.788743  0.810114  0.787066  0.808498  0.784192  ...   
+Standard Deviation  0.011870  0.004318  0.014850  0.002567  0.011168  ...   
+
+                    train_20   test_20  train_21   test_21  train_22  \
+0                   0.803411  0.792814  0.809695  0.791617  0.807002   
+1                   0.815380  0.759281  0.817774  0.773653  0.815380   
+2                   0.810293  0.797605  0.812687  0.792814  0.810892   
+3                   0.815380  0.810778  0.807301  0.803593  0.817175   
+4                   0.807899  0.780838  0.808199  0.782036  0.807002   
+Mean                0.810473  0.788263  0.811131  0.788743  0.811490   
+Standard Deviation  0.004576  0.017378  0.003792  0.010179  0.004198   
+
+                     test_22  train_23   test_23  train_24   test_24  
+0                   0.779641  0.795931  0.792814  0.802513  0.789222  
+1                   0.761677  0.803112  0.759281  0.811789  0.768862  
+2                   0.782036  0.807899  0.789222  0.809695  0.788024  
+3                   0.807186  0.807002  0.802395  0.807600  0.801198  
+4                   0.774850  0.811789  0.779641  0.810592  0.778443  
+Mean                0.781078  0.805147  0.784671  0.808438  0.785150  
+Standard Deviation  0.014831  0.005371  0.014636  0.003264  0.010887  
+
+[7 rows x 50 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.4.28.</span> </figcaption></figure><span class="incontext"><a href="section-58.html#listing-433">in-context</a></span>
+</body>
+</html>

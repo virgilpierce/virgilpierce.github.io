@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-10-23T14:36:18-06:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We can recode it using a dictionary and .map()
+Street_dict = {'Grvl':0, 'Pave':1, 0:0, 1:1}  
+# Note we include the trivial coding of the new values as otherwise if we run this twice
+# it produces NaN values for the Street feature.
+hd.Street = hd.Street.map(Street_dict)
+set(hd.Street)
+</b>{0, 1}
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">14.3.3.</span> </figcaption></figure><span class="incontext"><a href="section-57.html#listing-389">in-context</a></span>
+</body>
+</html>
