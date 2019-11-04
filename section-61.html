@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-04T14:15:07-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Neural Network with a Large Number of Features</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<!-- 2019-10-12: Temporary - CSS file for experiments with styling --><link href="developer.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="section-60.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="neural-networks.html" title="Up">Up</a><span id="nextbutton" class="next-button button toolbar-item disabled">Next</span></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-60.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="neural-networks.html" title="Up">Up</a><span class="next-button button toolbar-item disabled">Next</span>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="lda_svm.html" data-scroll="lda_svm"><span class="codenumber">13</span> <span class="title">Linear Discrimant Analysis and Support Vector Machines</span></a><ul>
+<li><a href="section-53.html" data-scroll="section-53">Linear Discriminant Analysis</a></li>
+<li><a href="section-54.html" data-scroll="section-54">Support Vector Machines</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="decision_trees.html" data-scroll="decision_trees"><span class="codenumber">14</span> <span class="title">Decsion Trees</span></a><ul>
+<li><a href="section-55.html" data-scroll="section-55">Regression Trees</a></li>
+<li><a href="section-56.html" data-scroll="section-56">Classification Tree</a></li>
+<li><a href="section-57.html" data-scroll="section-57">High Dimensional Data and Decision Trees</a></li>
+<li><a href="section-58.html" data-scroll="section-58">Discussion of Decision Tree Algorithms</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="neural-networks.html" data-scroll="neural-networks"><span class="codenumber">15</span> <span class="title">Neural Networks</span></a><ul>
+<li><a href="section-59.html" data-scroll="section-59">Neural Network for Regression</a></li>
+<li><a href="section-60.html" data-scroll="section-60">Neural Networks for Classification</a></li>
+<li><a href="section-61.html" data-scroll="section-61" class="active">Neural Network with a Large Number of Features</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-61"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">15.3</span> <span class="title">Neural Network with a Large Number of Features</span>
+</h2>
+<p id="p-884">Neural networks are especially capable when using a large number of features. Also for the sake of an example doing this we will do a multi-class problem which presents some difficulties.</p>
+<figure class="figure-like" id="listing-482"><pre class="console"><b>names=['Sex', 'Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight',
+                                                        'Viscera_Weight', 'Shell_Weight', 'Rings']
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.1.</span> </figcaption></figure><figure class="figure-like" id="listing-483"><pre class="console"><b>ab = pa.read_csv('Data Sets/Abalone/abalone.csv', names=names)
+ab.head()
+</b>  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.2.</span> </figcaption></figure><figure class="figure-like" id="listing-484"><pre class="console"><b># One hot encoding for the 'Sex' feature
+
+for k in ab.index:
+    if ab.loc[k, 'Sex']=='M':
+        ab.loc[k, 'Male']=1
+    else: ab.loc[k, 'Male']=0
+    if ab.loc[k, 'Sex']=='F':
+        ab.loc[k, 'Female']=1
+    else: ab.loc[k, 'Female']=0
+    if ab.loc[k, 'Sex']=='I':
+        ab.loc[k, 'Infant']=1
+    else: ab.loc[k, 'Infant']=0
+        
+ab.head()
+</b>  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  Male  Female  Infant  
+0         0.150     15   1.0     0.0     0.0  
+1         0.070      7   1.0     0.0     0.0  
+2         0.210      9   0.0     1.0     0.0  
+3         0.155     10   1.0     0.0     0.0  
+4         0.055      7   0.0     0.0     1.0
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.3.</span> </figcaption></figure><figure class="figure-like" id="listing-485"><pre class="console"><b>t = ab.Rings.mean()
+for k in ab.index:
+    if ab.loc[k, 'Rings'] &lt; t:
+        ab.loc[k, 'Age'] = 0
+    else: ab.loc[k, 'Age'] = 1
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.4.</span> </figcaption></figure><figure class="figure-like" id="listing-486"><pre class="console"><b>keep = ['Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight', 
+         'Viscera_Weight', 'Shell_Weight', 'Male', 'Female', 'Infant']
+X = np.array( ab[ keep] )
+y = np.array( ab['Rings'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.5.</span> </figcaption></figure><figure class="figure-like" id="listing-487"><pre class="console"><b>v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.6.</span> </figcaption></figure><figure class="figure-like" id="listing-488"><pre class="console"><b>def fit_test_model(clf, X, y):
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    clf.fit(X_train, y_train) # Fit the model
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.7.</span> </figcaption></figure><figure class="figure-like" id="listing-489"><pre class="console"><b>clf = LogisticRegression(solver = 'lbfgs', multi_class='auto', max_iter=500)
+fit_test_model(clf, X, y)
+</b>Training Error: 0.25433871932974267
+Testing Error: 0.24910179640718563
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.8.</span> </figcaption></figure><figure class="figure-like" id="listing-490"><pre class="console"><b>clf = LinearDiscriminantAnalysis()
+fit_test_model(clf, X, y)
+</b>Training Error: 0.27618192698982647
+Testing Error: 0.24191616766467067
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.9.</span> </figcaption></figure><p id="p-885">Note that this problem kicks a warning because some of our variables are related. To fix this we should determine which variables are related and remove one, or we should use a pre-processing routine like PCA.</p>
+<p id="p-886">Because we are doing a multiclass problem and one of our classes only has one sample the Quadratic Discriminant Analysis does not apply. That is for one class there is no such thing as variance. This might also be causing the collinear warning above.</p>
+<figure class="figure-like" id="listing-491"><pre class="console"><b>clf = SVC(C=1.0, gamma='auto', kernel='linear')
+fit_test_model(clf, X, y)
+</b>Training Error: 0.25583482944344704
+Testing Error: 0.24431137724550897
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.10.</span> </figcaption></figure><figure class="figure-like" id="listing-492"><pre class="console"><b>clf = SVC(C=1.0, gamma='auto', kernel='rbf')
+fit_test_model(clf, X, y)
+</b>Training Error: 0.23728306403351287
+Testing Error: 0.24550898203592814
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.11.</span> </figcaption></figure><figure class="figure-like" id="listing-493"><pre class="console"><b>clf = KNeighborsClassifier(n_neighbors=13)
+fit_test_model(clf, X, y)
+</b>Training Error: 0.36654697785757034
+Testing Error: 0.25748502994011974
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.12.</span> </figcaption></figure><figure class="figure-like" id="listing-494"><pre class="console"><b>clf = DecisionTreeClassifier(max_depth=5)
+fit_test_model(clf, X, y)
+</b>Training Error: 0.3114901256732496
+Testing Error: 0.24550898203592814
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.13.</span> </figcaption></figure><figure class="figure-like" id="listing-495"><pre class="console"><b>clf = RandomForestClassifier(n_estimators=250, max_depth=5)
+fit_test_model(clf, X, y)
+</b>Training Error: 0.32854578096947934
+Testing Error: 0.24910179640718563
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.14.</span> </figcaption></figure><p id="p-887">Ensemble models are starting to make a big improvement over our more basic models. Let's check the feature importances.</p>
+<figure class="figure-like" id="listing-496"><pre class="console"><b>def plot_feature_importances(model, names, tol=10**-3):
+    n_features = len(names)
+    plot_names = []
+    plot_importances = []
+    
+    for k in range(n_features):
+        if model.feature_importances_[k] &gt; tol:
+            plot_names += [ names[k] ]
+            plot_importances += [ model.feature_importances_[k] ]
+    
+    n_plot = len(plot_names)
+    
+    plt.figure(figsize = (10, 6))
+    plt.barh(range(n_plot), plot_importances, align = 'center')
+    plt.yticks(np.arange(n_plot), plot_names)
+    plt.xlabel('Feature importance')
+    plt.ylabel('Feature')
+    plt.ylim(-1, n_plot)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.15.</span> </figcaption></figure><figure class="figure-like" id="listing-497"><pre class="console"><b>plot_feature_importances(clf, keep)
+plt.savefig('15.19.png')
+</b>&lt;Figure size 720x432 with 1 Axes&gt;
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.19.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.16.</span> </figcaption></figure><p id="p-888">Now working with a Neural Network:</p>
+<figure class="figure-like" id="listing-498"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100), max_iter=300)
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.28934769599042487
+Testing Error: 0.2622754491017964
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.17.</span> </figcaption></figure><p id="p-889">So with one layer, even after adjusting the <em class="emphasis">max_iter</em> parameter to be larger, we still get a convergence warning. Rather than continue to play with the number of interations (which makes the model take a while to train) let's adjust the number of neurons and layers.</p>
+<figure class="figure-like" id="listing-499"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100, 10))
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.28426092160383004
+Testing Error: 0.2838323353293413
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.18.</span> </figcaption></figure><p id="p-890">Still getting the error. No worries, let's add another layer.</p>
+<figure class="figure-like" id="listing-500"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.29024536205864754
+Testing Error: 0.2622754491017964
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.19.</span> </figcaption></figure><p id="p-891">Warning is gone, and we see that the model is performing well.</p>
+<figure class="figure-like" id="listing-501"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.2950329144225015
+Testing Error: 0.2718562874251497
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.20.</span> </figcaption></figure><figure class="figure-like" id="listing-502"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.3007181328545781
+Testing Error: 0.26706586826347306
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.21.</span> </figcaption></figure><figure class="figure-like" id="listing-503"><pre class="console"><b>nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</b>Training Error: 0.296229802513465
+Testing Error: 0.2898203592814371
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.22.</span> </figcaption></figure><p id="p-892">Now to be systematic about it. We will fix the number of hidden the layers and vary the number of neurons in the last layer and try to identify the best choice. Setting up a cross validation.</p>
+<figure class="figure-like" id="listing-504"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = Xn.shape[0]
+test = int(0.10*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+Xn = Xn[perm]
+y = y[perm]
+
+tests = 12
+a = np.linspace(5, tests*2+5, tests).astype('int')  # the number of neurons in a layer must be an int
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Error = pa.DataFrame( np.array([ [0]*10 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(10):
+    X_test = Xn[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (Xn[:k*test], Xn[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+    
+    for c in range(tests):
+        clf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, a[k])).fit(X_train, y_train)
+        Error.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Error.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Error_mean = [0]*2*tests
+Error_std = [0]*2*tests
+for c in range(2*tests):
+    Error_mean[c] = np.mean(Error.iloc[0:5, c])
+    Error_std[c] = np.std(Error.iloc[0:5, c])
+    
+Error = Error.append( pa.Series(Error_mean, index=Error.columns), ignore_index=True )
+Error = Error.append( pa.Series(Error_std, index=Error.columns), ignore_index=True)
+Error.index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'Mean', 'Standard Deviation']
+Error
+</b>/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.23.</span> </figcaption></figure><figure class="figure-like" id="listing-505"><pre class="console"><b>plt.plot(a, Error_mean[::2], 'b-')
+plt.plot(a, Error_mean[1::2], 'r-');
+plt.savefig('15.20.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.20.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.24.</span> </figcaption></figure><figure class="figure-like" id="listing-506"><pre class="console"><b>a[1]
+</b>7
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.25.</span> </figcaption></figure><p id="p-893">There is a lot we do not understand about neural networks for machine learning.</p>
+<p id="p-894">Neural networks, paritcularly those with a large number of layers are very difficult to interepret. What we can do is ask what are the coefficients that were computed by the model connecting each layer. This is easy to understand for the connection between the features and the first hidden layer but becomes increasingly hard to interpret with each successive layer. This model with five layers will be especially difficult to interpret.</p>
+<p id="p-895">Based on the graph above I worked with a network with five hidden layers, the first four with 24 neurons and the last one with 7 neurons.</p>
+<figure class="figure-like" id="listing-507"><pre class="console"><b>clf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 7)).fit(Xn, y)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.26.</span> </figcaption></figure><figure class="figure-like" id="listing-508"><pre class="console"><b>plt.figure(figsize = (20, 5))
+plt.imshow(clf.coefs_[0], interpolation='none', cmap='viridis')
+plt.yticks(range(len(keep)), keep)
+plt.xlabel('Neurons in First hidden layer')
+plt.ylabel('Input feature')
+plt.colorbar();
+plt.savefig('15.21.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.21.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.27.</span> </figcaption></figure><p id="p-896">Bright colors indicate that that feature contributes to the corresponding neuron in the first hidden layer a positive coefficient (increasing excitation), while a dark color indicates that that feature contributes to the corresponding neuron in the first hidden layer a negative coefficient (decreasing excitation).</p>
+<figure class="figure-like" id="listing-509"><pre class="console"><b>plt.figure(figsize = (20, 5))
+plt.imshow(clf.coefs_[1], interpolation='none', cmap='viridis')
+plt.xlabel('Neurons in Second hidden layer')
+plt.ylabel('Neurons in First hidden layer')
+plt.colorbar();
+plt.savefig('15.22.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.22.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.28.</span> </figcaption></figure><p id="p-897">You can start to see the difficulty with trying to understand how a change in one of the feature values will translate in to a change in the prediction.</p>
+<p id="p-898">If you are interested in going deeper into Neural Networks, including trying to increase their interpretative value, please look for CS 456 class in Spring 2021.</p></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

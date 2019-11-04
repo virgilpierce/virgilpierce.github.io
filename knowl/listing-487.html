@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-04T14:15:10-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.6.</span> </figcaption></figure><span class="incontext"><a href="section-61.html#listing-487">in-context</a></span>
+</body>
+</html>

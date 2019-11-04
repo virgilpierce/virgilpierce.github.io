@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-04T14:15:10-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># Read in the major league players data set
+
+major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+major = major.drop(640, axis=0) 
+
+# Each row of a data frame is a data point - in this case a player.
+# Each column is a feature about the data point (its coordinates if you will)
+
+major.head()   # displays the first few rows
+</b>              Name Team       Position  Height  Weight    Age
+0    Adam_Donachie  BAL        Catcher      74   180.0  22.99
+1        Paul_Bako  BAL        Catcher      74   215.0  34.69
+2  Ramon_Hernandez  BAL        Catcher      72   210.0  30.78
+3     Kevin_Millar  BAL  First_Baseman      72   210.0  35.43
+4      Chris_Gomez  BAL  First_Baseman      73   188.0  35.71
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.2.1.</span> </figcaption></figure><span class="incontext"><a href="section-60.html#listing-460">in-context</a></span>
+</body>
+</html>

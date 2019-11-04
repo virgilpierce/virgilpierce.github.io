@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-04T14:15:10-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We shuffle the data using a random permutation
+
+n = Xn.shape[0]
+test = int(0.10*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+Xn = Xn[perm]
+y = y[perm]
+
+tests = 12
+a = np.linspace(5, tests*2+5, tests).astype('int')  # the number of neurons in a layer must be an int
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Error = pa.DataFrame( np.array([ [0]*10 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(10):
+    X_test = Xn[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (Xn[:k*test], Xn[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+    
+    for c in range(tests):
+        clf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, a[k])).fit(X_train, y_train)
+        Error.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Error.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Error_mean = [0]*2*tests
+Error_std = [0]*2*tests
+for c in range(2*tests):
+    Error_mean[c] = np.mean(Error.iloc[0:5, c])
+    Error_std[c] = np.std(Error.iloc[0:5, c])
+    
+Error = Error.append( pa.Series(Error_mean, index=Error.columns), ignore_index=True )
+Error = Error.append( pa.Series(Error_std, index=Error.columns), ignore_index=True)
+Error.index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'Mean', 'Standard Deviation']
+Error
+</b>/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.3.23.</span> </figcaption></figure><span class="incontext"><a href="section-61.html#listing-504">in-context</a></span>
+</body>
+</html>

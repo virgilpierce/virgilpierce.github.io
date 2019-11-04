@@ -1,0 +1,1197 @@
+<chapter xml:id="neural-networks">
+ <title> Neural Networks
+</title>
+
+<introduction>
+<p>Today we will explore <em>Neural Networks</em>. Neural Networks are heuristically designed to mimic the way networks of neurons in an organism's brain make decisions, or at least the way we think they do. So we will start with a review of how single neurons and small networks of neurons behave.</p>
+
+<p><image source='Images/2-whyareneuron.jpg' width="60%"/></p>
+
+<p>A neuron consists of a Soma with Dendrites connected to an Axon with Terminals. The dendrites receive stimulation in the form of neurotransimitters that act to increase the charge held in the Soma. When the charge in the Soma reaches a critical threshhold, a signal in the form of other neurotransmitters is passed by a chemical reaction in a wave down the axon causing the axon terminals to realease neurotransmitters. </p>
+
+<p>Networks of neurons work together in chains by receiving input in the form of stimulation increasing (or decreasing) their charge, and once they hit a critical threshold communicating stimulation to other neurons in the network. We believe that patterns of firing neurons are responsible for the decsion making processes we can observe in the brains of organisms. There is a lot we do not completely understand about how networks of neurons behave, and it is a complicated chemical and electrical process. There is even less we understand about how the particular patterns of firing neurons in a network represent or are used making decisions. The neural network model we will use here is based on some laboratory evidence of how the data collected by sensory ograns (eyeballs) are communicated to the relevant region of the brain. </p>
+
+<p>So our Machine Learning algorithm modeled on this is made up of <em>nodes</em> set up in layers that collect input that either increases or decreases their excitation level, and then communicate that excitation to the next layer that either increases or decreases excitation levels of some of the nodes in that layer (it has been found that networks using the <em>firing neuron</em> model are problematic to train because of their discontinuous nature so the neurons in our network will always pass their excitation level forward). The network starts with a layer that takes as its inputs values for the features we are using as predictors, and the final layer is a node or nodes that give the output (either a classification or regression). The number and sizes of the layers is a parameter set when the model is defined, and then the coefficients giving the strength of each signal passed from node-to-node are trained to fit the network to the training data using a steepest descent method to find the best choice of parameters.</p>
+
+<p><image source='Images/nn.png' width="60%"/></p>
+
+<p>Why do neural networks work? Well first they can be trained to work well with training data. They are very flexible and will adapt to nonlinearity in the data. Because the nodes and layers incorportate information from the previous layers in a nonlinear way they are protected from overfitting. </p>
+
+<p>What is the downside to neural networks? Because of the number of coefficients and their nonlinear relationship there are multiple local minimums and the steepest descent method will not necessarily find the best one. There is some randomness in the training of the model that can result in different minimums being found. The other downside, similar to the <em>boosting</em> and <em>random forest</em> ensemble models we saw already is that neural networks are hard to interpret.</p>
+
+<p>For example. I have found that a neural network with two layers of 100 nodes would do a good job of predicting which students in <em>Mathematics for Liberal Arts</em> need additional support. However we cannot use a neural network as placement mechanism (well not easily anyway, how would we explain to a student what they can do to improve their placement?).</p>
+
+<p>We will do a couple of examples of using a Neural Network with two predictors because it will let us draw some nice graphs of the result; however the real power of the method (like all the methods we are learning) is when there are a large number of predictors.</p>
+</introduction>
+
+
+<section>
+ <title> Neural Network for Regression</title>
+
+ <subsection>
+ 	<title> Horsepower Data </title>
+
+<introduction>
+<listing>
+<console>
+<input>
+import pandas as pa
+import matplotlib.pyplot as plt
+import matplotlib.colors as pltco
+import numpy as np
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+mpg = pa.read_csv('Data Sets/auto-mpg.csv', names=['mpg', 'cylinders', 'displacement', 'horsepower', 
+                                                   'weight', 'acceleration', 'model year', 'origin', 'car name'])
+mpg.head(10)
+</input>
+<output>
+    mpg  cylinders  displacement horsepower  weight  acceleration  model year  \
+0  18.0          8         307.0        130    3504          12.0          70   
+1  15.0          8         350.0        165    3693          11.5          70   
+2  18.0          8         318.0        150    3436          11.0          70   
+3  16.0          8         304.0        150    3433          12.0          70   
+4  17.0          8         302.0        140    3449          10.5          70   
+5  15.0          8         429.0        198    4341          10.0          70   
+6  14.0          8         454.0        220    4354           9.0          70   
+7  14.0          8         440.0        215    4312           8.5          70   
+8  14.0          8         455.0        225    4425          10.0          70   
+9  15.0          8         390.0        190    3850           8.5          70   
+
+   origin                       car name  
+0       1  \t"chevrolet chevelle malibu"  
+1       1          \t"buick skylark 320"  
+2       1         \t"plymouth satellite"  
+3       1              \t"amc rebel sst"  
+4       1                \t"ford torino"  
+5       1           \t"ford galaxie 500"  
+6       1           \t"chevrolet impala"  
+7       1          \t"plymouth fury iii"  
+8       1           \t"pontiac catalina"  
+9       1         \t"amc ambassador dpl"  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+mpg = mpg[mpg.horsepower!='?']
+mpg.horsepower = mpg.horsepower.astype('int')
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X = np.array(mpg[['horsepower', 'weight']])
+y = np.array(mpg['mpg'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+import numpy.random as rn
+</input>
+</console>
+</listing>
+<p>One note here:  I've realized that we probably should be using a different permutation for each run even across multiple models so for this class I have moved the training/testing set division inside of the plot command. This also means that the fit for the model is in there as well. The function now returns the fitted model. </p>
+<listing>
+<console>
+<input>
+# A bit of code for plotting the contour in a regression problem with two predictors
+# Also prints out the training and testing errors
+
+def plot_reg_model(reg, X, y):
+
+    # We shuffle the data using a random permutation
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    reg.fit(X_train, y_train) # Fit the model
+     
+    nn = 200
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min()-0.1, X[:, 0].max()+0.1
+    y_min, y_max = X[:, 1].min()-0.1, X[:, 1].max()+0.1
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),   # Changed the function to use linspace rather than arrange
+        np.linspace(y_min, y_max, nn))                    # This keeps us from having to adjust h.
+    Z = reg.predict(np.c_[xx.ravel(), yy.ravel()]) # predict
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    plt.contour(xx, yy, Z)
+    
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, marker='+');
+    
+    print('Training R2: {}'.format(reg.score(X_train, y_train)))
+    print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+    
+    return reg
+</input>
+</console>
+</listing>
+<p>Check how the existing regression algorithms from our toolbox do on this data:</p>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import LinearRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = LinearRegression()
+plot_reg_model(reg, X, y)
+plt.savefig('15.1.png')
+</input>
+<output>
+Training R2: 0.7192348953452512
+Testing R2: 0.6365073993975836
+
+</output>
+</console>
+<image source='Images/15.1.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import Ridge
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg = Ridge(alpha=2)
+plot_reg_model(reg, X, y);
+plt.savefig('15.2.png')
+</input>
+<output>
+Training R2: 0.7051603436992125
+Testing R2: 0.7064530518185714
+
+</output>
+</console>
+<image source='Images/15.2.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import Lasso
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+reg=Lasso(alpha=1)
+plot_reg_model(reg, X, y);
+plt.savefig('15.3.png')
+</input>
+<output>
+Training R2: 0.7028043354957347
+Testing R2: 0.7193888127463721
+
+</output>
+</console>
+<image source='Images/15.3.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.neighbors import KNeighborsRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+knn = KNeighborsRegressor(n_neighbors=6)
+plot_reg_model(knn, X, y);
+plt.savefig('15.4.png')
+</input>
+<output>
+Training R2: 0.7854900027143057
+Testing R2: 0.7049891298565694
+
+</output>
+</console>
+<image source='Images/15.4.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.tree import DecisionTreeRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeRegressor(max_depth=3)
+plot_reg_model(tree, X, y);
+plt.plot('15.5.png')
+</input>
+<output>
+Training R2: 0.7772156685645444
+Testing R2: 0.7035452023620691
+
+</output>
+</console>
+<image source='Images/15.5.png'/>
+</listing>
+</introduction>
+
+<subsubsection>
+ <title> Ensemble Methods
+</title>
+
+<p>The ensemble methods we learned last week (Random Forest and Boosting).</p>
+<listing>
+<console>
+<input>
+from sklearn.ensemble import RandomForestRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+forest = RandomForestRegressor(n_estimators=100, max_depth=3, n_jobs=-1)
+plot_reg_model(forest, X, y);
+plt.savefig('15.6.png')
+</input>
+<output>
+Training R2: 0.797865908488564
+Testing R2: 0.7078902474105069
+
+</output>
+</console>
+<image source='Images/15.6.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.ensemble import GradientBoostingRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+boost = GradientBoostingRegressor(n_estimators=25, learning_rate=0.1, max_depth=3)
+plot_reg_model(boost, X, y);
+plt.savefig('15.7.png')
+</input>
+<output>
+Training R2: 0.8221701073276784
+Testing R2: 0.6981595489090198
+
+</output>
+</console>
+<image source='Images/15.7.png'/>
+</listing>
+
+</subsubsection>
+</subsection>
+
+
+<subsection>
+ <title> Neural Networks for Regression</title>
+<p>Let's apply the <em>Multi-Layer Perceptron Regressor</em> from scikitlearn to this data. The model has parameters:</p>
+
+<p><ul>
+<li><p><em>hidden_layer_sizes</em> gives the number of neurons in each layer other than input and output;</p>
+</li>
+<li><p><em>activation</em> for choosing the function to model the activation profiles for the hidden layers (this transforms the input into a excitation level);</p>
+</li>
+<li><p><em>solver</em> giving the method for solving for the minimum, note the recomendation in the documentation to use 'adam' for large data sets and 'lbfgs' for smaller.</p>
+</li>
+<li><p><em>alpha</em> a <m>L^2</m> penalty parameter (forcing regularization);</p>
+</li>
+</ul></p>
+
+<p>The trick is to develop a method for systemactically exploring the parameter space to develop the best model. Note that the hidden layer parameter is a list (tuple) of numbers giving the number of layers and the size of those layers.</p>
+
+<p>Neural Networks are models that respond better after normalization so this is a recomended step for these cases.</p>
+<listing>
+<console>
+<input>
+v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.neural_network import MLPRegressor
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+mlp = MLPRegressor(hidden_layer_sizes = (100), solver = 'lbfgs', activation = 'relu', alpha=0.0001)
+plot_reg_model(mlp, Xn, y);
+plt.savefig('15.8.png')
+</input>
+<output>
+Training R2: 0.7695199233738694
+Testing R2: 0.6927039414818306
+
+</output>
+</console>
+<image source='Images/15.8.png'/>
+</listing>
+<p>Adding an additional hidden layer for this problem improves performance.</p>
+<listing>
+<console>
+<input>
+mlp = MLPRegressor(hidden_layer_sizes = (100, 100), solver = 'lbfgs', activation = 'relu', alpha=0.0001)
+plot_reg_model(mlp, Xn, y);
+plt.savefig('15.9.png')
+</input>
+<output>
+Training R2: 0.7630509976874953
+Testing R2: 0.7302796663696425
+
+</output>
+</console>
+<image source='Images/15.9.png'/>
+</listing>
+<p>So very quickly we get good performance. The resulting regression has some of the features of K-Nearest Neighbors, Decsision Trees, and Ensembles for this data but is smoother.</p>
+
+
+</subsection>
+</section>
+
+<section>
+ <title> Neural Networks for Classification
+</title>
+
+<introduction>
+<p>For classification, we consider the Baseball Pitcher Classification.</p>
+<listing>
+<console>
+<input>
+# Read in the major league players data set
+
+major = pa.read_csv('Data Sets/Major League Height-Weight.csv')   # creates a pandas Dataframe from a .csv file
+major = major.rename({'Height(inches)':'Height', 'Weight(pounds)':'Weight'}, axis=1)  
+major = major.drop(640, axis=0) 
+
+# Each row of a data frame is a data point - in this case a player.
+# Each column is a feature about the data point (its coordinates if you will)
+
+major.head()   # displays the first few rows
+</input>
+<output>
+              Name Team       Position  Height  Weight    Age
+0    Adam_Donachie  BAL        Catcher      74   180.0  22.99
+1        Paul_Bako  BAL        Catcher      74   215.0  34.69
+2  Ramon_Hernandez  BAL        Catcher      72   210.0  30.78
+3     Kevin_Millar  BAL  First_Baseman      72   210.0  35.43
+4      Chris_Gomez  BAL  First_Baseman      73   188.0  35.71
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:1 for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:0 for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2
+</input>
+<output>
+                 Name Team  Position  Height  Weight    Age
+0       Adam_Donachie  BAL         0      74   180.0  22.99
+1           Paul_Bako  BAL         0      74   215.0  34.69
+2     Ramon_Hernandez  BAL         0      72   210.0  30.78
+3        Kevin_Millar  BAL         0      72   210.0  35.43
+4         Chris_Gomez  BAL         0      73   188.0  35.71
+...               ...  ...       ...     ...     ...    ...
+1029    Brad_Thompson  STL         1      73   190.0  25.08
+1030    Tyler_Johnson  STL         1      74   180.0  25.73
+1031   Chris_Narveson  STL         1      75   205.0  25.19
+1032    Randy_Keisler  STL         1      75   190.0  31.01
+1033      Josh_Kinney  STL         1      73   195.0  27.92
+
+[1033 rows x 6 columns]
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+X = np.array(major_2[['Height', 'Weight']])
+y = np.array(major_2['Position'])
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# A bit of code for plotting the decision boundaries in a categorical problem with two predictors and two values for the result
+# Also prints out the training and testing errors
+
+def plot_cat_model(clf, X, y):
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    clf.fit(X_train, y_train) # Fit the model
+    
+    nn = 200 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min(), X[:, 0].max()
+    y_min, y_max = X[:, 1].min(), X[:, 1].max()
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),
+        np.linspace(y_min, y_max, nn))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</input>
+</console>
+</listing>
+<p>Check how the classification does on with the tools we have seen previously.</p>
+<listing>
+<console>
+<input>
+from sklearn.linear_model import LogisticRegression
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = LogisticRegression(solver = 'lbfgs')
+plot_cat_model(clf, X, y)
+plt.savefig('15.10.png')
+</input>
+<output>
+Training Error: 0.6541717049576784
+Testing Error: 0.6456310679611651
+
+</output>
+</console>
+<image source = 'Images/15.10.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = LinearDiscriminantAnalysis()
+plot_cat_model(clf, X, y)
+plt.savefig('15.11.png')
+</input>
+<output>
+Training Error: 0.6432889963724304
+Testing Error: 0.6796116504854369
+
+</output>
+</console>
+<image source='Images/15.11.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = QuadraticDiscriminantAnalysis()
+plot_cat_model(clf, X, y)
+plt.savefig('15.12.png')
+</input>
+<output>
+Training Error: 0.6686819830713422
+Testing Error: 0.6262135922330098
+
+</output>
+</console>
+<image source='Images/15.12.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.svm import SVC
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = SVC(C=1.0, gamma='auto', kernel='linear')
+plot_cat_model(clf, X, y)
+plt.savefig('15.13.png')
+</input>
+<output>
+Training Error: 0.660217654171705
+Testing Error: 0.6213592233009708
+
+</output>
+</console>
+<image source='Images/15.13.png'/>
+</listing>
+<listing>
+<console>
+<input>
+clf = SVC(C=0.5, gamma='auto', kernel='rbf')
+plot_cat_model(clf, X, y)
+plt.savefig('15.14.png')
+</input>
+<output>
+Training Error: 0.727932285368803
+Testing Error: 0.6601941747572816
+
+</output>
+</console>
+<image source='Images/15.14.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.neighbors import KNeighborsClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = KNeighborsClassifier(n_neighbors=3)
+plot_cat_model(clf, X, y)
+plt.savefig('15.15.png')
+</input>
+<output>
+Training Error: 0.7049576783555018
+Testing Error: 0.5825242718446602
+
+</output>
+</console>
+<image source='Images/15.15.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.tree import DecisionTreeClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+tree = DecisionTreeClassifier(max_depth=5)
+plot_cat_model(tree, X, y)
+plt.savefig('15.16.png')
+</input>
+<output>
+Training Error: 0.7025392986698912
+Testing Error: 0.6650485436893204
+
+</output>
+</console>
+<image source='Images/15.16.png'/>
+</listing>
+<listing>
+<console>
+<input>
+from sklearn.ensemble import RandomForestClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+forest = RandomForestClassifier(n_estimators=100, max_depth=3)
+plot_cat_model(forest, X, y)
+plt.savefig('15.17.png')
+</input>
+<output>
+Training Error: 0.6469165659008465
+Testing Error: 0.6990291262135923
+
+</output>
+</console>
+<image source='Images/15.17.png'/>
+</listing>
+</introduction>
+
+<subsection>
+ <title> Neural Networks for Classification
+</title>
+
+<p>For Classification the output layer has a cell for each class and a point is classified if the resulting class becomes activated (again the activation function for the cells is one of the parameters that can be set).</p>
+<listing>
+<console>
+<input>
+from sklearn.neural_network import MLPClassifier
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = MLPClassifier(hidden_layer_sizes = (10, 10, 10))
+plot_cat_model(clf, Xn, y)
+plt.savefig('15.18.png')
+</input>
+<output>
+Training Error: 0.6541717049576784
+Testing Error: 0.6407766990291263
+
+</output>
+</console>
+<image source='Images/15.18.png'/>
+</listing>
+<p>In this example the neural network does not respond particularly well, although interestingly it gives a much different classification model than the more rigid models above. </p>
+</subsection>
+</section>
+
+<section>
+	<title> Neural Network with a Large Number of Features </title>
+
+<p>Neural networks are especially capable when using a large number of features. Also for the sake of an example doing this we will do a multi-class problem which presents some difficulties.</p>
+<listing>
+<console>
+<input>
+names=['Sex', 'Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight',
+                                                        'Viscera_Weight', 'Shell_Weight', 'Rings']
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+ab = pa.read_csv('Data Sets/Abalone/abalone.csv', names=names)
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  
+0         0.150     15  
+1         0.070      7  
+2         0.210      9  
+3         0.155     10  
+4         0.055      7  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+# One hot encoding for the 'Sex' feature
+
+for k in ab.index:
+    if ab.loc[k, 'Sex']=='M':
+        ab.loc[k, 'Male']=1
+    else: ab.loc[k, 'Male']=0
+    if ab.loc[k, 'Sex']=='F':
+        ab.loc[k, 'Female']=1
+    else: ab.loc[k, 'Female']=0
+    if ab.loc[k, 'Sex']=='I':
+        ab.loc[k, 'Infant']=1
+    else: ab.loc[k, 'Infant']=0
+        
+ab.head()
+</input>
+<output>
+  Sex  Length  Diameter  Height  Whole_Weight  Shucked_Weight  Viscera_Weight  \
+0   M   0.455     0.365   0.095        0.5140          0.2245          0.1010   
+1   M   0.350     0.265   0.090        0.2255          0.0995          0.0485   
+2   F   0.530     0.420   0.135        0.6770          0.2565          0.1415   
+3   M   0.440     0.365   0.125        0.5160          0.2155          0.1140   
+4   I   0.330     0.255   0.080        0.2050          0.0895          0.0395   
+
+   Shell_Weight  Rings  Male  Female  Infant  
+0         0.150     15   1.0     0.0     0.0  
+1         0.070      7   1.0     0.0     0.0  
+2         0.210      9   0.0     1.0     0.0  
+3         0.155     10   1.0     0.0     0.0  
+4         0.055      7   0.0     0.0     1.0  
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+t = ab.Rings.mean()
+for k in ab.index:
+    if ab.loc[k, 'Rings'] &lt; t:
+        ab.loc[k, 'Age'] = 0
+    else: ab.loc[k, 'Age'] = 1
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+keep = ['Length', 'Diameter', 'Height', 'Whole_Weight', 'Shucked_Weight', 
+         'Viscera_Weight', 'Shell_Weight', 'Male', 'Female', 'Infant']
+X = np.array( ab[ keep] )
+y = np.array( ab['Rings'])
+
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+def fit_test_model(clf, X, y):
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    clf.fit(X_train, y_train) # Fit the model
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = LogisticRegression(solver = 'lbfgs', multi_class='auto', max_iter=500)
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.25433871932974267
+Testing Error: 0.24910179640718563
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = LinearDiscriminantAnalysis()
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.27618192698982647
+Testing Error: 0.24191616766467067
+
+</output>
+</console>
+</listing>
+<p>Note that this problem kicks a warning because some of our variables are related. To fix this we should determine which variables are related and remove one, or we should use a pre-processing routine like PCA.</p>
+
+<p>Because we are doing a multiclass problem and one of our classes only has one sample the Quadratic Discriminant Analysis does not apply. That is for one class there is no such thing as variance. This might also be causing the collinear warning above.</p>
+<listing>
+<console>
+<input>
+clf = SVC(C=1.0, gamma='auto', kernel='linear')
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.25583482944344704
+Testing Error: 0.24431137724550897
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = SVC(C=1.0, gamma='auto', kernel='rbf')
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.23728306403351287
+Testing Error: 0.24550898203592814
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = KNeighborsClassifier(n_neighbors=13)
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.36654697785757034
+Testing Error: 0.25748502994011974
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = DecisionTreeClassifier(max_depth=5)
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.3114901256732496
+Testing Error: 0.24550898203592814
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+clf = RandomForestClassifier(n_estimators=250, max_depth=5)
+fit_test_model(clf, X, y)
+</input>
+<output>
+Training Error: 0.32854578096947934
+Testing Error: 0.24910179640718563
+
+</output>
+</console>
+</listing>
+<p>Ensemble models are starting to make a big improvement over our more basic models. Let's check the feature importances.</p>
+<listing>
+<console>
+<input>
+def plot_feature_importances(model, names, tol=10**-3):
+    n_features = len(names)
+    plot_names = []
+    plot_importances = []
+    
+    for k in range(n_features):
+        if model.feature_importances_[k] > tol:
+            plot_names += [ names[k] ]
+            plot_importances += [ model.feature_importances_[k] ]
+    
+    n_plot = len(plot_names)
+    
+    plt.figure(figsize = (10, 6))
+    plt.barh(range(n_plot), plot_importances, align = 'center')
+    plt.yticks(np.arange(n_plot), plot_names)
+    plt.xlabel('Feature importance')
+    plt.ylabel('Feature')
+    plt.ylim(-1, n_plot)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plot_feature_importances(clf, keep)
+plt.savefig('15.19.png')
+</input>
+<output>
+&lt;Figure size 720x432 with 1 Axes>
+</output>
+</console>
+<image source='Images/15.19.png'/>
+</listing>
+<p>Now working with a Neural Network:</p>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100), max_iter=300)
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.28934769599042487
+Testing Error: 0.2622754491017964
+
+</output>
+</console>
+</listing>
+<p>So with one layer, even after adjusting the <em>max_iter</em> parameter to be larger, we still get a convergence warning. Rather than continue to play with the number of interations (which makes the model take a while to train) let's adjust the number of neurons and layers.</p>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100, 10))
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.28426092160383004
+Testing Error: 0.2838323353293413
+
+</output>
+</console>
+</listing>
+<p>Still getting the error. No worries, let's add another layer.</p>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.29024536205864754
+Testing Error: 0.2622754491017964
+
+</output>
+</console>
+</listing>
+<p>Warning is gone, and we see that the model is performing well.</p>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.2950329144225015
+Testing Error: 0.2718562874251497
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.3007181328545781
+Testing Error: 0.26706586826347306
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+nnclf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 100, 10))
+fit_test_model(nnclf, Xn, y)
+</input>
+<output>
+Training Error: 0.296229802513465
+Testing Error: 0.2898203592814371
+
+</output>
+</console>
+</listing>
+<p>Now to be systematic about it. We will fix the number of hidden the layers and vary the number of neurons in the last layer and try to identify the best choice. Setting up a cross validation.</p>
+<listing>
+<console>
+<input>
+# We shuffle the data using a random permutation
+
+n = Xn.shape[0]
+test = int(0.10*n)            # We will use a test set made up of 20% of the data from our sample
+perm = rn.permutation(n)   
+Xn = Xn[perm]
+y = y[perm]
+
+tests = 12
+a = np.linspace(5, tests*2+5, tests).astype('int')  # the number of neurons in a layer must be an int
+
+names1 = [ 'train_{}'.format(x) for x in range(tests)]
+names2 = [ 'test_{}'.format(x) for x in range(tests)]
+names = []
+for c in range(tests):
+    names += [names1[c], names2[c]]
+
+
+Error = pa.DataFrame( np.array([ [0]*10 ]*2*tests).transpose(), columns = names)
+# Making a DataFrame to record the R2 values in
+
+for k in range(10):
+    X_test = Xn[k*test:(k+1)*test]       # Then create the test
+    y_test = y[k*test:(k+1)*test]
+    X_train = np.concatenate( (Xn[:k*test], Xn[(k+1)*test:]), axis=0)     # and train sets
+    y_train = np.concatenate( (y[:k*test], y[(k+1)*test:]), axis=0)
+    
+    for c in range(tests):
+        clf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, a[k])).fit(X_train, y_train)
+        Error.iloc[k, 2*c] = clf.score(X_train, y_train)
+        Error.iloc[k, 2*c+1] = clf.score(X_test, y_test)
+
+Error_mean = [0]*2*tests
+Error_std = [0]*2*tests
+for c in range(2*tests):
+    Error_mean[c] = np.mean(Error.iloc[0:5, c])
+    Error_std[c] = np.std(Error.iloc[0:5, c])
+    
+Error = Error.append( pa.Series(Error_mean, index=Error.columns), ignore_index=True )
+Error = Error.append( pa.Series(Error_std, index=Error.columns), ignore_index=True)
+Error.index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'Mean', 'Standard Deviation']
+Error
+</input>
+<output>
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+/anaconda3/lib/python3.7/site-packages/sklearn/neural_network/multilayer_perceptron.py:566: ConvergenceWarning: Stochastic Optimizer: Maximum iterations (200) reached and the optimization hasn't converged yet.
+  % self.max_iter, ConvergenceWarning)
+
+</output>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.plot(a, Error_mean[::2], 'b-')
+plt.plot(a, Error_mean[1::2], 'r-');
+plt.savefig('15.20.png')
+</input>
+</console>
+<image source='Images/15.20.png'/>
+</listing>
+<listing>
+<console>
+<input>
+a[1]
+</input>
+<output>
+7
+</output>
+</console>
+</listing>
+<p>There is a lot we do not understand about neural networks for machine learning. </p>
+
+<p>Neural networks, paritcularly those with a large number of layers are very difficult to interepret. What we can do is ask what are the coefficients that were computed by the model connecting each layer. This is easy to understand for the connection between the features and the first hidden layer but becomes increasingly hard to interpret with each successive layer. This model with five layers will be especially difficult to interpret.</p>
+
+<p>Based on the graph above I worked with a network with five hidden layers, the first four with 24 neurons and the last one with 7 neurons.</p>
+<listing>
+<console>
+<input>
+clf = MLPClassifier(hidden_layer_sizes = (100, 100, 100, 100, 7)).fit(Xn, y)
+</input>
+</console>
+</listing>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (20, 5))
+plt.imshow(clf.coefs_[0], interpolation='none', cmap='viridis')
+plt.yticks(range(len(keep)), keep)
+plt.xlabel('Neurons in First hidden layer')
+plt.ylabel('Input feature')
+plt.colorbar();
+plt.savefig('15.21.png')
+</input>
+</console>
+<image source='Images/15.21.png'/>
+</listing>
+<p>Bright colors indicate that that feature contributes to the corresponding neuron in the first hidden layer a positive coefficient (increasing excitation), while a dark color indicates that that feature contributes to the corresponding neuron in the first hidden layer a negative coefficient (decreasing excitation). </p>
+<listing>
+<console>
+<input>
+plt.figure(figsize = (20, 5))
+plt.imshow(clf.coefs_[1], interpolation='none', cmap='viridis')
+plt.xlabel('Neurons in Second hidden layer')
+plt.ylabel('Neurons in First hidden layer')
+plt.colorbar();
+plt.savefig('15.22.png')
+</input>
+</console>
+<image source='Images/15.22.png'/>
+</listing>
+<p>You can start to see the difficulty with trying to understand how a change in one of the feature values will translate in to a change in the prediction.</p>
+
+<p>If you are interested in going deeper into Neural Networks, including trying to increase their interpretative value, please look for CS 456 class in Spring 2021.</p>
+</section>
+</chapter>

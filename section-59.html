@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-04T14:15:07-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Neural Network for Regression</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<!-- 2019-10-12: Temporary - CSS file for experiments with styling --><link href="developer.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="neural-networks.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="neural-networks.html" title="Up">Up</a><a id="nextbutton" class="next-button button toolbar-item" href="section-60.html" title="Next">Next</a></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="neural-networks.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="neural-networks.html" title="Up">Up</a><a class="next-button button toolbar-item" href="section-60.html" title="Next">Next</a>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="lda_svm.html" data-scroll="lda_svm"><span class="codenumber">13</span> <span class="title">Linear Discrimant Analysis and Support Vector Machines</span></a><ul>
+<li><a href="section-53.html" data-scroll="section-53">Linear Discriminant Analysis</a></li>
+<li><a href="section-54.html" data-scroll="section-54">Support Vector Machines</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="decision_trees.html" data-scroll="decision_trees"><span class="codenumber">14</span> <span class="title">Decsion Trees</span></a><ul>
+<li><a href="section-55.html" data-scroll="section-55">Regression Trees</a></li>
+<li><a href="section-56.html" data-scroll="section-56">Classification Tree</a></li>
+<li><a href="section-57.html" data-scroll="section-57">High Dimensional Data and Decision Trees</a></li>
+<li><a href="section-58.html" data-scroll="section-58">Discussion of Decision Tree Algorithms</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="neural-networks.html" data-scroll="neural-networks"><span class="codenumber">15</span> <span class="title">Neural Networks</span></a><ul>
+<li><a href="section-59.html" data-scroll="section-59" class="active">Neural Network for Regression</a></li>
+<li><a href="section-60.html" data-scroll="section-60">Neural Networks for Classification</a></li>
+<li><a href="section-61.html" data-scroll="section-61">Neural Network with a Large Number of Features</a></li>
+</ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-59"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">15.1</span> <span class="title">Neural Network for Regression</span>
+</h2>
+<section class="subsection" id="subsection-77"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">15.1.1</span> <span class="title">Horsepower Data</span>
+</h3>
+<section class="introduction" id="introduction-35"><figure class="figure-like" id="listing-436"><pre class="console"><b>import pandas as pa
+import matplotlib.pyplot as plt
+import matplotlib.colors as pltco
+import numpy as np
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.1.</span> </figcaption></figure><figure class="figure-like" id="listing-437"><pre class="console"><b>mpg = pa.read_csv('Data Sets/auto-mpg.csv', names=['mpg', 'cylinders', 'displacement', 'horsepower', 
+                                                   'weight', 'acceleration', 'model year', 'origin', 'car name'])
+mpg.head(10)
+</b>    mpg  cylinders  displacement horsepower  weight  acceleration  model year  \
+0  18.0          8         307.0        130    3504          12.0          70   
+1  15.0          8         350.0        165    3693          11.5          70   
+2  18.0          8         318.0        150    3436          11.0          70   
+3  16.0          8         304.0        150    3433          12.0          70   
+4  17.0          8         302.0        140    3449          10.5          70   
+5  15.0          8         429.0        198    4341          10.0          70   
+6  14.0          8         454.0        220    4354           9.0          70   
+7  14.0          8         440.0        215    4312           8.5          70   
+8  14.0          8         455.0        225    4425          10.0          70   
+9  15.0          8         390.0        190    3850           8.5          70   
+
+   origin                       car name  
+0       1  \t"chevrolet chevelle malibu"  
+1       1          \t"buick skylark 320"  
+2       1         \t"plymouth satellite"  
+3       1              \t"amc rebel sst"  
+4       1                \t"ford torino"  
+5       1           \t"ford galaxie 500"  
+6       1           \t"chevrolet impala"  
+7       1          \t"plymouth fury iii"  
+8       1           \t"pontiac catalina"  
+9       1         \t"amc ambassador dpl"
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.2.</span> </figcaption></figure><figure class="figure-like" id="listing-438"><pre class="console"><b>mpg = mpg[mpg.horsepower!='?']
+mpg.horsepower = mpg.horsepower.astype('int')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.3.</span> </figcaption></figure><figure class="figure-like" id="listing-439"><pre class="console"><b>X = np.array(mpg[['horsepower', 'weight']])
+y = np.array(mpg['mpg'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.4.</span> </figcaption></figure><figure class="figure-like" id="listing-440"><pre class="console"><b>import numpy.random as rn
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.5.</span> </figcaption></figure><p id="p-867">One note here:  I've realized that we probably should be using a different permutation for each run even across multiple models so for this class I have moved the training/testing set division inside of the plot command. This also means that the fit for the model is in there as well. The function now returns the fitted model.</p>
+<figure class="figure-like" id="listing-441"><pre class="console"><b># A bit of code for plotting the contour in a regression problem with two predictors
+# Also prints out the training and testing errors
+
+def plot_reg_model(reg, X, y):
+
+    # We shuffle the data using a random permutation
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    reg.fit(X_train, y_train) # Fit the model
+     
+    nn = 200
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min()-0.1, X[:, 0].max()+0.1
+    y_min, y_max = X[:, 1].min()-0.1, X[:, 1].max()+0.1
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),   # Changed the function to use linspace rather than arrange
+        np.linspace(y_min, y_max, nn))                    # This keeps us from having to adjust h.
+    Z = reg.predict(np.c_[xx.ravel(), yy.ravel()]) # predict
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    plt.contour(xx, yy, Z)
+    
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, marker='+');
+    
+    print('Training R2: {}'.format(reg.score(X_train, y_train)))
+    print('Testing R2: {}'.format(reg.score(X_test, y_test)))
+    
+    return reg
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.6.</span> </figcaption></figure><p id="p-868">Check how the existing regression algorithms from our toolbox do on this data:</p>
+<figure class="figure-like" id="listing-442"><pre class="console"><b>from sklearn.linear_model import LinearRegression
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.7.</span> </figcaption></figure><figure class="figure-like" id="listing-443"><pre class="console"><b>reg = LinearRegression()
+plot_reg_model(reg, X, y)
+plt.savefig('15.1.png')
+</b>Training R2: 0.7192348953452512
+Testing R2: 0.6365073993975836
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.8.</span> </figcaption></figure><figure class="figure-like" id="listing-444"><pre class="console"><b>from sklearn.linear_model import Ridge
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.9.</span> </figcaption></figure><figure class="figure-like" id="listing-445"><pre class="console"><b>reg = Ridge(alpha=2)
+plot_reg_model(reg, X, y);
+plt.savefig('15.2.png')
+</b>Training R2: 0.7051603436992125
+Testing R2: 0.7064530518185714
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.10.</span> </figcaption></figure><figure class="figure-like" id="listing-446"><pre class="console"><b>from sklearn.linear_model import Lasso
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.11.</span> </figcaption></figure><figure class="figure-like" id="listing-447"><pre class="console"><b>reg=Lasso(alpha=1)
+plot_reg_model(reg, X, y);
+plt.savefig('15.3.png')
+</b>Training R2: 0.7028043354957347
+Testing R2: 0.7193888127463721
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.3.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.12.</span> </figcaption></figure><figure class="figure-like" id="listing-448"><pre class="console"><b>from sklearn.neighbors import KNeighborsRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.13.</span> </figcaption></figure><figure class="figure-like" id="listing-449"><pre class="console"><b>knn = KNeighborsRegressor(n_neighbors=6)
+plot_reg_model(knn, X, y);
+plt.savefig('15.4.png')
+</b>Training R2: 0.7854900027143057
+Testing R2: 0.7049891298565694
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.4.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.14.</span> </figcaption></figure><figure class="figure-like" id="listing-450"><pre class="console"><b>from sklearn.tree import DecisionTreeRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.15.</span> </figcaption></figure><figure class="figure-like" id="listing-451"><pre class="console"><b>tree = DecisionTreeRegressor(max_depth=3)
+plot_reg_model(tree, X, y);
+plt.plot('15.5.png')
+</b>Training R2: 0.7772156685645444
+Testing R2: 0.7035452023620691
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.16.</span> </figcaption></figure></section><section class="subsubsection" id="subsubsection-4"><h4 class="heading hide-type">
+<span class="type">Subsubsection</span> <span class="codenumber">15.1.1.1</span> <span class="title">Ensemble Methods</span>
+</h4>
+<p id="p-869">The ensemble methods we learned last week (Random Forest and Boosting).</p>
+<figure class="figure-like" id="listing-452"><pre class="console"><b>from sklearn.ensemble import RandomForestRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.17.</span> </figcaption></figure><figure class="figure-like" id="listing-453"><pre class="console"><b>forest = RandomForestRegressor(n_estimators=100, max_depth=3, n_jobs=-1)
+plot_reg_model(forest, X, y);
+plt.savefig('15.6.png')
+</b>Training R2: 0.797865908488564
+Testing R2: 0.7078902474105069
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.18.</span> </figcaption></figure><figure class="figure-like" id="listing-454"><pre class="console"><b>from sklearn.ensemble import GradientBoostingRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.19.</span> </figcaption></figure><figure class="figure-like" id="listing-455"><pre class="console"><b>boost = GradientBoostingRegressor(n_estimators=25, learning_rate=0.1, max_depth=3)
+plot_reg_model(boost, X, y);
+plt.savefig('15.7.png')
+</b>Training R2: 0.8221701073276784
+Testing R2: 0.6981595489090198
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.7.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.20.</span> </figcaption></figure></section></section><section class="subsection" id="subsection-78"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">15.1.2</span> <span class="title">Neural Networks for Regression</span>
+</h3>
+<p id="p-870">Let's apply the <em class="emphasis">Multi-Layer Perceptron Regressor</em> from scikitlearn to this data. The model has parameters:</p>
+<ul id="p-871" class="disc">
+<li id="li-181"><p id="p-872"><em class="emphasis">hidden_layer_sizes</em> gives the number of neurons in each layer other than input and output;</p></li>
+<li id="li-182"><p id="p-873"><em class="emphasis">activation</em> for choosing the function to model the activation profiles for the hidden layers (this transforms the input into a excitation level);</p></li>
+<li id="li-183"><p id="p-874"><em class="emphasis">solver</em> giving the method for solving for the minimum, note the recomendation in the documentation to use 'adam' for large data sets and 'lbfgs' for smaller.</p></li>
+<li id="li-184"><p id="p-875"><em class="emphasis">alpha</em> a \(L^2\) penalty parameter (forcing regularization);</p></li>
+</ul>
+<p id="p-876">The trick is to develop a method for systemactically exploring the parameter space to develop the best model. Note that the hidden layer parameter is a list (tuple) of numbers giving the number of layers and the size of those layers.</p>
+<p id="p-877">Neural Networks are models that respond better after normalization so this is a recomended step for these cases.</p>
+<figure class="figure-like" id="listing-456"><pre class="console"><b>v = [0]*X.shape[1]
+for k in range(X.shape[1]):
+    M = X[:, k].max()
+    m = X[:, k].min()
+    v[k] = (X[:, k] - m)/(M - m)
+Xn = np.c_[v].transpose()   # Note I could not assign these to X because the type was int not float
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.21.</span> </figcaption></figure><figure class="figure-like" id="listing-457"><pre class="console"><b>from sklearn.neural_network import MLPRegressor
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.22.</span> </figcaption></figure><figure class="figure-like" id="listing-458"><pre class="console"><b>mlp = MLPRegressor(hidden_layer_sizes = (100), solver = 'lbfgs', activation = 'relu', alpha=0.0001)
+plot_reg_model(mlp, Xn, y);
+plt.savefig('15.8.png')
+</b>Training R2: 0.7695199233738694
+Testing R2: 0.6927039414818306
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.8.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.23.</span> </figcaption></figure><p id="p-878">Adding an additional hidden layer for this problem improves performance.</p>
+<figure class="figure-like" id="listing-459"><pre class="console"><b>mlp = MLPRegressor(hidden_layer_sizes = (100, 100), solver = 'lbfgs', activation = 'relu', alpha=0.0001)
+plot_reg_model(mlp, Xn, y);
+plt.savefig('15.9.png')
+</b>Training R2: 0.7630509976874953
+Testing R2: 0.7302796663696425
+</pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/15.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">15.1.24.</span> </figcaption></figure><p id="p-879">So very quickly we get good performance. The resulting regression has some of the features of K-Nearest Neighbors, Decsision Trees, and Ensembles for this data but is smoother.</p></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

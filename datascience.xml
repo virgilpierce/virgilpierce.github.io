@@ -91,5 +91,9 @@
 
 <xi:include href='decision_trees.xml'/>
 
+<!-- Chapter Fifteen - Neural Networks -->
+
+<xi:include href='neural-network.xml'/>
+
 </book>
 </pretext>
