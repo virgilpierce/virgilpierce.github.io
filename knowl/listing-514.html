@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-11T16:53:57-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>def plot_cat_model(clf, X, y):
+
+    n = X.shape[0]
+    test = int(0.20*n)            # We will use a test set made up of 20% of the data from our sample
+    perm = rn.permutation(n)   
+    X = X[perm]
+    y = y[perm]
+    X_test = X[:test]       # Then create the test
+    y_test = y[:test]
+    X_train = X[test:]     # and train sets
+    y_train = y[test:]
+    
+    clf.fit(X_train, y_train)
+    
+    nn = 200 # Mesh size  
+    # Plot the decision boundary. For that, we will assign a color to each
+    # point in the mesh [x_min, m_max]x[y_min, y_max].
+    x_min, x_max = X[:, 0].min(), X[:, 0].max()
+    y_min, y_max = X[:, 1].min(), X[:, 1].max()
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, nn),
+        np.linspace(y_min, y_max, nn))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+
+    plt.figure(figsize=(8, 6))
+    cmap_light = pltco.ListedColormap(['#FFAAAA', '#AAFFAA'])
+    cmap_bold = pltco.ListedColormap(['#FF0000', '#00FF00'])
+    plt.pcolormesh(xx, yy, Z, cmap=cmap_light);
+
+    plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cmap_bold,marker='o')
+    plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap=cmap_bold, marker='+');
+    
+    print('Training Error: {}'.format(clf.score(X_train, y_train)))
+    print('Testing Error: {}'.format(clf.score(X_test, y_test)))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">16.1.5.</span> </figcaption></figure><span class="incontext"><a href="section-62.html#listing-514">in-context</a></span>
+</body>
+</html>

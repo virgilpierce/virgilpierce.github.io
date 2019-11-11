@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-11T16:53:57-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>def condition(df, feature1, feature2):
+    
+    #This is onehot encoding but for features that represent the same things 
+    # - i.e. where a sample could have two values identified.
+    
+    v = set(list(set(df[feature1])) + list(set(df[feature2])))  # Build a list of the possible outputs
+    
+    for c in df.index: # cycle through the samples
+        t1 = df.loc[c, feature1]
+        t2 = df.loc[c, feature2]
+        
+        for test in v:
+            if (t1==test) or (t2==test):
+                df.loc[c, '{}_{}'.format(feature1, test)] = 1  # Makes a new feature with name feature_value
+                                                            # and codes it as a 1 if that was the value
+            else:
+                df.loc[c, '{}_{}'.format(feature1, test)] = 0  # and 0 otherwise
+            
+    return df.drop([feature1, feature2], axis=1) # returns a dataframe with the encoded feature removed
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">16.2.7.</span> </figcaption></figure><span class="incontext"><a href="section-63.html#listing-529">in-context</a></span>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-11T16:53:57-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>kd = pa.read_csv('Data Sets/Kidney/chronic_kidney_disease.csv', 
+                 names=['age', 'bp', 'specific_gravity', 'albumin', 'sugar', 'red_blood_cells', 'pus_cell',
+                        'pus_cell_clumps', 'bacteria', 'blood_glucose', 'blood_urea', 'serum_creatinine', 
+                        'sodium', 'potassium', 'hemoglobin', 'packed_cell_volume', 'white_blood_cell_count',
+                        'red_blood_cell_count', 'hypertension', 'diabetes_mellitus', 'coronary_artery_disease',
+                        'appetite', 'pedal_edema', 'anemia', 'class'])
+
+kd.loc[kd.loc[:, 'class'] == 'ckd\t', 'class'] = 'ckd'  # There is an extra tab character on some of the ckd values
+
+kd.head()
+</b>  age  bp specific_gravity albumin sugar red_blood_cells  pus_cell  \
+0  48  80            1.020       1     0               ?    normal   
+1   7  50            1.020       4     0               ?    normal   
+2  62  80            1.010       2     3          normal    normal   
+3  48  70            1.005       4     0          normal  abnormal   
+4  51  80            1.010       2     0          normal    normal   
+
+  pus_cell_clumps    bacteria blood_glucose  ... packed_cell_volume  \
+0      notpresent  notpresent           121  ...                 44   
+1      notpresent  notpresent             ?  ...                 38   
+2      notpresent  notpresent           423  ...                 31   
+3         present  notpresent           117  ...                 32   
+4      notpresent  notpresent           106  ...                 35   
+
+  white_blood_cell_count red_blood_cell_count hypertension diabetes_mellitus  \
+0                   7800                  5.2          yes               yes   
+1                   6000                    ?           no                no   
+2                   7500                    ?           no               yes   
+3                   6700                  3.9          yes                no   
+4                   7300                  4.6           no                no   
+
+  coronary_artery_disease appetite pedal_edema anemia class  
+0                      no     good          no     no   ckd  
+1                      no     good          no     no   ckd  
+2                      no     poor          no    yes   ckd  
+3                      no     poor         yes    yes   ckd  
+4                      no     good          no     no   ckd  
+
+[5 rows x 25 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">16.1.2.</span> </figcaption></figure><span class="incontext"><a href="section-62.html#listing-511">in-context</a></span>
+</body>
+</html>

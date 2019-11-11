@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-11T16:53:57-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># We are going to make a dictionary of key:value pairs to recode the Position feature to 
+# 'Pitcher' and 'Not Pitcher'
+
+pos_dict = {x:1 for x in list(set(major.Position)) if 'Pitcher' in x}
+pos_dict2 = {x:0 for x in list(set(major.Position)) if not 'Pitcher' in x}
+
+# Using dictionary comprehensions
+
+pos_dict.update(pos_dict2) # merge the two dictionaries
+
+major_2 = major.copy()   # pandas.dataframe is a mutable object so we use the .copy() command 
+                         # otherwise changes to major_2 will change major
+    
+major_2.Position = major_2.Position.map(pos_dict)  # use the dictionary we made to recode the values with .map()
+
+major_2
+</b>                 Name Team  Position  Height  Weight    Age
+0       Adam_Donachie  BAL         0      74   180.0  22.99
+1           Paul_Bako  BAL         0      74   215.0  34.69
+2     Ramon_Hernandez  BAL         0      72   210.0  30.78
+3        Kevin_Millar  BAL         0      72   210.0  35.43
+4         Chris_Gomez  BAL         0      73   188.0  35.71
+...               ...  ...       ...     ...     ...    ...
+1029    Brad_Thompson  STL         1      73   190.0  25.08
+1030    Tyler_Johnson  STL         1      74   180.0  25.73
+1031   Chris_Narveson  STL         1      75   205.0  25.19
+1032    Randy_Keisler  STL         1      75   190.0  31.01
+1033      Josh_Kinney  STL         1      73   195.0  27.92
+
+[1033 rows x 6 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">16.1.10.</span> </figcaption></figure><span class="incontext"><a href="section-62.html#listing-519">in-context</a></span>
+</body>
+</html>

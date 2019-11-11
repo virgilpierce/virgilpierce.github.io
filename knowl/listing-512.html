@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-11T16:53:57-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b># There are some missing values for hemoglobin and blood pressure
+
+var1 = 'hemoglobin'
+var2 = 'red_blood_cell_count'
+
+kd = kd[kd.loc[:, var1] != '?']
+kd = kd[kd.loc[:, var2] != '?']
+kd = kd[kd.loc[:, var2] != '\t?']
+kd.loc[:, var1] = kd.loc[:, var1].astype('float')
+kd.loc[:, var2] = kd.loc[:, var2].astype('float')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">16.1.3.</span> </figcaption></figure><span class="incontext"><a href="section-62.html#listing-512">in-context</a></span>
+</body>
+</html>

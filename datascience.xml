@@ -95,5 +95,9 @@
 
 <xi:include href='neural-network.xml'/>
 
+<!-- Chapter Sixteen - Ensemble Models -->
+
+<xi:include href='ensemble.xml'/>
+
 </book>
 </pretext>
