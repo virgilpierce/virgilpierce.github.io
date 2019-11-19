@@ -99,5 +99,11 @@
 
 <xi:include href='ensemble.xml'/>
 
+<!--- Chapter Seventeen - Unsupervised Learning (Clustering) -->
+
+<xi:include href='unsupervised.xml'/>
+
+
+
 </book>
 </pretext>

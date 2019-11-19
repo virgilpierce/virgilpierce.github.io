@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-19T13:25:39-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Clustering</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']]
+    },
+    asciimath2jax: {
+        ignoreClass: ".*",
+        processClass: "has_am"
+    },
+    jax: ["input/AsciiMath"],
+    extensions: ["asciimath2jax.js"],
+    TeX: {
+        extensions: ["extpfeil.js", "autobold.js", "https://pretextbook.org/js/lib/mathjaxknowl.js", ],
+        // scrolling to fragment identifiers is controlled by other Javascript
+        positionToHash: false,
+        equationNumbers: { autoNumber: "none", useLabelIds: true, },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    // HTML-CSS output Jax to be dropped for MathJax 3.0
+    "HTML-CSS": {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+    CommonHTML: {
+        scale: 88,
+        mtextFontInherit: true,
+    },
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_CHTML-full"></script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.12/pretext.js"></script><script src="https://pretextbook.org/js/0.12/pretext_add_on.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/toc.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/setcolors.css" rel="stylesheet" type="text/css">
+<!-- 2019-10-12: Temporary - CSS file for experiments with styling --><link href="developer.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.2/features.css" rel="stylesheet" type="text/css">
+<script>var logged_in = false;
+var role = 'student';
+var guest_access = true;
+var login_required = false;
+var js_version = 0.12;
+</script>
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<a class="assistive" href="#content">Skip to main content</a><div class="hidden-content" style="display:none">\(\newcommand{\doubler}[1]{2#1}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\)</div>
+<header id="masthead" class="smallbuttons"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><a href="datascience.html"><span class="title">Data Science with Python</span></a></h1>
+<p class="byline">Virgil U Pierce</p>
+</div>
+</div></div>
+<nav id="primary-navbar" class="navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active" aria-label="Show or hide table of contents sidebar">Contents</button><div class="tree-nav toolbar toolbar-divisor-3"><span class="threebuttons"><a id="previousbutton" class="previous-button toolbar-item button" href="unsupervised.html" title="Previous">Prev</a><a id="upbutton" class="up-button button toolbar-item" href="unsupervised.html" title="Up">Up</a><span id="nextbutton" class="next-button button toolbar-item disabled">Next</span></span></div>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="unsupervised.html" title="Previous">Prev</a><a class="up-button button toolbar-item" href="unsupervised.html" title="Up">Up</a><span class="next-button button toolbar-item disabled">Next</span>
+</div>
+</div></nav></header><div class="page">
+<div id="sidebar-left" class="sidebar" role="navigation"><div class="sidebar-content">
+<nav id="toc"><ul>
+<li class="link"><a href="frontmatter-1.html" data-scroll="frontmatter-1"><span class="title">Front Matter</span></a></li>
+<li class="link">
+<a href="course_syllabus.html" data-scroll="course_syllabus"><span class="codenumber">1</span> <span class="title">Course Syllabus</span></a><ul>
+<li><a href="section-1.html" data-scroll="section-1">Class and Instructor Details</a></li>
+<li><a href="section-2.html" data-scroll="section-2">Course Description</a></li>
+<li><a href="section-3.html" data-scroll="section-3">Textbook and Software</a></li>
+<li><a href="section-4.html" data-scroll="section-4">Learning Objectives / Outcomes for the Course</a></li>
+<li><a href="section-5.html" data-scroll="section-5">Communicating</a></li>
+<li><a href="section-6.html" data-scroll="section-6">Course Outline</a></li>
+<li><a href="section-7.html" data-scroll="section-7">Connections with Industrial Mathematics</a></li>
+<li><a href="section-8.html" data-scroll="section-8">Assessments</a></li>
+<li><a href="section-9.html" data-scroll="section-9">UNCO Policy Statements</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data_science_introduction.html" data-scroll="data_science_introduction"><span class="codenumber">2</span> <span class="title">Introduction to Data Science</span></a><ul>
+<li><a href="section-10.html" data-scroll="section-10">Anaconda, Jupyter, and Python</a></li>
+<li><a href="section-11.html" data-scroll="section-11">Github</a></li>
+<li><a href="section-12.html" data-scroll="section-12">Python</a></li>
+<li><a href="section-13.html" data-scroll="section-13">Some Prelimaries</a></li>
+<li><a href="section-14.html" data-scroll="section-14">First Motivating Example - Baseball Players</a></li>
+<li><a href="section-15.html" data-scroll="section-15">Second Motivating Example - Abalone Characteristics</a></li>
+<li><a href="section-16.html" data-scroll="section-16">Third Motivating Example - US Income Levels</a></li>
+<li><a href="section-17.html" data-scroll="section-17">Fourth Motivating Example - Mushroom Characteristics</a></li>
+<li><a href="section-18.html" data-scroll="section-18">Fifth Motivating Example - House Prices</a></li>
+<li><a href="section-19.html" data-scroll="section-19">Sixth Motivating Example - Running Data from Garmin</a></li>
+<li><a href="section-20.html" data-scroll="section-20">Seventh Motivating Example - Berlin Airbnb Data</a></li>
+<li><a href="section-21.html" data-scroll="section-21">Eighth Motivating Example - Colorado Child Care</a></li>
+<li><a href="section-22.html" data-scroll="section-22">Ninth Motivating Example - Flight Delays at DEN</a></li>
+<li><a href="section-23.html" data-scroll="section-23">Tenth Motivating Example - Image Classification</a></li>
+<li><a href="section-24.html" data-scroll="section-24">Left for a future class - Unsupervised Learning</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="data.html" data-scroll="data"><span class="codenumber">3</span> <span class="title">Data</span></a><ul>
+<li><a href="section-25.html" data-scroll="section-25">What is Data</a></li>
+<li><a href="section-26.html" data-scroll="section-26">Supervised versus Unsupervised Learning</a></li>
+<li><a href="section-27.html" data-scroll="section-27">Where to get Data</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="tools.html" data-scroll="tools"><span class="codenumber">4</span> <span class="title">Tools of the Trade</span></a><ul>
+<li><a href="section-28.html" data-scroll="section-28">Python and Jupyter</a></li>
+<li><a href="section-29.html" data-scroll="section-29">Development</a></li>
+<li><a href="section-30.html" data-scroll="section-30">Versioning Control</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="process.html" data-scroll="process"><span class="codenumber">5</span> <span class="title">The Data Science Process</span></a><ul>
+<li><a href="section-31.html" data-scroll="section-31">Professional Ethics</a></li>
+<li><a href="section-32.html" data-scroll="section-32">Controlling for Error</a></li>
+<li><a href="section-33.html" data-scroll="section-33">Error in Categorization Problems</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="wrangling.html" data-scroll="wrangling"><span class="codenumber">6</span> <span class="title">Wrangling the Data</span></a><ul>
+<li><a href="section-34.html" data-scroll="section-34">Formatting the Data</a></li>
+<li><a href="section-35.html" data-scroll="section-35">Dealing with Strings</a></li>
+<li><a href="section-36.html" data-scroll="section-36">Dealing with Categorical Data</a></li>
+<li><a href="section-37.html" data-scroll="section-37">Dealing with Missing Data</a></li>
+<li><a href="section-38.html" data-scroll="section-38">Dealing with Images</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="resampling.html" data-scroll="resampling"><span class="codenumber">7</span> <span class="title">Resampling</span></a><ul>
+<li><a href="section-39.html" data-scroll="section-39">Cross Validation</a></li>
+<li><a href="section-40.html" data-scroll="section-40">Bootstraps</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="EDA.html" data-scroll="EDA"><span class="codenumber">8</span> <span class="title">Exploratory Data Analysis</span></a><ul><li><a href="section-41.html" data-scroll="section-41">Nonlinear Relations</a></li></ul>
+</li>
+<li class="link">
+<a href="linear_regression.html" data-scroll="linear_regression"><span class="codenumber">9</span> <span class="title">Linear Regression</span></a><ul>
+<li><a href="section-42.html" data-scroll="section-42">Calculus Approach to Linear Regression</a></li>
+<li><a href="section-43.html" data-scroll="section-43">Linear Regression as Projection</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="pca.html" data-scroll="pca"><span class="codenumber">10</span> <span class="title">Principal Component Analysis</span></a><ul>
+<li><a href="section-44.html" data-scroll="section-44">Eigenvalue Decomposition of Square Matrix</a></li>
+<li><a href="section-45.html" data-scroll="section-45">Singular Value Decomposition</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="k-nn.html" data-scroll="k-nn"><span class="codenumber">11</span> <span class="title">k-Nearest Neighbors</span></a><ul>
+<li><a href="section-46.html" data-scroll="section-46">Checking Performance with Bootstraps</a></li>
+<li><a href="section-47.html" data-scroll="section-47">Normalization</a></li>
+<li><a href="section-48.html" data-scroll="section-48">k-Nearest Neighbors with Many Factors</a></li>
+<li><a href="section-49.html" data-scroll="section-49">k-Nearest Neighbors for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ridge_and_lasso.html" data-scroll="ridge_and_lasso"><span class="codenumber">12</span> <span class="title">Ridge and Lasso Regression</span></a><ul>
+<li><a href="section-50.html" data-scroll="section-50">House Pricing Data: Linear Regression</a></li>
+<li><a href="section-51.html" data-scroll="section-51">Ridge Regression</a></li>
+<li><a href="section-52.html" data-scroll="section-52">Lasso Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="lda_svm.html" data-scroll="lda_svm"><span class="codenumber">13</span> <span class="title">Linear Discrimant Analysis and Support Vector Machines</span></a><ul>
+<li><a href="section-53.html" data-scroll="section-53">Linear Discriminant Analysis</a></li>
+<li><a href="section-54.html" data-scroll="section-54">Support Vector Machines</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="decision_trees.html" data-scroll="decision_trees"><span class="codenumber">14</span> <span class="title">Decsion Trees</span></a><ul>
+<li><a href="section-55.html" data-scroll="section-55">Regression Trees</a></li>
+<li><a href="section-56.html" data-scroll="section-56">Classification Tree</a></li>
+<li><a href="section-57.html" data-scroll="section-57">High Dimensional Data and Decision Trees</a></li>
+<li><a href="section-58.html" data-scroll="section-58">Discussion of Decision Tree Algorithms</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="neural-networks.html" data-scroll="neural-networks"><span class="codenumber">15</span> <span class="title">Neural Networks</span></a><ul>
+<li><a href="section-59.html" data-scroll="section-59">Neural Network for Regression</a></li>
+<li><a href="section-60.html" data-scroll="section-60">Neural Networks for Classification</a></li>
+<li><a href="section-61.html" data-scroll="section-61">Neural Network with a Large Number of Features</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="ensemble.html" data-scroll="ensemble"><span class="codenumber">16</span> <span class="title">General Ensemble Models</span></a><ul>
+<li><a href="section-62.html" data-scroll="section-62">Why do Ensemble Models Work</a></li>
+<li><a href="section-63.html" data-scroll="section-63">Ensemble Models for Regression</a></li>
+</ul>
+</li>
+<li class="link">
+<a href="unsupervised.html" data-scroll="unsupervised"><span class="codenumber">17</span> <span class="title">Unsupervised Learning</span></a><ul><li><a href="section-64.html" data-scroll="section-64" class="active">Clustering</a></li></ul>
+</li>
+</ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://pretextbook.org">Authored in PreTeXt</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a></nav></div>
+</div></div>
+<main class="main"><div id="content" class="pretext-content"><section class="section" id="section-64"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">17.1</span> <span class="title">Clustering</span>
+</h2>
+<section class="introduction" id="introduction-41"><p id="p-921">The goal of clustering algorithms is to separate the samples into groups or clusters by the values of their features. A classic use case of this in studying the genomic variety of a species. For example in tracing the process by which an agricultural plant (such as <em class="emphasis">Cannabis Sativa</em> or <em class="emphasis">Humulus Lupulus</em>) has been domesticated one might collect the proportions of various codes included in their DNA for samples of the plants from a wide geographic region and then ask if there are identifiable subgroups within the species.</p>
+<p id="p-922">Another classic use of clustering is by companies in developing targeted marketing. Data is collected from existing customers, machine learning applied to see if indentifiable subgroups of customers can be found and then the motivations behind those types of customers explored to develop marketing strategies for them. Our university is doing this as we speak.</p>
+<p id="p-923">To some extent clustering is still where there is some human needed in deciding if the algorithm returned a useful result or not.</p></section><section class="subsection" id="subsection-82"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">17.1.1</span> <span class="title">K-Means</span>
+</h3>
+<p id="p-924">Our first clustering algorithm is called K-Means. The algorithm will take k, the number of clusters, as a parameter, and then will find the best division of the data into k clusters.</p>
+<p id="p-925">First we need to define the <em class="emphasis">centroid</em> of a subset of our samples to be the coordinates in the feature space given by the means of each of the features over the subset.</p>
+<p id="p-926"><em class="alert">The K-Means Algorithm</em></p>
+<ol id="p-927" class="decimal"><li id="li-187"><p id="p-928">Starting from a random assignment of each of the samples into on of the k clusters.</p></li></ol>
+<ol id="p-929" class="decimal"><li id="li-188"><p id="p-930">Proceeding with the following steps until the assignment into Clusters stops changing:</p></li></ol>
+<p id="p-931">a. Compute the <em class="emphasis">centroid</em> of each cluster form the current assignments.</p>
+<p id="p-932">b. Reassign the smaples to the clusters by setting it to match the closest centroid.</p>
+<p id="p-933"></p>
+<p id="p-934">Note right away that because we are using <em class="emphasis">distance</em> in the algorithm the method will produce different results depending on whether we have normalized our data first or not.</p>
+<figure class="figure-like" id="listing-551"><pre class="console"><b>import pandas as pa
+import numpy as np
+import matplotlib.pyplot as plt
+import numpy.random as rnd
+import matplotlib.cm as cm
+import matplotlib.colors as pltco
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.1.</span> </figcaption></figure><p id="p-935">Today we will circle back around to the Colorado Childcare dataset. This dataset contains the geographic location of licensed childcare facilities in Colorado, and we suspect from our earlier analysis that there are clusters within the data. It is a bit problematic and we will see that the K-Means Algorithm misses some of the features.</p>
+<figure class="figure-like" id="listing-552"><pre class="console"><b>df = pa.read_csv('Data Sets/Colorado_Licensed_Child_Care_Facilities_Report.csv')
+df.head()
+</b>   PROVIDER ID                          PROVIDER NAME  \
+0           48                          VIKKI MCKEOGH   
+1           65                            JACKIE GRAY   
+2          100  CHEROKEE TRAIL ELEMENTARY KIDS CENTER   
+3          115              EARLY CHILDHOOD EDUCATION   
+4          157                     CHERLLYNN SAUNDERS   
+
+                PROVIDER SERVICE TYPE         STREET ADDRESS  \
+0  Experienced Family Child Care Home       6635 E Monaco DR   
+1              Family Child Care Home          4388 118 Ave.   
+2        School-Age Child Care Center  17302 Clarke Farms DR   
+3                   Preschool Program         1023 N 31st ST   
+4                 Infant/Toddler Home         5989 W Fair DR   
+
+               CITY STATE    ZIP     COUNTY            COMMUNITY  \
+0          Brighton    CO  80602      Adams           West Adams   
+1          Thornton    CO  80233      Adams           West Adams   
+2            Parker    CO  80134    Douglas               Parker   
+3  Colorado Springs    CO  80904    El Paso     Colorado Springs   
+4         Littleton    CO  80123  Jefferson  Northeast Jefferson   
+
+                                           ECC  ... CCCAP CASE COUNT_D1  \
+0  Early Childhood Partnership of Adams County  ...                 NaN   
+1  Early Childhood Partnership of Adams County  ...                 3.0   
+2       Douglas County Early Childhood Council  ...                 3.0   
+3                            Alliance for Kids  ...                 NaN   
+4                Triad Early Childhood Council  ...                 NaN   
+
+  CCCAP FA EXP DATE_D1 CCCAP TOTAL AUTH_D1 CCCAP FA STATUS_D1  \
+0                  NaN                 NaN                NaN   
+1           06/30/2019                 3.0                1.0   
+2           06/30/2019                 5.0                1.0   
+3                  NaN                 NaN                NaN   
+4                  NaN                 NaN                NaN   
+
+  CCCAP AMOUNT PAID_D1  CCCAP FA EXP DATE_D2  CCCAP TOTAL AUTH_D2  \
+0                  NaN                   NaN                  NaN   
+1               239.20            06/14/2019                  3.0   
+2               974.61            05/31/2020                  5.0   
+3                  NaN                   NaN                  NaN   
+4                  NaN                   NaN                  NaN   
+
+   CCCAP FA STATUS_D2 LICENSE FEE DISCOUNT                  LONG-LAT  
+0                 NaN                  0.0  (39.919258, -104.911005)  
+1                 1.0                  0.0      (39.9101, -104.9344)  
+2                 1.0                  0.0  (39.525183, -104.786646)  
+3                 NaN                  0.0   (38.86547, -104.867475)  
+4                 NaN                  0.0  (39.604151, -105.063248)  
+
+[5 rows x 27 columns]
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.2.</span> </figcaption></figure><figure class="figure-like" id="listing-553"><pre class="console"><b>temp = df.loc[:, ['PROVIDER SERVICE TYPE', 'LONG-LAT'] ]
+
+# pull up the longitude and lattitude coordinates
+ 
+lon = [eval(temp.loc[c, 'LONG-LAT'])[0] for c in temp.index.values]
+lat = [eval(temp.loc[c, 'LONG-LAT'])[1] for c in temp.index.values]
+    
+# Separate the longitude and lattide coordinates
+# Some notes on the Python here:  the coordinates have been read in as a string, we can convert them to a 
+# tuple with eval and then reference each with a position index.
+
+locate = pa.DataFrame(np.array( [lat, lon]).transpose(), columns = ['Lat', 'Long'])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.3.</span> </figcaption></figure><figure class="figure-like" id="listing-554"><pre class="console"><b>X = np.array(locate)
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.4.</span> </figcaption></figure><p id="p-936">As described above, we expect better results after a normalization, be warry though as the types could be integer rather than float. In this case I check that they have been read as floats.</p>
+<figure class="figure-like" id="listing-555"><pre class="console"><b>X.dtype
+</b>dtype('float64')
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.5.</span> </figcaption></figure><figure class="figure-like" id="listing-556"><pre class="console"><b>for l in range(X.shape[1]):
+    X[:, l] = ( X[:, l] - X[:, l].min())/(X[:, l].max() - X[:, l].min())
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.6.</span> </figcaption></figure><figure class="figure-like" id="listing-557"><pre class="console"><b>plt.plot(X[:, 0], X[:, 1], 'b.');
+plt.savefig('17.1.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.1.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.7.</span> </figcaption></figure><p id="p-937">We will do the K-Means Clustering by hand here and then introduce the scikit learn package implementing it.</p>
+<p id="p-938">Let's see if we can identify two clusters in this data. We start by randomly assigning each point to one of the two groups.</p>
+<figure class="figure-like" id="listing-558"><pre class="console"><b>y = np.array(rnd.randint(2, size=X.shape[0]))
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.8.</span> </figcaption></figure><figure class="figure-like" id="listing-559"><pre class="console"><b>plt.plot(X[y==0, 0], X[y==0, 1], 'b.')
+plt.plot(X[y==1, 0], X[y==1, 1], 'r.')
+plt.savefig('17.2.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.2.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.9.</span> </figcaption></figure><p id="p-939">For each group we compute the centroid by finding the mean of the values along each axis.</p>
+<figure class="figure-like" id="listing-560"><pre class="console"><b>def ret_centroids(X, y):
+    
+    return np.array([[X[y==0, 0].mean(), X[y==0, 1].mean()], [X[y==1, 0].mean(), X[y==1, 1].mean()]])
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.10.</span> </figcaption></figure><figure class="figure-like" id="listing-561"><pre class="console"><b>c = ret_centroids(X, y)
+c
+</b>array([[0.54840172, 0.63470342],
+       [0.54462971, 0.63159221]])
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.11.</span> </figcaption></figure><figure class="figure-like" id="listing-562"><pre class="console"><b>def plot_cluster(X, y, c):
+
+    plt.figure(figsize=(10, 8))
+    plt.plot(X[y==0, 0], X[y==0, 1], 'b.')
+    plt.plot(X[y==1, 0], X[y==1, 1], 'r.')
+    plt.plot(c[0, 0], c[0, 1], 'b*')
+    plt.plot(c[1, 0], c[1, 1], 'r*')
+    
+    return None
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.12.</span> </figcaption></figure><figure class="figure-like" id="listing-563"><pre class="console"><b>plot_cluster(X, y, c)
+plt.savefig('17.3.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.3.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.13.</span> </figcaption></figure><p id="p-940">They are there (very close to each other).</p>
+<p id="p-941">Now we reassign the values of each point based on the centroid they are closest to.</p>
+<figure class="figure-like" id="listing-564"><pre class="console"><b>def assign_cluster(X, y, c):
+    
+    for k in range(X.shape[0]):
+        d0 = np.sqrt( (X[k, 0] - c[0, 0])**2 + (X[k, 1] - c[0, 1])**2)
+        d1 = np.sqrt( (X[k, 0] - c[1, 0])**2 + (X[k, 1] - c[1, 1])**2)
+        
+        if d0 &lt;= d1:
+            y[k] = 0
+        else:
+            y[k] = 1
+            
+    return y
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.14.</span> </figcaption></figure><figure class="figure-like" id="listing-565"><pre class="console"><b>y = assign_cluster(X, y, c)
+plot_cluster(X, y, c)
+plt.savefig('17.4.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.4.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.15.</span> </figcaption></figure><figure class="figure-like" id="listing-566"><pre class="console"><b>c = ret_centroids(X, y)
+plot_cluster(X, y, c)
+plt.savefig('17.5.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.5.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.16.</span> </figcaption></figure><figure class="figure-like" id="listing-567"><pre class="console"><b>y = assign_cluster(X, y, c)
+plot_cluster(X, y, c)
+plt.savefig('17.6.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.6.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.17.</span> </figcaption></figure><figure class="figure-like" id="listing-568"><pre class="console"><b>c = ret_centroids(X, y)
+plot_cluster(X, y, c)
+plt.savefig('17.7.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.7.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.18.</span> </figcaption></figure><figure class="figure-like" id="listing-569"><pre class="console"><b>y = assign_cluster(X, y, c)
+plot_cluster(X, y, c)
+plt.savefig('17.8.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.8.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.19.</span> </figcaption></figure><p id="p-942">In practice K-means is minimizing the within-cluster sum-of-squares criterion that is the sum of the distances between the samples of a cluster and its centroid. This measurement does have some drawbacks, it will favor clusters that are convex, and it will miss clusters that are elongated or have irregular shapes.</p>
+<p id="p-943">Evaluating the performance of a clustering model is not as straightforward as computing the percentage of correct classifications that we do in supervised learning. In this case we do not know what the true classification is for our sample.</p>
+<p id="p-944">The main parameter in the algorithm is \(K\text{,}\) the number of clusters.</p>
+<figure class="figure-like" id="listing-570"><pre class="console"><b>def cluster_plot(cluster, X):
+       
+    n_clusters = cluster.get_params()['n_clusters']
+    cmap_bold = pltco.ListedColormap([cm.hot(k/n_clusters) for k in range(n_clusters) ])  
+    # We need a color map that expands to match the number of clusters
+
+    plt.scatter(X[:, 0], X[:, 1], c=cluster.fit_predict(X), cmap=cmap_bold,marker='o')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.20.</span> </figcaption></figure><figure class="figure-like" id="listing-571"><pre class="console"><b>from sklearn.cluster import KMeans
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.21.</span> </figcaption></figure><figure class="figure-like" id="listing-572"><pre class="console"><b>cluster = KMeans(n_clusters=2)
+cluster_plot(cluster, X)
+plt.savefig('17.9.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.9.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.22.</span> </figcaption></figure><figure class="figure-like" id="listing-573"><pre class="console"><b>cluster = KMeans(n_clusters=3)
+cluster_plot(cluster, X)
+plt.savefig('17.10.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.10.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.23.</span> </figcaption></figure><figure class="figure-like" id="listing-574"><pre class="console"><b>cluster = KMeans(n_clusters=4)
+cluster_plot(cluster, X)
+plt.savefig('17.11.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.11.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.24.</span> </figcaption></figure><figure class="figure-like" id="listing-575"><pre class="console"><b>cluster = KMeans(n_clusters=5)
+cluster_plot(cluster, X)
+plt.savefig('17.12.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.12.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.25.</span> </figcaption></figure><figure class="figure-like" id="listing-576"><pre class="console"><b>cluster = KMeans(n_clusters=6)
+cluster_plot(cluster, X)
+plt.savefig('17.13.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.13.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.26.</span> </figcaption></figure><figure class="figure-like" id="listing-577"><pre class="console"><b>cluster = KMeans(n_clusters=8)
+cluster_plot(cluster, X)
+plt.savefig('17.14.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.14.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.27.</span> </figcaption></figure><p id="p-945">The algorithm has produced a rather unsurprising clustering of the states childcare facilities that more or less corresponds to the major geographic and demographic regions. Note that we have not taken into account any of the other features in the data.</p>
+<p id="p-946">Clustering is a tool for teasing out meaning in the data or identifying hypothesis that deserve exploring.</p></section><section class="subsection" id="subsection-83"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">17.1.2</span> <span class="title">Hierarchical Clustering</span>
+</h3>
+<p id="p-947"><em class="emphasis">Hierarchical Clustering</em> are algorithms that decide on clusters among the data by looking at merging or splitting cluster divisions. The are different from the distance based clustering algorithms used above and support some generalizations that are capable of picking out clusters with odd geometric structure.</p>
+<p id="p-948">These clusters are also capable of identifing groupsings that have uneven cluster sizes.</p>
+<p id="p-949">The objective function we will be minimizing is the <em class="emphasis">linkage distance</em> this is one of the parameters for the algorithm that can be varied it can be set to the 'single', 'average', 'complete', or 'Ward'. Furthermore the actual distance function underlying the linkage distance can be varried as well. The linkage distance used will affect the types of clusters that will be identified. See scikit-learn for a complete overview.</p>
+<p id="p-950">The algorithm we will examine today, <em class="emphasis">Agglomerative Clustering</em>, is a bottom up approach. It will start with each data point from the sample in its own cluster and then proceed to merge pairs of clusters that will give a minimal increase in the <em class="emphasis">linkage distance</em>.</p>
+<figure class="figure-like" id="listing-578"><pre class="console"><b>from sklearn.cluster import AgglomerativeClustering
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.28.</span> </figcaption></figure><figure class="figure-like" id="listing-579"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=2, linkage='ward')
+cluster_plot(cluster, X)
+plt.savefig('17.15.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.15.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.29.</span> </figcaption></figure><figure class="figure-like" id="listing-580"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=3, linkage='ward')
+cluster_plot(cluster, X)
+plt.savefig('17.16.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.16.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.30.</span> </figcaption></figure><figure class="figure-like" id="listing-581"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=4, linkage='ward')
+cluster_plot(cluster, X)
+plt.savefig('17.17.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.17.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.31.</span> </figcaption></figure><figure class="figure-like" id="listing-582"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=5, linkage='ward')
+cluster_plot(cluster, X)
+plt.savefig('17.18.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.18.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.32.</span> </figcaption></figure><p id="p-951">Changing the linkage used adjusts the shapes and types of clusters that are identified.</p>
+<figure class="figure-like" id="listing-583"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=5, linkage='complete')
+cluster_plot(cluster, X)
+plt.savefig('17.19.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.19.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.33.</span> </figcaption></figure><figure class="figure-like" id="listing-584"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=5, linkage='average')
+cluster_plot(cluster, X)
+plt.savefig('17.20.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.20.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.34.</span> </figcaption></figure><figure class="figure-like" id="listing-585"><pre class="console"><b>cluster = AgglomerativeClustering(n_clusters=5, linkage='single')
+cluster_plot(cluster, X)
+plt.savefig('17.21.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.21.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.35.</span> </figcaption></figure><p id="p-952">This last example illustrates another use of clustering. It can identify samples that are significantly separated in the feature space from the rest of the data set.</p></section><section class="subsection" id="subsection-84"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber">17.1.3</span> <span class="title">Birch Algorithm</span>
+</h3>
+<p id="p-953">The <em class="emphasis">Birch</em> algorithm builds a tree called the Characteristic Feature Tree for the data. The data is compressed into the feature tree and the algorithm stores the necessary information without keeping the entire data set used. Each node of the tree includes information about the number of samples it represents and their relatives distances and location in the feature space. There are two parameters in the algorithm a <em class="emphasis">threshhold</em> and a <em class="emphasis">branching factor</em>. One use of Birch is to reduce the size of the dataset being used as that is its primary approach in identifying samples that are closely related. It can be passed the number of clusters or it can produce as a result the number of clusters.</p>
+<figure class="figure-like" id="listing-586"><pre class="console"><b>from sklearn.cluster import Birch
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.36.</span> </figcaption></figure><figure class="figure-like" id="listing-587"><pre class="console"><b>cluster = Birch(threshold = 0.10, n_clusters=5)
+cluster_plot(cluster, X)
+plt.savefig('17.22.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.22.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.37.</span> </figcaption></figure><figure class="figure-like" id="listing-588"><pre class="console"><b>cluster = Birch(threshold = 0.10, n_clusters=None)
+cluster.fit(X)
+labels = set(cluster.labels_)
+labels
+</b>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18}
+</pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.38.</span> </figcaption></figure><figure class="figure-like" id="listing-589"><pre class="console"><b>n_clusters = len(labels)
+cmap_bold = pltco.ListedColormap([cm.tab20b(k/n_clusters) for k in range(n_clusters) ])  
+# We need a color map that expands to match the number of clusters
+
+plt.scatter(X[:, 0], X[:, 1], c=cluster.labels_, cmap=cmap_bold,marker='o');
+plt.savefig('17.33.png')
+</b></pre>
+<div class="image-box" style="width: 100%; margin-left: 0%; margin-right: 0%;"><img src="Images/17.23.png" style="width: 100%; height: auto;" alt=""></div>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.39.</span> </figcaption></figure></section></section></div></main>
+</div>
+<div class="login-link"><span id="loginlogout" class="login">login</span></div>
+<script src="https://pretextbook.org/js/0.12/login.js"></script>
+</body>
+</html>

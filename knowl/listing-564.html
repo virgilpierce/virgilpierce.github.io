@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-19T13:25:42-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>def assign_cluster(X, y, c):
+    
+    for k in range(X.shape[0]):
+        d0 = np.sqrt( (X[k, 0] - c[0, 0])**2 + (X[k, 1] - c[0, 1])**2)
+        d1 = np.sqrt( (X[k, 0] - c[1, 0])**2 + (X[k, 1] - c[1, 1])**2)
+        
+        if d0 &lt;= d1:
+            y[k] = 0
+        else:
+            y[k] = 1
+            
+    return y
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.14.</span> </figcaption></figure><span class="incontext"><a href="section-64.html#listing-564">in-context</a></span>
+</body>
+</html>

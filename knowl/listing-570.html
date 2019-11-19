@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!--**************************************-->
+<!--*    Generated from PreTeXt source   *-->
+<!--*    on 2019-11-19T13:25:42-07:00    *-->
+<!--*                                    *-->
+<!--*      https://pretextbook.org       *-->
+<!--*                                    *-->
+<!--**************************************-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<figure class="figure-like"><pre class="console"><b>def cluster_plot(cluster, X):
+       
+    n_clusters = cluster.get_params()['n_clusters']
+    cmap_bold = pltco.ListedColormap([cm.hot(k/n_clusters) for k in range(n_clusters) ])  
+    # We need a color map that expands to match the number of clusters
+
+    plt.scatter(X[:, 0], X[:, 1], c=cluster.fit_predict(X), cmap=cmap_bold,marker='o')
+</b></pre>
+<figcaption><span class="type">Listing</span> <span class="codenumber">17.1.20.</span> </figcaption></figure><span class="incontext"><a href="section-64.html#listing-570">in-context</a></span>
+</body>
+</html>
